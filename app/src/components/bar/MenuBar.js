@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import arrowDown from '../../css/images/Arrow-down.svg';
 import monthImage from '../../css/images/month.png';
 import weekImage from '../../css/images/week.svg';
 import dayImage from '../../css/images/day.svg';
@@ -36,7 +35,8 @@ class MenuBar extends Component {
         super(props);
 
         this.state = {
-            currentDisplayMonth: [2, 3, 4, 5]
+            currentDisplayMonth: [2, 3, 4, 5],
+            currentYear: 2020
         }
     }
 
@@ -54,7 +54,14 @@ class MenuBar extends Component {
             }
             return newNumber;
         });
-        this.setState( { currentDisplayMonth: newDisplayMonth });
+        this.setState( {currentDisplayMonth: newDisplayMonth});
+        console.log(this.state.currentDisplayMonth);
+        if (this.state.currentDisplayMonth[1] === 11 && shiftMonth > 0) {
+            this.setState({currentYear: this.state.currentYear + 1});
+        }
+        if (this.state.currentDisplayMonth[2] === 0 && shiftMonth < 0) {
+            this.setState({currentYear: this.state.currentYear - 1});
+        }
     };
 
     render() {
@@ -62,7 +69,7 @@ class MenuBar extends Component {
 
         return (
             <div className="cal-wind__menu-bar">
-                <div className="cal-wind__menu-bar__button-year">2020</div>
+                <div className="cal-wind__menu-bar__button-year">{this.state.currentYear}</div>
                 <button
                     id="0"
                     className="cal-wind__menu-bar__button-month"
