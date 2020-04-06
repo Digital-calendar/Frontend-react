@@ -83,9 +83,10 @@ html, body {
     width: 100%;
 }
 
+
 .cal-wind__menu-bar__button-month {
     font-family: Oxygen;
-    margin-left: 1%;
+    /*margin-left: 1%;*/
     background-color: #ffffff;
     border-style: none;
     font-size: 18px;
@@ -95,6 +96,17 @@ html, body {
 }
 
 .cal-wind__menu-bar__button-month:hover {
+    background-color: #F2F2F2;
+}
+
+.cal-wind__menu-bar__button-month_selected {
+    font-family: Oxygen;
+    background-color: #ffffff;
+    border-style: none;
+    font-size: 18px;
+    text-align: left;
+    height: 40px;
+    padding-top: 2px;
     border-bottom: 1px solid red;
     background-color: #F2F2F2;
 }
@@ -205,14 +217,18 @@ html, body {
 
 .cal-wind__menu-bar__button-year {
     font-family: Oxygen;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #ffffff;
     border-style: none;
     font-size: 18px;
     text-align: center;
     margin-left: 30px;
+    margin-right: 1%;
 }
 
-.cal-wind__menu-bar__year-submenu, .cal-wind__up-bar__filter-btn__filter-submenu,
+.cal-wind__up-bar__filter-btn__filter-submenu,
 .cal-wind__menu-bar__mapping-btn__map-submenu, .cal-wind__auth-bar__employee-info-btn__submenu,
 .filter-private, .filter-internal, .filter-external, .filter-correspondence,
 .cal-wind__days-table__day-submenu, .edit-info, .sign-out{

@@ -24,24 +24,73 @@ const viewOptions = [
     { value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>  }
 ];
 
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
+
 class MenuBar extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentDisplayMonth: [2, 3, 4, 5]
+        }
+    }
+
+    onMonthButtonClicked = event => {
+        const shiftMonth = parseInt(event.target.getAttribute("id")) - 1;
+        console.log(shiftMonth);
+        const newDisplayMonth = this.state.currentDisplayMonth.map(number => {
+            const newNumber = number + shiftMonth;
+            console.log(newNumber);
+            if (newNumber > 11) {
+                return newNumber - 12;
+            }
+            if (newNumber < 0) {
+                return 12 + newNumber;
+            }
+            return newNumber;
+        });
+        this.setState( { currentDisplayMonth: newDisplayMonth });
+    };
+
     render() {
+        console.log(this.state.currentDisplayMonth);
+
         return (
             <div className="cal-wind__menu-bar">
-                <button className="cal-wind__menu-bar__button-year">2020
-                    <img src={arrowDown} alt="arrow-down" id="arrow-down-year"/>
-                        <div className="cal-wind__menu-bar__year-submenu">
-                            <p className="year">2019</p>
-                            <p className="year">2019</p>
-                            <p className="year">2019</p>
-                            <p className="year">2019</p>
-                            <p className="year">2019</p>
-                        </div>
+                <div className="cal-wind__menu-bar__button-year">2020</div>
+                <button
+                    id="0"
+                    className="cal-wind__menu-bar__button-month"
+                    onClick={this.onMonthButtonClicked}
+                >
+                    {months[this.state.currentDisplayMonth[0]]}
                 </button>
-                <button className="cal-wind__menu-bar__button-month">February</button>
-                <button className="cal-wind__menu-bar__button-month">March</button>
-                <button className="cal-wind__menu-bar__button-month">April</button>
+                <button
+                    id="1"
+                    className="cal-wind__menu-bar__button-month_selected"
+                    onClick={this.onMonthButtonClicked}
+                >
+                    {months[this.state.currentDisplayMonth[1]]}
+                </button>
+                <button
+                    id="2"
+                    className="cal-wind__menu-bar__button-month"
+                    onClick={this.onMonthButtonClicked}
+                >
+                    {months[this.state.currentDisplayMonth[2]]}
+                </button>
+                <button
+                    id="3"
+                    className="cal-wind__menu-bar__button-month"
+                    onClick={this.onMonthButtonClicked}
+                >
+                    {months[this.state.currentDisplayMonth[3]]}
+                </button>
                 <button className="cal-wind__up-bar__new-event-button">New Event</button>
                 <CustomSelect
                     options={filterOptions}
