@@ -43,29 +43,12 @@ class MenuBar extends Component {
                 <button className="cal-wind__menu-bar__button-month">March</button>
                 <button className="cal-wind__menu-bar__button-month">April</button>
                 <button className="cal-wind__up-bar__new-event-button">New Event</button>
-                {/*<button className="cal-wind__up-bar__filter-btn">*/}
-                {/*        <img src={triangleFilter} alt="filter" id="filter"/>Filter*/}
-                {/*        <img src={arrowDown} alt="arrow-down-filter" id="arrow-down-filter"/>*/}
-                {/*            <div className="cal-wind__up-bar__filter-btn__filter-submenu">*/}
-                {/*                <div className="filters">*/}
-                {/*                    /!*<button class="filter-private"></button>*!/*/}
-                {/*                    /!*<button class="filter-internal"></button>*!/*/}
-                {/*                    /!*<button class="filter-external"></button>*!/*/}
-                {/*                    /!*<button class="filter-correspondence"></button>*!/*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*</button>*/}
                 <CustomSelect
                     options={filterOptions}
                     name={'filterType'}
                     isMulti={true}
                     placeholder={'Filter'}
                 />
-                {/*<button className="cal-wind__menu-bar__mapping-btn">*/}
-                {/*        <img src={month} alt="month" id="month" />Month*/}
-                {/*        <img src={arrowDown} alt="arrow-down" id="arrow-down-month"/>*/}
-                {/*        <div className="cal-wind__menu-bar__mapping-btn__map-submenu"></div>*/}
-                {/*</button>*/}
                 <CustomSelect
                     options={viewOptions}
                     isMulti={false}
