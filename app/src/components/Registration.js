@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/registration.css';
 import { Redirect } from 'react-router';
+import md5 from 'md5';
 
 class Registration extends Component {
 
@@ -8,11 +9,13 @@ class Registration extends Component {
         super(props);
         this.state = {
             data: {
+                first_name: "",
+                last_name: "",
                 email: "",
                 pass: ""
             },
-            isSuccess: false,
-            isPassCorrect: true
+            isSuccess: false
+            // isPassCorrect: true
         }
     }
 
@@ -20,7 +23,7 @@ class Registration extends Component {
 
      submitForm = async e => {
         e.preventDefault();
-
+        this.state.data.pass = md5(this.state.data.pass);
         try {
             const resp = await fetch("/api/users/sign_up", {
                 method: "POST",
@@ -31,19 +34,20 @@ class Registration extends Component {
             });
             
             if (!resp.ok) {
+                console.log(resp); //дебаг
                 throw new Error("Неизвестная ошибка сети");
             }
             
-            if (resp.status === 226) {
+            if (resp.status === 205) {
                 throw new Error("Пользователь с таким email уже существует");
             }
 
-            if (resp.status === 200) {
+            if (resp.status === 201) {
                 console.log(await resp.json()); //дебаг
                 alert("Регистрация прошла успешно");
                 this.setState({isSuccess: true});
             } else {
-                throw new Error("Сервер вернул ошибку" + resp.status);
+                throw new Error("Сервер вернул ошибку: " + resp.status); //дебаг
             }
 
         } catch (e) {
@@ -52,10 +56,11 @@ class Registration extends Component {
 
     };
 
-    handleSubmit = e =>
+    handleSubmit = e => 
         this.setState({
            data : {...this.state.data, [e.target.name]: e.target.value}
         });
+    
 
     checkPass = e => {
         if (this.state.data.pass === e.target.value) {
@@ -87,14 +92,16 @@ class Registration extends Component {
                                     type="text"
                                     autoFocus
                                     placeholder="first name"
-                                    name="firstName"
+                                    name="first_name"
+                                    onChange={this.handleSubmit}
                                     required
                                 />
                                 <input
                                     className="lastName"
                                     type="text"
                                     placeholder="last name"
-                                    name="lastName"
+                                    name="last_name"
+                                    onChange={this.handleSubmit}
                                     required
                                 />
                                 <input
@@ -102,7 +109,6 @@ class Registration extends Component {
                                     type="email"
                                     placeholder="email"
                                     name="email"
-                                    value={this.state.data.email}
                                     onChange={this.handleSubmit}
                                     required
                                 />
@@ -111,7 +117,6 @@ class Registration extends Component {
                                     type="password"
                                     placeholder="password"
                                     name="pass"
-                                    value={this.state.data.pass}
                                     onChange={this.handleSubmit}
                                     required
                                 />
