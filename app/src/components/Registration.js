@@ -12,32 +12,43 @@ class Registration extends Component {
                 pass: ""
             },
             isSuccess: false,
-            isError: false
+            isPassCorrect: true
         }
     }
 
-    submitForm = e => {
+    
+
+     submitForm = async e => {
         e.preventDefault();
 
-        fetch("/api/users/sign_up", {
-            method: "POST",
-            body: JSON.stringify(this.state.data),
-            headers: {
-                "Content-Type": "application/json"
+        try {
+            const resp = await fetch("/api/users/sign_up", {
+                method: "POST",
+                body: JSON.stringify(this.state.data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            
+            if (!resp.ok) {
+                throw new Error("Неизвестная ошибка сети");
             }
-        })
-        .then(r => {
+            
+            if (resp.status === 226) {
+                throw new Error("Пользователь с таким email уже существует");
+            }
 
-            return r.json();
-        })
-        .then(data => {
-            console.log(data);
-            // !data.hasOwnProperty("error")
-            //     ? this.setState({ message: data.success })
-            //     : this.setState({ message: data.error, isError: true });
-            alert("Регситрация прошла успешно");
-            this.setState({isSuccess: true});
-        });
+            if (resp.status === 200) {
+                console.log(await resp.json()); //дебаг
+                alert("Регистрация прошла успешно");
+                this.setState({isSuccess: true});
+            } else {
+                throw new Error("Сервер вернул ошибку" + resp.status);
+            }
+
+        } catch (e) {
+            alert(e);
+        }
 
     };
 
