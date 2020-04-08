@@ -42,10 +42,8 @@ class MenuBar extends Component {
 
     onMonthButtonClicked = event => {
         const shiftMonth = parseInt(event.target.getAttribute("id")) - 1;
-        console.log(shiftMonth);
         const newDisplayMonth = this.state.currentDisplayMonth.map(number => {
             const newNumber = number + shiftMonth;
-            console.log(newNumber);
             if (newNumber > 11) {
                 return newNumber - 12;
             }
@@ -55,7 +53,6 @@ class MenuBar extends Component {
             return newNumber;
         });
         this.setState( {currentDisplayMonth: newDisplayMonth});
-        console.log(this.state.currentDisplayMonth);
         if (this.state.currentDisplayMonth[1] === 11 && shiftMonth > 0) {
             this.setState({currentYear: this.state.currentYear + 1});
         }
@@ -65,8 +62,6 @@ class MenuBar extends Component {
     };
 
     render() {
-        console.log(this.state.currentDisplayMonth);
-
         return (
             <div className="cal-wind__menu-bar">
                 <div className="cal-wind__menu-bar__button-year">{this.state.currentYear}</div>
