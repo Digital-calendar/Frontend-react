@@ -86,7 +86,7 @@ html, body {
 
 .cal-wind__menu-bar__button-month {
     font-family: Oxygen;
-    width: 90px;
+    width: 100px;
     display: flex;
     justify-content: center;
     background-color: #ffffff;
@@ -103,7 +103,7 @@ html, body {
 
 .cal-wind__menu-bar__button-month_selected {
     font-family: Oxygen;
-    width: 90px;
+    width: 100px;
     display: flex;
     justify-content: center;
     background-color: #ffffff;
