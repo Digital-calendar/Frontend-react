@@ -27,6 +27,7 @@ class Registration extends Component {
         try {
             const resp = await fetch("/api/users/sign_up", {
                 method: "POST",
+                dataType: 'json',
                 body: JSON.stringify(this.state.data),
                 headers: {
                     "Content-Type": "application/json"
@@ -43,7 +44,6 @@ class Registration extends Component {
             }
 
             if (resp.status === 201) {
-                console.log(await resp.json()); //дебаг
                 alert("Регистрация прошла успешно");
                 this.setState({isSuccess: true});
             } else {
