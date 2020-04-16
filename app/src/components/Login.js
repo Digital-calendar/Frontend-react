@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import '.././css/login.css';
 import {userSignIn} from "../actions/signIn";
+ import {Redirect} from 'react-router-dom';
+import {userModel} from "../models/UserModel";
+import {observer} from "mobx-react";
+import {toJS} from "mobx";
 
+@observer
 class Login extends Component {
+
 
     state = {
         emailText: '',
         passText: '',
+        user: {}
     };
 
     onLoginInput = event => {
@@ -27,23 +34,28 @@ class Login extends Component {
         const currentEmail = this.state.emailText;
         const currentPassword = this.state.passText;
 
-        this.setState({
-            emailText: '',
-            passText: '',
-        });
 
         userSignIn({
             email: currentEmail,
             pass: currentPassword
         });
+
+        this.setState({
+            emailText: '',
+            passText: '',
+            user: userModel.user
+        });
     };
 
     render() {
+        // console.log(toJS(userModel.user));
 
-        console.log("login: ", this.state.emailText);
-        console.log("pass: ", this.state.passText);
+        if (userModel.user !== null) {
+            return <Redirect to='/calendar/month' />;
+        }
 
         return (
+
             <div className="window">
                 <div className="window__RectTop"/>
                 <div className="window__mainBg">
@@ -52,7 +64,7 @@ class Login extends Component {
                         <div className="window__mainWindow__formGroup">
                             <form
                                 method="post"
-                                action="/api/users/sign_in"
+                                action="http://localhost:3000/calendar/month"
                                 onSubmit={this.onSubmit}
                             >
                                 <input
@@ -61,7 +73,8 @@ class Login extends Component {
                                     autoFocus
                                     placeholder="login"
                                     name="login"
-                                    onInput={this.onLoginInput}
+                                    value={this.state.emailText}
+                                    onChange={this.onLoginInput}
                                     required
                                 />
                                 <input
@@ -69,7 +82,8 @@ class Login extends Component {
                                     type="password"
                                     placeholder="password"
                                     name="password"
-                                    onInput={this.onPassInput}
+                                    value={this.state.passText}
+                                    onChange={this.onPassInput}
                                     required
                                 />
                                 <input
@@ -78,6 +92,7 @@ class Login extends Component {
                                     value="sign in"
                                     name="signIn"
                                 />
+                                {/*<div>{userModel.user.first_name}</div>*/}
                             </form>
                         </div>
                     </div>

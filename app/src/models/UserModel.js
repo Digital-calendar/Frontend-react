@@ -1,20 +1,35 @@
-import { observable } from 'mobx'
+import { observable, decorate, action } from 'mobx'
 
-export interface UserInterface {
-    id: number,
-    email: string,
-    pass: string,
-    events: []
-}
 
-export class UserModel {
+export const userModel = observable({
 
-    @observable
-    user: UserInterface = null;
+    user: null,
 
-    @observable
-    isPresent: boolean = false;
+    isPresent: false,
 
-}
 
-export const userModel = new UserModel();
+    // signIn = (userAuthData) => {
+    //
+    //     fetch('/api/users/sign_in', {
+    //         method: "POST",
+    //         body: JSON.stringify(userAuthData),
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     }).then(response => {
+    //         return response.json();
+    //     }).then(data => {
+    //         userModel.user = data;
+    //         // console.log(userModel.user);
+    //         // console.log(data);
+    //     })
+    // }
+});
+
+// export const userModel = new UserModel();
+//
+//
+// decorate(UserModel, {
+//     user: observable,
+//     isPresent: observable,
+// });
