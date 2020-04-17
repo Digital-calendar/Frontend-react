@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/registration.css';
 import { Redirect } from 'react-router';
+import md5 from 'md5';
 
 class Registration extends Component {
 
@@ -8,43 +9,58 @@ class Registration extends Component {
         super(props);
         this.state = {
             data: {
+                first_name: "",
+                last_name: "",
                 email: "",
                 pass: ""
             },
-            isSuccess: false,
-            isError: false
+            isSuccess: false
+            // isPassCorrect: true
         }
     }
 
-    submitForm = e => {
+    
+
+     submitForm = async e => {
         e.preventDefault();
-
-        fetch("/api/users/sign_up", {
-            method: "POST",
-            body: JSON.stringify(this.state.data),
-            headers: {
-                "Content-Type": "application/json"
+        this.state.data.pass = md5(this.state.data.pass);
+        try {
+            const resp = await fetch("/api/users/sign_up", {
+                method: "POST",
+                dataType: 'json',
+                body: JSON.stringify(this.state.data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            
+            if (!resp.ok) {
+                console.log(resp); //дебаг
+                throw new Error("Неизвестная ошибка сети");
             }
-        })
-        .then(r => {
+            
+            if (resp.status === 205) {
+                throw new Error("Пользователь с таким email уже существует");
+            }
 
-            return r.json();
-        })
-        .then(data => {
-            console.log(data);
-            // !data.hasOwnProperty("error")
-            //     ? this.setState({ message: data.success })
-            //     : this.setState({ message: data.error, isError: true });
-            alert("Регситрация прошла успешно");
-            this.setState({isSuccess: true});
-        });
+            if (resp.status === 201) {
+                alert("Регистрация прошла успешно");
+                this.setState({isSuccess: true});
+            } else {
+                throw new Error("Сервер вернул ошибку: " + resp.status); //дебаг
+            }
+
+        } catch (e) {
+            alert(e);
+        }
 
     };
 
-    handleSubmit = e =>
+    handleSubmit = e => 
         this.setState({
            data : {...this.state.data, [e.target.name]: e.target.value}
         });
+    
 
     checkPass = e => {
         if (this.state.data.pass === e.target.value) {
@@ -76,14 +92,16 @@ class Registration extends Component {
                                     type="text"
                                     autoFocus
                                     placeholder="first name"
-                                    name="firstName"
+                                    name="first_name"
+                                    onChange={this.handleSubmit}
                                     required
                                 />
                                 <input
                                     className="lastName"
                                     type="text"
                                     placeholder="last name"
-                                    name="lastName"
+                                    name="last_name"
+                                    onChange={this.handleSubmit}
                                     required
                                 />
                                 <input
@@ -91,7 +109,6 @@ class Registration extends Component {
                                     type="email"
                                     placeholder="email"
                                     name="email"
-                                    value={this.state.data.email}
                                     onChange={this.handleSubmit}
                                     required
                                 />
@@ -100,7 +117,6 @@ class Registration extends Component {
                                     type="password"
                                     placeholder="password"
                                     name="pass"
-                                    value={this.state.data.pass}
                                     onChange={this.handleSubmit}
                                     required
                                 />
