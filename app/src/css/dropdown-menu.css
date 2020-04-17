@@ -1,0 +1,108 @@
+.dropdown {
+    position: relative;
+    background-color: #F2F2F2;
+    justify-content: flex-end;
+    width: 130px;
+    display: flex;
+    padding-right: 5px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top:37px;
+    right:0px;
+    width: 260px;
+    background-color: #F2F2F2;
+    position: absolute;
+
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+li a {
+    color: #000;
+    text-decoration: none;
+}
+li {
+    /*padding: 8px 16px;*/
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 24px;
+}
+li:last-child {
+    border-bottom: none;
+}
+li:hover {
+    background-color: #e5e5e5;
+    color: white;
+}
+.button{
+    width:200px;
+    height:0px;
+    background-color: #F2F2F2;
+    border-radius:5px;
+    font-weight:bold;
+    color:white;
+}
+
+.cal-wind__auth-bar__employee {
+    position: relative;
+    font-family: Oxygen;
+    background-color: inherit;
+    border-style: none;
+    font-size: 20px;
+    height: 37px;
+}
+
+.cal-wind__auth-bar__employee-info-btn {
+    position: relative;
+    background-color: #F2F2F2;
+    border-style: none;
+    font-family: Oxygen, serif;
+    align-content: center;
+    font-size: 18px;
+    height: 24px;
+    left: 0;
+    right: 0;
+    top: 6px;
+}
+
+.cal-wind__auth-bar__employee-name {
+    padding-top: 20px;
+    font-size: 24px;
+    line-height: 25px;
+    font-style: normal;
+    text-transform: capitalize;
+    align-items: center;
+    text-align: center;
+}
+
+.cal-wind__auth-bar__employee-position {
+    font-size: 18px;
+    font-style: normal;
+    color: #4F4F4F;
+    text-transform: lowercase;
+    align-items: center;
+    line-height: 23px;
+    text-align: center;
+}
+
+.cal-wind__auth-bar__employee-edit {
+    font-size: 18px;
+    font-style: normal;
+    text-transform: lowercase;
+    align-items: center;
+    line-height: 23px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.cal-wind__auth-bar__employee-sing_out {
+    font-size: 18px;
+    color: #4F4F4F;
+    align-items: center;
+    line-height: 23px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
