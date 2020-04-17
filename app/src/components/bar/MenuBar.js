@@ -11,7 +11,7 @@ const imageStyle = {
 };
 
 const filterOptions = [
-    { value: 'own', label: 'Owm' },
+    { value: 'own', label: 'Own' },
     { value: 'internal', label: 'Internal' },
     { value: 'external', label: 'External' },
     { value: 'Correspondence', label: 'Correspondence' },

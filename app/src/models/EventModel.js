@@ -1,11 +1,29 @@
-import { observable, decorate, action } from 'mobx'
+import { observable, computed } from 'mobx'
 
 
-export const userModel = observable({
+export class EventModel{
+    @observable
+    events = [];
 
-    user: null,
+    @observable
+    filters = [];
 
-    isPresent: false,
+    @observable
+    isPresent;
 
+    @computed
+    get filteredEvents() {
+        return this.events
+            .filter(event => {
+                let isFilteredEvent = false;
+                this.filters.forEach(filter => {
+                    isFilteredEvent = filter === event.eventType;
+                });
+                return isFilteredEvent;
+            });
+    };
 
-});
+}
+
+export const eventModel = new eventModel();
+
