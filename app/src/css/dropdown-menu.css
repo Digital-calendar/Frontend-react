@@ -2,7 +2,7 @@
     position: relative;
     background-color: #F2F2F2;
     justify-content: flex-end;
-    width: 130px;
+    width: 15%;
     display: flex;
     padding-right: 5px;
 }
@@ -50,6 +50,7 @@ li:hover {
     font-family: Oxygen;
     background-color: inherit;
     border-style: none;
+    padding-right: 10px;
     font-size: 20px;
     height: 37px;
 }

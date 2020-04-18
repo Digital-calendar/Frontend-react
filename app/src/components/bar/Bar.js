@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserBar from './UserBar';
 import MenuBar from './MenuBar';
+import Calendar from "../Calendar";
 
 class Bar extends Component {
     render() {
@@ -8,6 +9,7 @@ class Bar extends Component {
           <div>
               <UserBar />
               <MenuBar />
+              <Calendar/>
           </div>
         );
     }
