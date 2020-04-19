@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import '.././css/login.css';
 import {userSignIn} from "../actions/signIn";
- import {Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
-import {toJS} from "mobx";
 
 @observer
 class Login extends Component {
@@ -48,8 +47,6 @@ class Login extends Component {
     };
 
     render() {
-        // console.log(toJS(userModel.user));
-
         if (userModel.user !== null) {
             return <Redirect to='/calendar/month' />;
         }
@@ -92,7 +89,6 @@ class Login extends Component {
                                     value="sign in"
                                     name="signIn"
                                 />
-                                {/*<div>{userModel.user.first_name}</div>*/}
                             </form>
                         </div>
                     </div>

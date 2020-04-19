@@ -3,6 +3,8 @@ import monthImage from '../../css/images/month.png';
 import weekImage from '../../css/images/week.svg';
 import dayImage from '../../css/images/day.svg';
 import CustomSelect from '../CustomSelect';
+import {observer} from "mobx-react";
+import {monthModel} from "../../models/MonthModel";
 
 const imageStyle = {
     width       : '12px',
@@ -28,20 +30,26 @@ const months = [
     "July", "August", "September", "October", "November", "December"
 ];
 
-
+@observer
 class MenuBar extends Component {
 
     constructor(props) {
         super(props);
 
+        let array = [];
+        for (let i = monthModel.currentMonth - 1; i <= monthModel.currentMonth + 2; ++i) {
+            array.push(i);
+        }
+
         this.state = {
-            currentDisplayMonth: [2, 3, 4, 5],
-            currentYear: 2020
+            currentDisplayMonth: array,
+            currentYear: monthModel.currentYear
         }
     }
 
     onMonthButtonClicked = event => {
         const shiftMonth = parseInt(event.target.getAttribute("id")) - 1;
+        // console.log(shiftMonth);
         const newDisplayMonth = this.state.currentDisplayMonth.map(number => {
             const newNumber = number + shiftMonth;
             if (newNumber > 11) {
@@ -52,6 +60,8 @@ class MenuBar extends Component {
             }
             return newNumber;
         });
+        this.shiftMonthInModel(shiftMonth);
+        monthModel.monthToDisplay = newDisplayMonth[1];
         this.setState( {currentDisplayMonth: newDisplayMonth});
         if (this.state.currentDisplayMonth[1] === 11 && shiftMonth > 0) {
             this.setState({currentYear: this.state.currentYear + 1});
@@ -60,6 +70,21 @@ class MenuBar extends Component {
             this.setState({currentYear: this.state.currentYear - 1});
         }
     };
+
+    shiftMonthInModel = (shiftMonth) => {
+        switch (shiftMonth) {
+            case 1:
+                monthModel.incrementRelative();
+                break;
+            case 2:
+                monthModel.doubleIncrementRelative();
+                break;
+            case -1:
+                monthModel.decrementRelative();
+                break;
+            default:
+        }
+    }
 
     render() {
         return (
