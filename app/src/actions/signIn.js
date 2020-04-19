@@ -11,5 +11,7 @@ export async function userSignIn(userAuthData) {
             "Content-Type": "application/json"
         }
     });
-    response.json().then(data => userModel.user = data);
+
+    userModel.user = await response.json();
+
 }

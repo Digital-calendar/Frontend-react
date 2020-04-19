@@ -70,7 +70,6 @@ class Login extends Component {
                                     autoFocus
                                     placeholder="login"
                                     name="login"
-                                    value={this.state.emailText}
                                     onChange={this.onLoginInput}
                                     required
                                 />
@@ -79,7 +78,6 @@ class Login extends Component {
                                     type="password"
                                     placeholder="password"
                                     name="password"
-                                    value={this.state.passText}
                                     onChange={this.onPassInput}
                                     required
                                 />
