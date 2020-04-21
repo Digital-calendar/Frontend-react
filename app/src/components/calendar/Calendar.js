@@ -3,6 +3,7 @@ import "../../css/calendar.css";
 import {monthModel} from "../../models/MonthModel";
 import {observer} from "mobx-react";
 import Day from "./Day";
+import DayDropdownMenu from "./DayDropdownMenu";
 
 @observer
 class Calendar extends Component {
@@ -67,7 +68,7 @@ class Calendar extends Component {
                                             if (week > monthModel.monthWeekAmount) {
                                                 return <Day key={day} value={value}/>;
                                             } else {
-                                                return <Day isCurrent={false} key={day} number={day} value={value}/>;
+                                                return <DayDropdownMenu isCurrent={false} key={day} number={day} value={value}/>;
                                             }
                                         }
 
