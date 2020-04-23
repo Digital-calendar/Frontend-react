@@ -68,7 +68,7 @@ class Calendar extends Component {
                                             if (week > monthModel.monthWeekAmount) {
                                                 return <Day key={day} value={value}/>;
                                             } else {
-                                                return <DayDropdownMenu isCurrent={false} key={day} number={day} value={value}/>;
+                                                return <DayDropdownMenu isNormal={(week > 3)} isCurrent={false} key={day} number={day} value={value}/>;
                                             }
                                         }
 

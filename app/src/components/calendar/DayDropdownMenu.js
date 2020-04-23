@@ -4,7 +4,10 @@ import './day-dropdown-menu.css';
 import {userModel} from "../../models/UserModel";
 import {observer} from 'mobx-react';
 import {monthModel} from "../../models/MonthModel";
-import DropdownMenu from "../DropdownMenu";
+import privateImage from '../../css/images/filters/private-filter.svg';
+import internalImage from '../../css/images/filters/internal-filter.svg';
+import externalImage from '../../css/images/filters/external-filter.svg';
+import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
 
 
 @observer
@@ -83,14 +86,220 @@ class DayDropdownMenu extends React.Component {
                     <div className="days-table__day-btn__busy-circle"></div>
                     {/*<div className="days-table__day-submenu"></div>*/}
                 </button>
-                <div id={this.id} className="day-dropdown">
+                <div id={this.id} className="day-dropdown" style={{ marginTop: this.props.isNormal ? "-27%" : "-4%" }}>
                 { this.state.displayMenu ?
+                        <div className="wrapper2">
                         <ul className="day-list">
-                            <li className="day-list-item">Vlad<br/>Zybkin</li>
-                            <li className="day-list-item" onClick={this.onSignOut}>backend developer</li>
-                            <li className="day-list-item"><Link to="/user/edit">edit</Link></li>
-                            <li className="day-list-item" onClick={this.onSignOut}>sign out</li>
+                            <li className="day-list-item">
+                                <div
+                                    className="day-list-time"
+                                >
+                                    18:30
+                                </div>
+                                <div className="day-list-content">
+                                    <div
+                                        className="day-list-text"
+                                    >
+                                        Обсуждение новых проектов
+                                        {/*The birthday of hh.ru company in big hall*/}
+                                    </div>
+                                    <div className="day-list-filters">
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={correspondenceImage}
+                                            alt="correspondence-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={externalImage}
+                                            alt="external-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={internalImage}
+                                            alt="internal-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={privateImage}
+                                            alt="private-filter" />
+                                    </div>
+                                </div>
+                            </li>
+                             <li className="day-list-item">
+                                <div
+                                    className="day-list-time"
+                                >
+                                    18:30
+                                </div>
+                                <div className="day-list-content">
+                                    <div
+                                        className="day-list-text"
+                                    >
+                                        Обсуждение новых проектов
+                                        {/*The birthday of hh.ru company in big hall*/}
+                                    </div>
+                                    <div className="day-list-filters">
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={correspondenceImage}
+                                            alt="correspondence-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={externalImage}
+                                            alt="external-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={internalImage}
+                                            alt="internal-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={privateImage}
+                                            alt="private-filter" />
+                                    </div>
+                                </div>
+                            </li>
+                             <li className="day-list-item">
+                                <div
+                                    className="day-list-time"
+                                >
+                                    18:30
+                                </div>
+                                <div className="day-list-content">
+                                    <div
+                                        className="day-list-text"
+                                    >
+                                        Обсуждение новых проектов
+                                        {/*The birthday of hh.ru company in big hall*/}
+                                    </div>
+                                    <div className="day-list-filters">
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={correspondenceImage}
+                                            alt="correspondence-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={externalImage}
+                                            alt="external-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={internalImage}
+                                            alt="internal-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={privateImage}
+                                            alt="private-filter" />
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="day-list-item">
+                                <div
+                                    className="day-list-time"
+                                >
+                                    18:30
+                                </div>
+                                <div className="day-list-content">
+                                    <div
+                                        className="day-list-text"
+                                    >
+                                        Обсуждение новых проектов
+                                        {/*The birthday of hh.ru company in big hall*/}
+                                    </div>
+                                    <div className="day-list-filters">
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={correspondenceImage}
+                                            alt="correspondence-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={externalImage}
+                                            alt="external-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={internalImage}
+                                            alt="internal-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={privateImage}
+                                            alt="private-filter" />
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="day-list-item">
+                                <div
+                                    className="day-list-time"
+                                >
+                                    18:30
+                                </div>
+                                <div className="day-list-content">
+                                    <div
+                                        className="day-list-text"
+                                    >
+                                        Обсуждение новых проектов
+                                        {/*The birthday of hh.ru company in big hall*/}
+                                    </div>
+                                    <div className="day-list-filters">
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={correspondenceImage}
+                                            alt="correspondence-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={externalImage}
+                                            alt="external-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={internalImage}
+                                            alt="internal-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={privateImage}
+                                            alt="private-filter" />
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="day-list-item">
+                                <div
+                                    className="day-list-time"
+                                >
+                                    18:30
+                                </div>
+                                <div className="day-list-content">
+                                    <div
+                                        className="day-list-text"
+                                    >
+                                        Обсуждение новых проектов
+                                        {/*The birthday of hh.ru company in big hall*/}
+                                    </div>
+                                    <div className="day-list-filters">
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={correspondenceImage}
+                                            alt="correspondence-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={externalImage}
+                                            alt="external-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={internalImage}
+                                            alt="internal-filter" />
+                                        <img
+                                            className="day-list-item-filter"
+                                            src={privateImage}
+                                            alt="private-filter" />
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="day-list-add-button">
+                                <div
+                                    className="day-list-add-new-button"
+                                >
+                                    add new
+                                </div>
+                            </li>
                         </ul>
+                            <div className="day-list-more-details-button">
+                                more details...
+                            </div>
+                        </div>
                     :
                         <></>
                 }
