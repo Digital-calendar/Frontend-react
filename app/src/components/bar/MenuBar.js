@@ -124,11 +124,13 @@ class MenuBar extends Component {
                     name={'filterType'}
                     isMulti={true}
                     placeholder={'Filter'}
+                    isViewSelect={false}
                 />
                 <CustomSelect
                     options={viewOptions}
                     isMulti={false}
                     defaultValue={true}
+                    isViewSelect={true}
                 />
             </div>
         );

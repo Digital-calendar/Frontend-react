@@ -25,5 +25,5 @@ export class EventModel{
 
 }
 
-export const eventModel = new eventModel();
+export const eventModel = new EventModel();
 
