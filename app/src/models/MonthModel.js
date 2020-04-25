@@ -1,8 +1,11 @@
 import { observable, computed, action } from 'mobx'
 import moment from "moment";
-
+import Week from "../components/calendar_week/Week"
 
 export class MonthModel{
+
+    @observable
+    arrayWeek = []
 
     @observable
     monthStartWeekDay = -1;

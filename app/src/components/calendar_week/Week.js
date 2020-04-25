@@ -9,49 +9,36 @@ import moment from "moment";
 class Week extends Component {
     constructor(props) {
         super(props);
-        monthModel.monthToDisplay = monthModel.currentMonth;
-        this.month = monthModel.currentMonth+1;
-        this.year = monthModel.currentYear;
-        this.lastWeek = 0;
-        this.state = {arrayWeek : this.getWeek(monthModel.currentDay, this.month, this.year)};
+        // monthModel.monthToDisplay = monthModel.currentMonth+1;
+        monthModel.arrayWeek = this.getNextWeek(new Date());
     }
 
-    getWeek = (current_day, month, year) => {
+    getNextWeek = (curr) => {
       let array = []
       for (let i = 1; i <= 7; i++) {
-        let curr = new Date(year.toString() + "-" + month.toString() + "-" + current_day.toString())
         let first = curr.getDate() - curr.getDay() + i 
+        console.log(first)
         let day = new Date(curr.setDate(first))
-        if (day.getMonth()+1 > this.month) {
-          this.month++;
-        }
-        if (day.getMonth()+1 < this.month) {
-          this.month--;
-        }
-        if (day.getMonth()+1 === 1) {
-          this.month = 1
-          this.year++
-        }
         array.push(day)
       }
+      
       return array
     }
 
-    // daysInMonth = (month, year) => {
-    //   return new Date(year, month, 0).getDate();
-    // }
+    handleRightClick = () => 
+      monthModel.arrayWeek = this.getNextWeek(monthModel.arrayWeek[monthModel.arrayWeek.length - 1]);
+    
 
-    handleRightClick = () => {
-      this.lastWeek = this.state.arrayWeek[1]
-      this.setState({arrayWeek : this.getWeek(this.state.arrayWeek[this.state.arrayWeek.length - 1].getDate(), this.month, monthModel.currentYear)})
-    }
-
-    handleLeftClick = () => {
-      this.setState({arrayWeek : this.getWeek(this.lastWeek.getDate(), this.month, monthModel.currentYear)})
-    }
+      handleLeftClick = () => {
+        let d = monthModel.arrayWeek[0]
+        monthModel.arrayWeek = this.getNextWeek(new Date(d.setDate(d.getDate()-7)));
+      }
+      
 
     render() {
-      
+      // if (monthModel.arrayWeek[0].getMonth()+1 < monthModel.monthToDisplay) {
+      //   monthModel.arrayWeek = this.getNextWeek(new Date(monthModel.currentYear + "-" + monthModel.monthToDisplay + "-1"))
+      // }
 
         return (
           <div class="main">
@@ -63,7 +50,7 @@ class Week extends Component {
       </div>
       
       {
-        this.state.arrayWeek.map((date, index) => {
+        monthModel.arrayWeek.map((date, index) => {
           return <div class="events-wind__weekdays-bar__wkd">
                   <p key={index} class="events-wind__weekdays-bar__wkd-text">{date.toString().slice(0, 10)}</p>
                 </div>
