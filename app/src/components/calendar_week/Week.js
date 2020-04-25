@@ -9,8 +9,13 @@ import moment from "moment";
 class Week extends Component {
     constructor(props) {
         super(props);
-        monthModel.monthToDisplay = monthModel.currentMonth;
-        monthModel.getNextWeek(new Date());
+        // monthModel.monthToDisplay = monthModel.currentMonth;
+        if (monthModel.currentMonth != monthModel.monthToDisplay) {
+          monthModel.getNextWeek(new Date(monthModel.currentYear + "-" + (monthModel.monthToDisplay+1).toString() + "-1"));
+        } else {
+          monthModel.getNextWeek(new Date());
+        }
+        
     }
 
     handleRightClick = () => {
@@ -26,7 +31,7 @@ class Week extends Component {
       handleLeftClick = () => {
         let d = monthModel.arrayWeek[0]
         monthModel.getNextWeek(new Date(d.setDate(d.getDate()-7)));
-        if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth() != monthModel.monthToDisplay) {
+        if (monthModel.arrayWeek[0].getMonth() != monthModel.monthToDisplay) {
           monthModel.shiftMonthArray(-1)
           monthModel.decrementRelative()  
           monthModel.monthToDisplay--
