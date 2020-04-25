@@ -34,9 +34,26 @@ export class MonthModel{
     @observable
     isCurrent = false;
 
+    @observable
+    monthArray = [];
+
     @action
     isCurrentDay(day) {
         this.isCurrent = ((this.currentMonth === this.monthToDisplay) && (day === this.currentDay));
+    }
+
+    @action
+    shiftMonthArray(shift) {
+        this.monthArray = this.monthArray.map(number => {
+            const newNumber = number + shift;
+            if (newNumber > 11) {
+                return newNumber - 12;
+            }
+            if (newNumber < 0) {
+                return 12 + newNumber;
+            }
+            return newNumber;
+        });
     }
 
     @action
@@ -97,6 +114,8 @@ export class MonthModel{
         }
     }
 
+
+    //use minus because moment library use subtract operator
     @action
     incrementRelative() {
         this.relativeToCurrentMonthShift--;

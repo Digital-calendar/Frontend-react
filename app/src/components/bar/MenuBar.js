@@ -36,13 +36,13 @@ class MenuBar extends Component {
     constructor(props) {
         super(props);
 
-        let array = [];
+        // let array = [];
         for (let i = monthModel.currentMonth - 1; i <= monthModel.currentMonth + 2; ++i) {
-            array.push(i);
+            monthModel.monthArray.push(i);
         }
 
         this.state = {
-            currentDisplayMonth: array,
+            // currentDisplayMonth: array,
             currentYear: monthModel.currentYear
         }
     }
@@ -50,23 +50,27 @@ class MenuBar extends Component {
     onMonthButtonClicked = event => {
         const shiftMonth = parseInt(event.target.getAttribute("id")) - 1;
         // console.log(shiftMonth);
-        const newDisplayMonth = this.state.currentDisplayMonth.map(number => {
-            const newNumber = number + shiftMonth;
-            if (newNumber > 11) {
-                return newNumber - 12;
-            }
-            if (newNumber < 0) {
-                return 12 + newNumber;
-            }
-            return newNumber;
-        });
+        // const newDisplayMonth = monthModel.monthArray.map(number => {
+        //     const newNumber = number + shiftMonth;
+        //     if (newNumber > 11) {
+        //         return newNumber - 12;
+        //     }
+        //     if (newNumber < 0) {
+        //         return 12 + newNumber;
+        //     }
+        //     return newNumber;
+        // });
+        monthModel.shiftMonthArray(shiftMonth);
         this.shiftMonthInModel(shiftMonth);
-        monthModel.monthToDisplay = newDisplayMonth[1];
-        this.setState( {currentDisplayMonth: newDisplayMonth});
-        if (this.state.currentDisplayMonth[1] === 11 && shiftMonth > 0) {
+        monthModel.monthToDisplay = monthModel.monthArray[1];
+        // this.setState( {currentDisplayMonth: newDisplayMonth});
+        // monthModel.monthArray = newDisplayMonth;
+        // if (this.state.currentDisplayMonth[1] === 11 && shiftMonth > 0) {
+        if (monthModel.monthArray[1] === 11 && shiftMonth > 0) {
             this.setState({currentYear: this.state.currentYear + 1});
         }
-        if (this.state.currentDisplayMonth[2] === 0 && shiftMonth < 0) {
+        // if (this.state.currentDisplayMonth[2] === 0 && shiftMonth < 0) {
+        if (monthModel.monthArray[2] === 0 && shiftMonth < 0) {
             this.setState({currentYear: this.state.currentYear - 1});
         }
     };
@@ -84,9 +88,11 @@ class MenuBar extends Component {
                 break;
             default:
         }
-    }
+    };
 
     render() {
+        console.log(monthModel.monthArray);
+
         return (
             <div className="cal-wind__menu-bar">
                 <div className="cal-wind__menu-bar__button-year">{this.state.currentYear}</div>
@@ -95,28 +101,32 @@ class MenuBar extends Component {
                     className="cal-wind__menu-bar__button-month"
                     onClick={this.onMonthButtonClicked}
                 >
-                    {months[this.state.currentDisplayMonth[0]]}
+                    {/*{months[this.state.currentDisplayMonth[0]]}*/}
+                    {months[monthModel.monthArray[0]]}
                 </button>
                 <button
                     id="1"
                     className="cal-wind__menu-bar__button-month_selected"
                     onClick={this.onMonthButtonClicked}
                 >
-                    {months[this.state.currentDisplayMonth[1]]}
+                    {/*{months[this.state.currentDisplayMonth[1]]}*/}
+                    {months[monthModel.monthArray[1]]}
                 </button>
                 <button
                     id="2"
                     className="cal-wind__menu-bar__button-month"
                     onClick={this.onMonthButtonClicked}
                 >
-                    {months[this.state.currentDisplayMonth[2]]}
+                    {/*{months[this.state.currentDisplayMonth[2]]}*/}
+                    {months[monthModel.monthArray[2]]}
                 </button>
                 <button
                     id="3"
                     className="cal-wind__menu-bar__button-month"
                     onClick={this.onMonthButtonClicked}
                 >
-                    {months[this.state.currentDisplayMonth[3]]}
+                    {/*{months[this.state.currentDisplayMonth[3]]}*/}
+                    {months[monthModel.monthArray[3]]}
                 </button>
                 <button className="cal-wind__up-bar__new-event-button">New Event</button>
                 <CustomSelect
