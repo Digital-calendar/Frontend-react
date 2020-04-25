@@ -41,6 +41,16 @@ export class MonthModel{
     monthArray = [];
 
     @action
+    getNextWeek = (curr) => {
+        this.arrayWeek = []
+        for (let i = 1; i <= 7; i++) {
+          let first = curr.getDate() - curr.getDay() + i 
+          let day = new Date(curr.setDate(first))
+          this.arrayWeek.push(day)
+        }
+      }
+
+    @action
     isCurrentDay(day) {
         this.isCurrent = ((this.currentMonth === this.monthToDisplay) && (day === this.currentDay));
     }
