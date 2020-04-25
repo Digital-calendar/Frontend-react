@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import './day-dropdown-menu.css';
 import {userModel} from "../../models/UserModel";
 import {observer} from 'mobx-react';

@@ -8,7 +8,9 @@ class CustomSelect extends React.Component {
             minWidth    : '120px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
-            zIndex      : "150"
+            zIndex      : "150",
+            position    : "relative",
+            width       : this.props.isNewEvent ? '100%' : '0%'
         }),
         placeholder: () => ({
             fontSize    : '18px',

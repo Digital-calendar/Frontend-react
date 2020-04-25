@@ -4,6 +4,7 @@ import {userSignIn} from "../actions/signIn";
 import {Redirect} from 'react-router-dom';
 import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
+import {monthModel} from "../models/MonthModel";
 
 @observer
 class Login extends Component {
@@ -50,7 +51,7 @@ class Login extends Component {
         if (userModel.user !== null) {
             return <Redirect to='/calendar/month' />;
         }
-
+        
         return (
 
             <div className="window">
