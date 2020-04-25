@@ -1,6 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
+import {observer} from "mobx-react";
+import { selectModel } from '../models/SelectModel';
 
+@observer
 class CustomSelect extends React.Component {
 
     customStyles = {
@@ -33,6 +36,10 @@ class CustomSelect extends React.Component {
 
     handleChange = selectedOption => {
         this.setState({ selectedOption });
+        if (this.props.isViewSelect) {
+            selectModel.currentView = selectedOption.value;
+        }
+        
     };
 
     render() {
