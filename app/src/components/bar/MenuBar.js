@@ -5,6 +5,9 @@ import dayImage from '../../css/images/day.svg';
 import CustomSelect from '../CustomSelect';
 import {observer} from "mobx-react";
 import {monthModel} from "../../models/MonthModel";
+import {userModel} from "../../models/UserModel";
+import {Redirect} from 'react-router-dom';
+
 
 const imageStyle = {
     width       : '12px',
@@ -41,7 +44,8 @@ class MenuBar extends Component {
         }
 
         this.state = {
-            currentYear: monthModel.currentYear
+            currentYear: monthModel.currentYear,
+            isRedirect: false
         }
     }
 
@@ -73,8 +77,18 @@ class MenuBar extends Component {
         }
     };
 
+    onNewEventClick = () => {
+        this.setState({
+            isRedirect: true
+        });
+    };
+
     render() {
         console.log(monthModel.monthArray);
+        if (this.state.isRedirect) {
+            return <Redirect to='/newEvent'/>
+        }
+
 
         return (
             <div className="cal-wind__menu-bar">
@@ -107,7 +121,7 @@ class MenuBar extends Component {
                 >
                     {months[monthModel.monthArray[3]]}
                 </button>
-                <button className="cal-wind__up-bar__new-event-button">New Event</button>
+                <button className="cal-wind__up-bar__new-event-button" onClick={this.onNewEventClick}>New Event</button>
                 <CustomSelect
                     options={filterOptions}
                     name={'filterType'}

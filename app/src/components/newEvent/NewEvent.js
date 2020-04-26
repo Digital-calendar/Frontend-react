@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
-import xImage from '../css/images/newEvent/x.svg';
-import lBImage from '../css/images/newEvent/light_bookmark.svg';
-import lCImage from '../css/images/newEvent/light_clock.svg';
-import bSLImage from '../css/images/newEvent/bytesize_location.svg';
-import pAOImage from '../css/images/newEvent/person-add-outline.svg';
-import rBOImage from '../css/images/newEvent/radio-button-on.svg';
-import aUOImage from '../css/images/newEvent/arrow-undo-outline.svg';
-import pPOImage from '../css/images/newEvent/paper-plane-outline.svg';
-import cEOImage from '../css/images/newEvent/chatbubble-ellipses-outline.svg';
-import cSImage from '../css/images/newEvent/content-save.svg';
-import tOImage from '../css/images/newEvent/trash-outline.svg';
-import '../css/newEvent.css';
-import CustomSelect from "./CustomSelect";
-import {userModel} from "../models/UserModel";
+import xImage from '../../css/images/newEvent/x.svg';
+import lBImage from '../../css/images/newEvent/light_bookmark.svg';
+import lCImage from '../../css/images/newEvent/light_clock.svg';
+import bSLImage from '../../css/images/newEvent/bytesize_location.svg';
+import pAOImage from '../../css/images/newEvent/person-add-outline.svg';
+import rBOImage from '../../css/images/newEvent/radio-button-on.svg';
+import aUOImage from '../../css/images/newEvent/arrow-undo-outline.svg';
+import pPOImage from '../../css/images/newEvent/paper-plane-outline.svg';
+import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg';
+import cSImage from '../../css/images/newEvent/content-save.svg';
+import tOImage from '../../css/images/newEvent/trash-outline.svg';
+import '../../css/newEvent.css';
+import {Redirect} from 'react-router-dom';
+import CustomSelect from "../CustomSelect";
+import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
 
 
@@ -24,6 +25,7 @@ class NewEvent extends Component {
         super(props);
 
         this.state = {
+            isRedirect: false,
             title: '',
             date: '',
             time: '',
@@ -50,12 +52,11 @@ class NewEvent extends Component {
         console.log(1);
     };
 
-    // const filterOptions = [
-    //     { value: 'own', label: 'Own' },
-    //     { value: 'internal', label: 'Internal' },
-    //     { value: 'external', label: 'External' },
-    //     { value: 'Correspondence', label: 'Correspondence' },
-    // ];
+    onCancelClick = () => {
+        this.setState({
+            isRedirect: true
+        });
+    };
 
     onTitleInput = event => {
         this.setState({
@@ -117,6 +118,10 @@ class NewEvent extends Component {
 
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
+        }
+
+        if (this.state.isRedirect) {
+            return <Redirect to='/calendar/month'/>
         }
 
         console.log('title: ', this.state.title);
@@ -370,13 +375,12 @@ class NewEvent extends Component {
                                         Save
                                     </div>
                                 </button>
-                                <a
-                                    href="#close"
+                                <button
                                     className="button-style"
                                     type="submit"
                                     id="cancel"
                                     tabIndex="12"
-                                    // onClick="this.blur();"
+                                    onClick={this.onCancelClick}
                                 >
                                     <img
                                         src={tOImage}
@@ -385,7 +389,7 @@ class NewEvent extends Component {
                                     <div className="text-style">
                                         Cancel
                                     </div>
-                                </a>
+                                </button>
                             </div>
 
                         </div>
