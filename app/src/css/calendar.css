@@ -133,9 +133,7 @@ html, body {
 }
 
 .wrapper {
-    position: relative;
-    z-index: 1;
-    background-color: #FFFFFF;
+    background: #FFFFFF;
 }
 
 .days-table__week {
