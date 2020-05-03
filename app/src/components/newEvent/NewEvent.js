@@ -15,6 +15,7 @@ import {Redirect} from 'react-router-dom';
 import CustomSelect from "../CustomSelect";
 import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
+import {createEvent} from "../../actions/createEvent";
 
 
 
@@ -32,12 +33,25 @@ class NewEvent extends Component {
             location: '',
             isPrivate: true,
             eventType: 'INTERNAL',
-            contact: '',
+            contactInfo: '',
             address: '',
             description: '',
             options: [],
         };
     }
+
+    onSaveClick = () => {
+        createEvent({
+            title: this.state.title,
+            timestamp: this.state.date + ' ' + this.state.time,
+            location: this.state.location,
+            eventType: this.state.eventType,
+            contactInfo: this.state.contactInfo,
+            description: this.state.description,
+            participants: [],
+            privateEvent: this.state.isPrivate
+        });
+    };
 
     onOptionChange = event => {
         const newOptions = userModel.users.map(item => {
@@ -96,7 +110,7 @@ class NewEvent extends Component {
 
     onContactInput = event => {
         this.setState({
-            contact: event.target.value
+            contactInfo: event.target.value
         })
     };
 
@@ -111,6 +125,7 @@ class NewEvent extends Component {
             description: event.target.value
         })
     };
+
 
     render() {
         // console.log(toJS(userModel.users));
@@ -130,9 +145,10 @@ class NewEvent extends Component {
         console.log('location: ', this.state.location);
         console.log('isPrivate: ', this.state.isPrivate);
         console.log('event type: ', this.state.eventType);
-        console.log('contact: ', this.state.contact);
+        console.log('contact: ', this.state.contactInfo);
         console.log('address: ', this.state.address);
         console.log('description: ', this.state.description);
+        console.log(this.state.options)
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
@@ -365,7 +381,7 @@ class NewEvent extends Component {
                                     id="save"
                                     // formTarget="_self"
                                     tabIndex="11"
-                                    // onClick="this.blur();"
+                                    onClick={this.onSaveClick}
                                 >
                                     <img
                                         src={cSImage}

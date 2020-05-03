@@ -57,7 +57,7 @@ class MenuBar extends Component {
         if (monthModel.monthArray[1] === 11 && shiftMonth > 0) {
             this.setState({currentYear: this.state.currentYear + 1});
         }
-        if (monthModel.monthArray[2] === 0 && shiftMonth < 0) {
+        if (monthModel.monthArray[3] === 0 && shiftMonth < 0) {
             this.setState({currentYear: this.state.currentYear - 1});
         }
     };
