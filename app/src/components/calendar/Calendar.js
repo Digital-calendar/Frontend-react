@@ -32,16 +32,6 @@ class Calendar extends Component {
     render() {
 
         this.formMonthArray();
-        console.log('1: ',monthModel.monthToDisplay);
-        console.log('2: ',monthModel.currentMonth);
-
-        if (monthModel.monthWeekAmount > 5) {
-            console.log(monthModel.monthStartWeekDay);
-            console.log(monthModel.monthEndWeekDay);
-            console.log(monthModel.monthDaysAmount);
-            console.log(monthModel.monthWeekAmount);
-        }
-
 
         return (
             <div className="wrapper" style={{height: this.height}}>
