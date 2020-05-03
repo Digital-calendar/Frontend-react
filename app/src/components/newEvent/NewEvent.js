@@ -51,6 +51,7 @@ class NewEvent extends Component {
             participants: [],
             privateEvent: this.state.isPrivate
         });
+        this.onCancelClick();
     };
 
     onOptionChange = event => {
