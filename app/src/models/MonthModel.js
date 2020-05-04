@@ -29,6 +29,9 @@ export class MonthModel{
     monthToDisplay = -1;
 
     @observable
+    yearToDisplay = -1;
+
+    @observable
     relativeToCurrentMonthShift = 0;
 
     @observable
@@ -39,7 +42,9 @@ export class MonthModel{
 
     @action
     isCurrentDay(day) {
-        this.isCurrent = ((this.currentMonth === this.monthToDisplay) && (day === this.currentDay));
+        this.isCurrent = ((this.currentMonth === this.monthToDisplay)
+                            && (day === this.currentDay)
+                            && (this.yearToDisplay === this.currentYear));
     }
 
     @action

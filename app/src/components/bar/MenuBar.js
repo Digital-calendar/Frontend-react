@@ -41,9 +41,9 @@ class MenuBar extends Component {
         for (let i = monthModel.currentMonth - 1; i <= monthModel.currentMonth + 2; ++i) {
             monthModel.monthArray.push(i);
         }
+        monthModel.yearToDisplay = monthModel.currentYear;
 
         this.state = {
-            currentYear: monthModel.currentYear,
             isRedirect: false
         }
     }
@@ -54,10 +54,10 @@ class MenuBar extends Component {
         this.shiftMonthInModel(shiftMonth);
         monthModel.monthToDisplay = monthModel.monthArray[1];
         if (monthModel.monthArray[1] === 11 && shiftMonth > 0) {
-            this.setState({currentYear: this.state.currentYear + 1});
+            monthModel.yearToDisplay += 1;
         }
         if (monthModel.monthArray[3] === 0 && shiftMonth < 0) {
-            this.setState({currentYear: this.state.currentYear - 1});
+            monthModel.yearToDisplay -= 1;
         }
     };
 
@@ -91,7 +91,7 @@ class MenuBar extends Component {
 
         return (
             <div className="cal-wind__menu-bar">
-                <div className="cal-wind__menu-bar__button-year">{this.state.currentYear}</div>
+                <div className="cal-wind__menu-bar__button-year">{monthModel.yearToDisplay}</div>
                 <button
                     id="0"
                     className="cal-wind__menu-bar__button-month"

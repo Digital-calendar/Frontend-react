@@ -4,6 +4,7 @@ import {monthModel} from "../../models/MonthModel";
 import {observer} from "mobx-react";
 import Day from "./Day";
 import DayDropdownMenu from "./DayDropdownMenu";
+import {loadEvents} from "../../actions/loadEvents";
 
 @observer
 class Calendar extends Component {
@@ -12,6 +13,7 @@ class Calendar extends Component {
     constructor(props) {
         super(props);
 
+        loadEvents();
         monthModel.monthToDisplay = monthModel.currentMonth;
         this.arrayWeek = [1, 2, 3, 4, 5, 6, 7];
         this.arrayMonth = [];

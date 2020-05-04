@@ -17,9 +17,11 @@ class DayDropdownMenu extends React.Component {
     constructor(props) {
         super(props);
 
+        monthModel.isCurrentDay(this.props.number);
         this.state = {
             displayMenu: false,
-            isRedirect: false
+            isRedirect: false,
+            isCurrentDay: monthModel.isCurrent,
         };
 
         this.id = this.props.number + 10;
@@ -71,6 +73,8 @@ class DayDropdownMenu extends React.Component {
             return <Redirect to="/login"/>;
         }
 
+        console.log(this.state.isCurrent, this.props.number)
+
         return (
             <div  className={(this.props.value > 0 && this.props.value < 6) ? "days-table__day" : "days-table__day-off"} onClick={this.showDropdownMenu} >
                 {/*<div className="cal-wind__auth-bar__employee" onClick={this.showDropdownMenu}>7</div>*/}
@@ -79,7 +83,7 @@ class DayDropdownMenu extends React.Component {
                     // onClick={this.showDropdownMenu}
                 >
                     <div className="days-table__day-btn__text-container">
-                        <p className={(monthModel.currentMonth === monthModel.monthToDisplay) && (this.props.number === this.currentDay) ? "current" : "text"}>
+                        <p className={this.state.isCurrentDay ? "current" : "text"}>
                             {this.props.number}
                         </p>
                     </div>
