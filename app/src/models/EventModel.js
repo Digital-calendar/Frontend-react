@@ -1,4 +1,4 @@
-import { observable, computed } from 'mobx'
+import {observable, action} from 'mobx'
 
 
 export class EventModel{
@@ -6,24 +6,39 @@ export class EventModel{
     events = [];
 
     @observable
-    filters = [];
+    filters = ['OWN'];
 
     @observable
-    isPresent;
+    isPresent = false;
 
-    @computed
-    get filteredEvents() {
-        return this.events
+    @observable
+    filteredEvents = [];
+
+    @action
+    filter() {
+        this.filteredEvents = this.events
             .filter(event => {
                 let isFilteredEvent = false;
                 this.filters.forEach(filter => {
-                    isFilteredEvent = filter === event.eventType;
+                    if (filter === 'OWN') {
+                        isFilteredEvent = event.privateEvent || isFilteredEvent;
+                    } else {
+                        isFilteredEvent = filter === event.eventType || isFilteredEvent;
+                    }
                 });
                 return isFilteredEvent;
             });
     };
 
+    @action
+    periodFiltered(start, end) {
+        this.filteredEvents = this.filteredEvents
+            .filter(event => {
+                return event.timestamp > start && event.timestamp < end;
+            })
+    }
+
 }
 
-export const eventModel = new eventModel();
+export const eventModel = new EventModel();
 
