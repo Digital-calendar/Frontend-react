@@ -94,6 +94,10 @@ export class MonthModel{
         this.currentMonth = moment().toDate().getMonth();
         this.currentYear = moment().toDate().getFullYear();
 
+        if (this.monthToDisplay === -1) {
+            this.monthToDisplay = this.currentMonth;
+        }
+
         this.monthStartWeekDay = moment()
             .subtract(this.relativeToCurrentMonthShift,'month')
             .startOf('month')
