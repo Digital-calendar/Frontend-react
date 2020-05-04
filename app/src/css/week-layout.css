@@ -1,0 +1,419 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #F2F2F2;
+}
+
+.authorization-bar {
+    display: flex;
+    font-family: Oxygen;
+    background-color: #F2F2F2;
+    height: 37px;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    justify-content: flex-end;
+    line-height: 35px;
+    margin-bottom: 3px;
+}
+
+.auth-bar__employee-info-btn {
+    position: relative;
+    border-style: none;
+    font-family: Oxygen;
+    padding-left: 10px;
+    font-size: 18px;
+    height: 37px;
+}
+
+.auth-bar__employee {
+    position: relative;
+    font-family: Oxygen;
+    background-color: inherit;
+    border-style: none;
+    font-size: 20px;
+    height: 37px;
+}
+
+.auth-bar__employee-info-btn:focus .sign-out, .auth-bar__employee-info-btn:focus .edit-info{
+    display: flex;
+    position: absolute;
+    height: 50px;
+    border-style: none;
+}
+
+.auth-bar__employee-info-btn:focus .cal-wind__auth-bar__employee-info-btn__submenu {
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    right: 0;
+    top: 37px;
+    background: #F2F2F2;
+    box-shadow: -5px 5px 7px rgba(0, 0, 0, 0.25);
+}
+
+
+.info {
+    height: 50px;
+}
+
+
+.authorization-bar .three-vectors {
+    padding-top: 6px;
+    width: 25px;
+    height: 25px;
+}
+
+.menu-bar {
+    display: flex;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    color: black;
+    padding-left: 5px;
+    font-family: Oxygen;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+}
+
+.menu-bar__button-month {
+    font-family: Oxygen;
+    margin-left: 1%;
+    background-color: #ffffff;
+    border-style: none;
+    font-size: 18px;
+    text-align: left;
+    height: 40px;
+    padding-top: 2px;
+}
+
+.menu-bar__button-month:hover {
+    border-bottom: 1px solid red;
+    background-color: #F2F2F2;
+}
+
+.menu-bar__new-event-button {
+    margin-left: auto;
+    font-family: Oxygen;
+    background-color: #ffffff;
+    border-style: solid;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    font-size: 18px;
+    height: 30px;
+    text-align: center;
+    line-height: 10px;
+    margin-top: 3px;
+    justify-self: end;
+    width: 150px;
+}
+
+.menu-bar__filter-btn {
+    font-size: 18px;
+    text-align: center;
+    line-height: 10px;
+    font-family: Oxygen;
+    background-color: #ffffff;
+    border-style: none;
+    justify-self: end;
+    height: 30px;
+    width: 150px;
+}
+
+
+.menu-bar__filter-btn:focus .menu-bar__filter-btn__filter-submenu {
+    display: flex;
+    top: 40px;
+    box-shadow: -5px 5px 7px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    width: 150px;
+    height: 200px;
+    background: #FFFFFF;
+}
+
+.menu-bar__filter-btn:focus .filter-correspondence,
+.filter-external, .filter-internal, .filter-private {
+    position: absolute;
+    display: flex;
+    visibility: visible;
+    font-size: 18px;
+    text-align: center;
+    font-family: Oxygen;
+}
+
+.filter-img {
+    padding-right: 10px;
+}
+
+.arrow-down-filter {
+    padding-top: 15px;
+    width: 15px;
+    height: 10px;
+}
+
+.menu-bar__mapping-btn {
+    margin-right: 1%;
+    font-family: Oxygen;
+    background-color: #ffffff;
+    border-style: none;
+    font-size: 18px;
+    text-align: center;
+    justify-self: end;
+}
+
+.menu-bar__mapping-btn .arrow-down-month {
+    width: 15px;
+    height: 10px;
+    padding-left: 2px;
+}
+
+.menu-bar__mapping-btn .month-img {
+    width: 15px;
+    height: 15px;
+    padding-right: 7px;
+}
+
+.menu-bar__mapping-btn:focus .cal-wind__menu-bar__mapping-btn__map-submenu {
+    display: flex;
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #FFFFFF;
+    box-shadow: -5px 5px 7px rgba(0, 0, 0, 0.25);
+}
+
+.menu-bar__button-year {
+    font-family: Oxygen;
+    background-color: #ffffff;
+    border-style: none;
+    font-size: 18px;
+    text-align: center;
+    margin-left: 30px;
+}
+
+.menu-bar__year-submenu, .menu-bar__filter-btn__filter-submenu,
+.cal-wind__menu-bar__mapping-btn__map-submenu, .cal-wind__auth-bar__employee-info-btn__submenu,
+.filter-private, .filter-internal, .filter-external, .filter-correspondence,
+.cal-wind__days-table__day-submenu, .edit-info, .sign-out{
+    display: none;
+}
+
+.menu-bar__button-year:focus .menu-bar__year-submenu {
+    display: flex;
+    position: absolute;
+    font-family: Oxygen;
+    box-shadow: -5px 5px 7px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 18px;
+    background-color: #F2F2F2;
+    width: 200px;
+    height: 150px;
+    left: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.year {
+    height: 25px;
+    margin:0;
+}
+
+.menu-bar__button-year:hover {
+    background-color: #F2F2F2;
+}
+
+.menu-bar__button-year #arrow-down-year {
+    width: 15px;
+    height: 10px;
+}
+
+.wkd-bar {
+    height: 35px;
+    display: flex;
+    justify-content: stretch;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+}
+
+.events-wind__weekdays-bar__wkd, .events-wind__weekdays-bar__wkd__last {
+    
+    text-align: center;
+    width: 20%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-width: thin;
+    border-left: none;
+    border-top: none;
+}
+
+.events-wind__weekdays-bar__wkd-text {
+    font-size: 18px;
+    color: #4F4F4F;
+    font-family: Oxygen;
+}
+
+.events-wind__weekdays-bar__wkd-prev-btn {
+    font-family: Oxygen;
+    font-size: 18px;
+    color: #4F4F4F;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    border-width: thin;
+    border-left: none;
+    padding-left: 2%;
+    border-right: none;
+    border-top: none;
+}
+
+.events-wind__weekdays-bar__wkd-next-btn {
+    font-family: Oxygen;
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    color: #4F4F4F;
+    border-style: solid;
+    border-width: thin;
+    border-right: none;
+    border-left: none;
+    padding-right: 2%;
+    border-top: none;
+}
+
+.events-wind__weekdays-bar__wkd__last {
+    border-right: none;
+}
+
+.wkd-bar__prev-btn {
+    border-style: none;
+    background-color: transparent;
+    margin-right: 15%;
+}
+
+.wkd-bar__next-btn {
+    border-style: none;
+    background-color: transparent;
+    margin-left: 15%;
+}
+
+.events-table {
+    margin-right: 3%;
+    margin-left: 4%;
+    height: 80%;
+    margin-top: 5px;
+    background: inherit;
+    display: flex;
+    flex-direction: row;
+}
+
+.events-table__column {
+    width: 14%;
+    height: 100%;
+    margin-right: 1%;
+}
+
+.events-table__column__event {
+    margin-top: 5px;
+    display: flex;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100px;
+    flex-wrap: wrap;
+    color: #333333;
+    box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+}
+
+.events-table__column__event__text {
+    text-align: left;
+    text-overflow: ellipsis;
+    font-family: Oxygen;
+    font-weight: 800;
+    font-size: 18px;
+    height: 75%;
+    overflow: hidden;
+    padding-left: 5px;
+}
+
+.events-table__column__event__time-and-filters {
+    width: 100%;
+    vertical-align: center;
+    text-align: right;
+    font-family: Oxygen;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    color: #FD5052;
+    margin-right: 5px;
+    height: 15px;
+    line-height: 80%;
+    overflow: hidden;
+}
+
+.events-table__column__event__time{
+    font-family: Oxygen;
+    padding-left: 5px;
+    font-size: 12px;
+    float: left;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+
+.private-filter-name {
+    float: right;
+    padding-top: 3px;
+}
+
+.filter-internal-popup, .filter-external-popup,  .filter-corresp-popup{
+    display: none;
+}
+
+.filters:hover .filter-internal-popup, .filters:hover .filter-external-popup, .filters:hover .filter-corresp-popup {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    font-family: Oxygen;
+    font-weight: 300;
+    margin-left: 8%;
+    font-size: 12px;
+    color: black;
+    line-height: 90%;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    width: 100px;
+    height: 15px;
+}
+
+.filters:hover .filter-internal-popup {
+    border: 0.5px solid #6FCF97;
+}
+
+.filters:hover .filter-external-popup {
+    border: 0.5px solid #50A9FD;
+}
+
+.filters:hover .filter-corresp-popup {
+    border: 0.5px solid #333333;
+}
+
+.cal-wind__auth-bar__employee-info, .cal-wind__auth-bar__employee-info-btn, .cal-wind__days-table__day-btn,
+.menu-bar__button-year, .menu-bar__mapping-btn,
+.cal-wind__auth-bar__employee-info-btn, .menu-bar__new-event-button, .menu-bar__filter-btn,
+.menu-bar__button-month, #three-vectors, .cal-wind__auth-bar__employee-info-btn__submenu, .wkd-bar__prev-btn,
+.wkd-bar__next-btn {
+    outline: 0;
+}

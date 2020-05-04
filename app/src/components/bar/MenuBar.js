@@ -53,6 +53,7 @@ class MenuBar extends Component {
         monthModel.shiftMonthArray(shiftMonth);
         this.shiftMonthInModel(shiftMonth);
         monthModel.monthToDisplay = monthModel.monthArray[1];
+        monthModel.getNextWeek(new Date(monthModel.currentYear + "-" + (monthModel.monthToDisplay +1).toString() + "-1"))
         if (monthModel.monthArray[1] === 11 && shiftMonth > 0) {
             monthModel.yearToDisplay += 1;
         }
@@ -126,11 +127,13 @@ class MenuBar extends Component {
                     name={'filterType'}
                     isMulti={true}
                     placeholder={'Filter'}
+                    isViewSelect={false}
                 />
                 <CustomSelect
                     options={viewOptions}
                     isMulti={false}
                     defaultValue={true}
+                    isViewSelect={true}
                 />
             </div>
         );
