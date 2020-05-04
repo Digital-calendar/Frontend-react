@@ -48,7 +48,7 @@ class Login extends Component {
 
     render() {
         if (userModel.user !== null) {
-            return <Redirect to='/calendar/month' />;
+            return <Redirect to='/calendar' />;
         }
         
         return (
