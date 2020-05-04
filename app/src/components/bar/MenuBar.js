@@ -63,6 +63,9 @@ class MenuBar extends Component {
         monthModel.shiftMonthArray(shiftMonth);
         this.shiftMonthInModel(shiftMonth);
         monthModel.monthToDisplay = monthModel.monthArray[1];
+        console.log(monthModel.monthToDisplay)
+        monthModel.getNextWeek(new Date(monthModel.currentYear + "-" + (monthModel.monthToDisplay +1).toString() + "-1"))
+        // monthModel.getNextWeek(new Date(monthModel.currentYear, monthModel.monthToDisplay +1, 1))
         // this.setState( {currentDisplayMonth: newDisplayMonth});
         // monthModel.monthArray = newDisplayMonth;
         // if (this.state.currentDisplayMonth[1] === 11 && shiftMonth > 0) {

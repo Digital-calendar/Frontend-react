@@ -9,37 +9,45 @@ import moment from "moment";
 class Week extends Component {
     constructor(props) {
         super(props);
-        // monthModel.monthToDisplay = monthModel.currentMonth+1;
-        monthModel.arrayWeek = this.getNextWeek(new Date());
+       
+        if (monthModel.currentMonth != monthModel.monthToDisplay) {
+          monthModel.getNextWeek(new Date(monthModel.currentYear + "-" + (monthModel.monthToDisplay+1).toString() + "-1"));
+        } else {
+          monthModel.getNextWeek(new Date());
+        }
+        
     }
 
-    getNextWeek = (curr) => {
-      let array = []
-      for (let i = 1; i <= 7; i++) {
-        let first = curr.getDate() - curr.getDay() + i 
-        console.log(first)
-        let day = new Date(curr.setDate(first))
-        array.push(day)
+    handleRightClick = () => {
+      let d = monthModel.arrayWeek[monthModel.arrayWeek.length - 1];
+      console.log(monthModel.arrayWeek)
+      if (new Date(d.setDate(d.getDate()+6)).getFullYear() > monthModel.currentYear) {
+        monthModel.currentYear+=1;
+        // alert(123)
       }
-      
-      return array
+      console.log(monthModel.currentYear)
+      monthModel.getNextWeek(new Date(d.setDate(d.getDate()+1)));
+      console.log(monthModel.arrayWeek)
+      if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth() != monthModel.monthToDisplay) {
+        monthModel.shiftMonthArray(1)
+        monthModel.incrementRelative()
+        monthModel.monthToDisplay++
+      }
     }
-
-    handleRightClick = () => 
-      monthModel.arrayWeek = this.getNextWeek(monthModel.arrayWeek[monthModel.arrayWeek.length - 1]);
-    
 
       handleLeftClick = () => {
         let d = monthModel.arrayWeek[0]
-        monthModel.arrayWeek = this.getNextWeek(new Date(d.setDate(d.getDate()-7)));
+        monthModel.getNextWeek(new Date(d.setDate(d.getDate()-1)));
+        if (monthModel.arrayWeek[0].getMonth() != monthModel.monthToDisplay) {
+          monthModel.shiftMonthArray(-1)
+          monthModel.decrementRelative()  
+          monthModel.monthToDisplay--
+        }
+        
       }
       
 
     render() {
-      // if (monthModel.arrayWeek[0].getMonth()+1 < monthModel.monthToDisplay) {
-      //   monthModel.arrayWeek = this.getNextWeek(new Date(monthModel.currentYear + "-" + monthModel.monthToDisplay + "-1"))
-      // }
-
         return (
           <div class="main">
     <div class="wkd-bar">
