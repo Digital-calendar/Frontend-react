@@ -62,16 +62,18 @@ class DayDropdownMenu extends React.Component {
         }
     };
 
-    onSignOut = event => {
-        userModel.user = null;
-        this.setState({isRedirect: true})
+    onAddNewClick = () => {
+        this.setState({
+            isRedirect: true
+        });
     };
 
     render() {
 
         if (this.state.isRedirect) {
-            return <Redirect to="/login"/>;
+            return <Redirect to='/newEvent'/>
         }
+
 
         console.log(this.state.isCurrent, this.props.number)
 
@@ -295,6 +297,7 @@ class DayDropdownMenu extends React.Component {
                             <li className="day-list-add-button">
                                 <div
                                     className="day-list-add-new-button"
+                                    onClick={this.onAddNewClick}
                                 >
                                     add new
                                 </div>
