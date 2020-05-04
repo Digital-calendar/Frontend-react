@@ -54,7 +54,7 @@ class MenuBar extends Component {
         this.shiftMonthInModel(shiftMonth);
         monthModel.monthToDisplay = monthModel.monthArray[1];
         monthModel.getNextWeek(new Date(monthModel.currentYear + "-" + (monthModel.monthToDisplay +1).toString() + "-1"))
-        if (monthModel.monthArray[0] === 11 && shiftMonth > 0) {
+        if ((monthModel.monthArray[0] === 11 || monthModel.monthArray[0] === 0) && shiftMonth > 0) {
             monthModel.yearToDisplay += 1;
         }
         if (monthModel.monthArray[2] === 0 && shiftMonth < 0) {
