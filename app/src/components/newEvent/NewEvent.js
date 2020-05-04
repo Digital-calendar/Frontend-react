@@ -44,6 +44,17 @@ class NewEvent extends Component {
         };
     }
 
+    getSelectedUsers = () => {
+
+        const selectedUsers = [];
+
+        userModel.selectedUsers.forEach(item => {
+            selectedUsers.push(userModel.users.find(el => el.id === item.id));
+        });
+
+        return selectedUsers;
+    };
+
     onSaveClick = () => {
         createEvent({
             title: this.state.title,
@@ -52,7 +63,7 @@ class NewEvent extends Component {
             eventType: this.state.eventType,
             contactInfo: this.state.contactInfo,
             description: this.state.description,
-            participants: [],
+            participants: this.getSelectedUsers(),
             privateEvent: this.state.isPrivate
         });
         this.onCancelClick();
@@ -155,6 +166,7 @@ class NewEvent extends Component {
         console.log('description: ', this.state.description);
         console.log(this.state.options);
         console.log(toJS(userModel.selectedUsers));
+        this.getSelectedUsers();
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
