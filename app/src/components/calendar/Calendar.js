@@ -14,7 +14,7 @@ class Calendar extends Component {
         super(props);
 
         loadEvents();
-        monthModel.monthToDisplay = monthModel.currentMonth;
+        // monthModel.monthToDisplay = monthModel.currentMonth;
         this.arrayWeek = [1, 2, 3, 4, 5, 6, 7];
         this.arrayMonth = [];
         this.height = document.documentElement.clientHeight;
