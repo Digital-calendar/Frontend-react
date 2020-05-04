@@ -17,7 +17,6 @@ import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
-import {toJS} from "mobx";
 
 
 
@@ -154,19 +153,6 @@ class NewEvent extends Component {
         if (this.state.isRedirect) {
             return <Redirect to='/calendar/month'/>
         }
-
-        console.log('title: ', this.state.title);
-        console.log('date: ', this.state.date);
-        console.log('time: ', this.state.time);
-        console.log('location: ', this.state.location);
-        console.log('isPrivate: ', this.state.isPrivate);
-        console.log('event type: ', this.state.eventType);
-        console.log('contact: ', this.state.contactInfo);
-        console.log('address: ', this.state.address);
-        console.log('description: ', this.state.description);
-        console.log(this.state.options);
-        console.log(toJS(userModel.selectedUsers));
-        this.getSelectedUsers();
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">

@@ -5,7 +5,6 @@ import dayImage from '../../css/images/day.svg';
 import CustomSelect from '../CustomSelect';
 import {observer} from "mobx-react";
 import {monthModel} from "../../models/MonthModel";
-import {userModel} from "../../models/UserModel";
 import {Redirect} from 'react-router-dom';
 
 

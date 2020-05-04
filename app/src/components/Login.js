@@ -4,7 +4,6 @@ import {userSignIn} from "../actions/signIn";
 import {Redirect} from 'react-router-dom';
 import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
-import {monthModel} from "../models/MonthModel";
 
 @observer
 class Login extends Component {
