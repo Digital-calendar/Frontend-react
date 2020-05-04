@@ -8,6 +8,7 @@ import privateImage from '../../css/images/filters/private-filter.svg';
 import internalImage from '../../css/images/filters/internal-filter.svg';
 import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
+import {eventModel} from "../../models/EventModel";
 
 
 @observer
@@ -23,7 +24,8 @@ class DayDropdownMenu extends React.Component {
             isRedirect: false,
             isCurrentDay: monthModel.isCurrent,
         };
-
+        // eventModel.filteredEvents()
+        eventModel.formDayEvents(this.props.number);
         this.id = this.props.number + 10;
         // monthModel.isCurrentDay(this.props.number);
 
@@ -75,7 +77,6 @@ class DayDropdownMenu extends React.Component {
         }
 
 
-        console.log(this.state.isCurrent, this.props.number)
 
         return (
             <div  className={(this.props.value > 0 && this.props.value < 6) ? "days-table__day" : "days-table__day-off"} onClick={this.showDropdownMenu} >

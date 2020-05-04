@@ -1,4 +1,5 @@
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
+import {monthModel} from "./MonthModel";
 
 
 export class EventModel{
@@ -6,13 +7,16 @@ export class EventModel{
     events = [];
 
     @observable
-    filters = ['OWN'];
+    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE"];
 
     @observable
     isPresent = false;
 
     @observable
     filteredEvents = [];
+
+    @observable
+    dayEvents = [];
 
     @action
     filter() {
@@ -35,6 +39,26 @@ export class EventModel{
         this.filteredEvents = this.filteredEvents
             .filter(event => {
                 return event.timestamp > start && event.timestamp < end;
+            })
+    }
+
+    @action
+    formDayEvents(day) {
+        let dayString = day;
+        if ((day - 10) < 0) {
+            dayString = '0' + dayString;
+        }
+        let monthString = monthModel.monthToDisplay + 1;
+        if ((monthModel.monthToDisplay - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
+        // console.log(formatDay);
+        // console.log(toJS(this.filteredEvents));
+        this.dayEvents = this.filteredEvents
+            .filter(event => {
+                console.log(event.timestamp.startsWith(formatDay));
+                return event.timestamp.startsWith(formatDay);
             })
     }
 
