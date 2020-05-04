@@ -12,6 +12,9 @@ export class UserModel{
     isNewUsersLoaded = false;
 
     @observable
+    selectedUsers = [];
+
+    @observable
     isPresent = false;
 
     @action

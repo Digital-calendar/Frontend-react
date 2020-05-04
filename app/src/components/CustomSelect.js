@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import {userModel} from "../models/UserModel";
 
 class CustomSelect extends React.Component {
 
@@ -35,6 +36,9 @@ class CustomSelect extends React.Component {
 
     handleChange = selectedOption => {
         this.setState({ selectedOption });
+        if (this.props.isNewEvent) {
+            userModel.selectedUsers = selectedOption;
+        }
     };
 
     render() {

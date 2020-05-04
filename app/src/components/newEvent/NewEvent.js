@@ -16,6 +16,8 @@ import CustomSelect from "../CustomSelect";
 import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
+import {loadUsers} from "../../actions/loadUsers";
+import {toJS} from "mobx";
 
 
 
@@ -25,6 +27,8 @@ class NewEvent extends Component {
     constructor(props) {
         super(props);
 
+        loadUsers();
+        userModel.selectedUsers = [];
         this.state = {
             isRedirect: false,
             title: '',
@@ -57,7 +61,7 @@ class NewEvent extends Component {
     onOptionChange = event => {
         const newOptions = userModel.users.map(item => {
             const value = item.first_name + ' ' + item.last_name;
-            return {value: value, label: value};
+            return {value: value, label: value, id: item.id};
         });
         this.setState({
             options: newOptions
@@ -149,7 +153,8 @@ class NewEvent extends Component {
         console.log('contact: ', this.state.contactInfo);
         console.log('address: ', this.state.address);
         console.log('description: ', this.state.description);
-        console.log(this.state.options)
+        console.log(this.state.options);
+        console.log(toJS(userModel.selectedUsers));
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
@@ -251,18 +256,6 @@ class NewEvent extends Component {
                                         className="icon-style"
                                     />
                                 </label>
-                                {/*<input*/}
-                                {/*    className="text-style input-field-style"*/}
-                                {/*    name="invite-field"*/}
-                                {/*    type="email"*/}
-                                {/*    placeholder="invite people"*/}
-                                {/*    id="invite-field"*/}
-                                {/*    form="new-event-form"*/}
-                                {/*    tabIndex="5"*/}
-                                {/*    autoComplete="off"*/}
-                                {/*    multiple*/}
-                                {/*/>*/}
-                                {/*<div className="text-style input-field-style">*/}
                                 <CustomSelect
                                     options={this.state.options}
                                     name={'filterType'}
@@ -270,7 +263,6 @@ class NewEvent extends Component {
                                     placeholder={'Filter'}
                                     isNewEvent={true}
                                 />
-                                {/*</div>*/}
                             </div>
                             <div className="field-container">
                                 <div className="private-event">
