@@ -9,7 +9,7 @@ import moment from "moment";
 class Week extends Component {
     constructor(props) {
         super(props);
-        // monthModel.monthToDisplay = monthModel.currentMonth;
+       
         if (monthModel.currentMonth != monthModel.monthToDisplay) {
           monthModel.getNextWeek(new Date(monthModel.currentYear + "-" + (monthModel.monthToDisplay+1).toString() + "-1"));
         } else {
@@ -19,8 +19,15 @@ class Week extends Component {
     }
 
     handleRightClick = () => {
-      monthModel.getNextWeek(monthModel.arrayWeek[monthModel.arrayWeek.length - 1]);
-      
+      let d = monthModel.arrayWeek[monthModel.arrayWeek.length - 1];
+      console.log(monthModel.arrayWeek)
+      if (new Date(d.setDate(d.getDate()+6)).getFullYear() > monthModel.currentYear) {
+        monthModel.currentYear+=1;
+        // alert(123)
+      }
+      console.log(monthModel.currentYear)
+      monthModel.getNextWeek(new Date(d.setDate(d.getDate()+1)));
+      console.log(monthModel.arrayWeek)
       if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth() != monthModel.monthToDisplay) {
         monthModel.shiftMonthArray(1)
         monthModel.incrementRelative()
@@ -30,7 +37,7 @@ class Week extends Component {
 
       handleLeftClick = () => {
         let d = monthModel.arrayWeek[0]
-        monthModel.getNextWeek(new Date(d.setDate(d.getDate()-7)));
+        monthModel.getNextWeek(new Date(d.setDate(d.getDate()-1)));
         if (monthModel.arrayWeek[0].getMonth() != monthModel.monthToDisplay) {
           monthModel.shiftMonthArray(-1)
           monthModel.decrementRelative()  
@@ -41,8 +48,6 @@ class Week extends Component {
       
 
     render() {
-      console.log(monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth())
-      console.log(monthModel.monthToDisplay)
         return (
           <div class="main">
     <div class="wkd-bar">
