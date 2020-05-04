@@ -21,17 +21,18 @@ class Week extends Component {
     handleRightClick = () => {
       let d = monthModel.arrayWeek[monthModel.arrayWeek.length - 1];
       console.log(monthModel.arrayWeek)
-      if (new Date(d.setDate(d.getDate()+6)).getFullYear() > monthModel.currentYear) {
-        monthModel.currentYear+=1;
-        // alert(123)
+      if (new Date(d.setDate(d.getDate()+6)).getFullYear() > monthModel.yearToDisplay) {
+        monthModel.yearToDisplay += 1;
+        
       }
       console.log(monthModel.currentYear)
       monthModel.getNextWeek(new Date(d.setDate(d.getDate()+1)));
       console.log(monthModel.arrayWeek)
       if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth() != monthModel.monthToDisplay) {
+        
         monthModel.shiftMonthArray(1)
         monthModel.incrementRelative()
-        monthModel.monthToDisplay++
+        
       }
     }
 
@@ -41,7 +42,7 @@ class Week extends Component {
         if (monthModel.arrayWeek[0].getMonth() != monthModel.monthToDisplay) {
           monthModel.shiftMonthArray(-1)
           monthModel.decrementRelative()  
-          monthModel.monthToDisplay--
+          
         }
         
       }

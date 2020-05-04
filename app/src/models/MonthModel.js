@@ -84,6 +84,7 @@ export class MonthModel{
             }
             return newNumber;
         });
+        this.monthToDisplay = this.monthArray[1];
     }
 
     @action
