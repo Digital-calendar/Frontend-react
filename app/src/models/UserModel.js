@@ -1,4 +1,4 @@
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
 
 
 export class UserModel{
@@ -6,7 +6,21 @@ export class UserModel{
     user = null;
 
     @observable
+    users = [];
+
+    @observable
+    isNewUsersLoaded = false;
+
+    @observable
+    selectedUsers = [];
+
+    @observable
     isPresent = false;
+
+    @action
+    dropLoadedFlag() {
+        this.isNewUsersLoaded = false;
+    }
 }
 
 export const userModel = new UserModel();

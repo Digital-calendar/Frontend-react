@@ -1,4 +1,5 @@
-import { observable, computed } from 'mobx'
+import {observable, action, toJS} from 'mobx'
+import {monthModel} from "./MonthModel";
 
 
 export class EventModel{
@@ -6,22 +7,60 @@ export class EventModel{
     events = [];
 
     @observable
-    filters = [];
+    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE"];
 
     @observable
-    isPresent;
+    isPresent = false;
 
-    @computed
-    get filteredEvents() {
-        return this.events
+    @observable
+    filteredEvents = [];
+
+    @observable
+    dayEvents = [];
+
+    @action
+    filter() {
+        this.filteredEvents = this.events
             .filter(event => {
                 let isFilteredEvent = false;
                 this.filters.forEach(filter => {
-                    isFilteredEvent = filter === event.eventType;
+                    if (filter === 'OWN') {
+                        isFilteredEvent = event.privateEvent || isFilteredEvent;
+                    } else {
+                        isFilteredEvent = filter === event.eventType || isFilteredEvent;
+                    }
                 });
                 return isFilteredEvent;
             });
     };
+
+    @action
+    periodFiltered(start, end) {
+        this.filteredEvents = this.filteredEvents
+            .filter(event => {
+                return event.timestamp > start && event.timestamp < end;
+            })
+    }
+
+    @action
+    formDayEvents(day) {
+        let dayString = day;
+        if ((day - 10) < 0) {
+            dayString = '0' + dayString;
+        }
+        let monthString = monthModel.monthToDisplay + 1;
+        if ((monthModel.monthToDisplay - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
+        // console.log(formatDay);
+        // console.log(toJS(this.filteredEvents));
+        this.dayEvents = this.filteredEvents
+            .filter(event => {
+                console.log(event.timestamp.startsWith(formatDay));
+                return event.timestamp.startsWith(formatDay);
+            })
+    }
 
 }
 

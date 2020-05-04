@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx'
+import { observable, action } from 'mobx'
 import moment from "moment";
 import Week from "../components/calendar_week/Week"
 
@@ -30,6 +30,9 @@ export class MonthModel{
 
     @observable
     monthToDisplay = -1;
+
+    @observable
+    yearToDisplay = -1;
 
     @observable
     relativeToCurrentMonthShift = 0;
@@ -64,7 +67,9 @@ export class MonthModel{
 
     @action
     isCurrentDay(day) {
-        this.isCurrent = ((this.currentMonth === this.monthToDisplay) && (day === this.currentDay));
+        this.isCurrent = ((this.currentMonth === this.monthToDisplay)
+                            && (day === this.currentDay)
+                            && (this.yearToDisplay === this.currentYear));
     }
 
     @action

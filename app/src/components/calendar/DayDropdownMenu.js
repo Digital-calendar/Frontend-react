@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import './day-dropdown-menu.css';
 import {userModel} from "../../models/UserModel";
 import {observer} from 'mobx-react';
@@ -8,6 +8,7 @@ import privateImage from '../../css/images/filters/private-filter.svg';
 import internalImage from '../../css/images/filters/internal-filter.svg';
 import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
+import {eventModel} from "../../models/EventModel";
 
 
 @observer
@@ -17,11 +18,14 @@ class DayDropdownMenu extends React.Component {
     constructor(props) {
         super(props);
 
+        monthModel.isCurrentDay(this.props.number);
         this.state = {
             displayMenu: false,
-            isRedirect: false
+            isRedirect: false,
+            isCurrentDay: monthModel.isCurrent,
         };
-
+        // eventModel.filteredEvents()
+        eventModel.formDayEvents(this.props.number);
         this.id = this.props.number + 10;
         // monthModel.isCurrentDay(this.props.number);
 
@@ -60,16 +64,19 @@ class DayDropdownMenu extends React.Component {
         }
     };
 
-    onSignOut = event => {
-        userModel.user = null;
-        this.setState({isRedirect: true})
+    onAddNewClick = () => {
+        this.setState({
+            isRedirect: true
+        });
     };
 
     render() {
 
         if (this.state.isRedirect) {
-            return <Redirect to="/login"/>;
+            return <Redirect to='/newEvent'/>
         }
+
+
 
         return (
             <div  className={(this.props.value > 0 && this.props.value < 6) ? "days-table__day" : "days-table__day-off"} onClick={this.showDropdownMenu} >
@@ -79,7 +86,7 @@ class DayDropdownMenu extends React.Component {
                     // onClick={this.showDropdownMenu}
                 >
                     <div className="days-table__day-btn__text-container">
-                        <p className={(monthModel.currentMonth === monthModel.monthToDisplay) && (this.props.number === this.currentDay) ? "current" : "text"}>
+                        <p className={this.state.isCurrentDay ? "current" : "text"}>
                             {this.props.number}
                         </p>
                     </div>
@@ -291,6 +298,7 @@ class DayDropdownMenu extends React.Component {
                             <li className="day-list-add-button">
                                 <div
                                     className="day-list-add-new-button"
+                                    onClick={this.onAddNewClick}
                                 >
                                     add new
                                 </div>

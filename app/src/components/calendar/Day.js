@@ -3,9 +3,6 @@ import "../../css/calendar.css";
 import {monthModel} from "../../models/MonthModel";
 
 class Day extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 

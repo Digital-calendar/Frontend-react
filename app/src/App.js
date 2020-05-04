@@ -4,6 +4,7 @@ import Registration from "./components/Registration";
 import Login from "./components/Login";
 import Bar from "./components/bar/Bar";
 import {observer} from "mobx-react";
+import NewEventPage from "./components/newEvent/NewEventPage";
 
 @observer
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
             <Switch>
                 <Route path='/' exact component={Registration}/>
                 <Route path='/login' exact component={Login}/>
+                <Route path='/newEvent' exact component={NewEventPage}/>
                 <Route path='/calendar' exact component={Bar}/>
             </Switch>
         </Router>

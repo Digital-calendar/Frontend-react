@@ -50,7 +50,7 @@ class Login extends Component {
         if (userModel.user !== null) {
             return <Redirect to='/calendar/month' />;
         }
-
+        
         return (
 
             <div className="window">
