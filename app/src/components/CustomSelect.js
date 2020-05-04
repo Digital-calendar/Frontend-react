@@ -14,7 +14,7 @@ class CustomSelect extends React.Component {
             marginRight : '10px',
             zIndex      : "150",
             position    : "relative",
-            width       : this.props.isNewEvent ? '100%' : '0%'
+            width       : this.props.isNewEvent ? '100%' : '-1'
         }),
         placeholder: () => ({
             fontSize    : '18px',
@@ -32,7 +32,7 @@ class CustomSelect extends React.Component {
         super(props);
 
         this.state = {
-            selectedOption: props.defaultValue ? props.options[0] : [] ,
+            selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : [] ,
         };
 
     }
