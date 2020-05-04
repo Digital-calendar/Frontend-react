@@ -2,32 +2,32 @@ import React, { Component } from "react";
 import "../../css/week-layout.css";
 import {monthModel} from "../../models/MonthModel";
 import {observer} from "mobx-react";
-import Day from "../calendar/Day";
-import moment from "moment";
+import { toJS } from "mobx";
 
 @observer
 class Week extends Component {
     constructor(props) {
         super(props);
-       
+
         if (monthModel.currentMonth != monthModel.monthToDisplay) {
-          monthModel.getNextWeek(new Date(monthModel.yearToDisplay + "-" + (monthModel.monthToDisplay+1).toString() + "-1"));
+          monthModel.getNextWeek(new Date(monthModel.yearToDisplay, monthModel.monthToDisplay, 1));
+          
         } else {
-          monthModel.getNextWeek(new Date());
+          monthModel.getNextWeek(new Date(monthModel.yearToDisplay, monthModel.monthToDisplay, monthModel.currentDay));
         }
         
     }
 
     handleRightClick = () => {
       let d = monthModel.arrayWeek[monthModel.arrayWeek.length - 1];
-      if (new Date(d.setDate(d.getDate()+6)).getFullYear() != monthModel.yearToDisplay) {
+      
+      monthModel.getNextWeek(new Date(d.setDate(d.getDate()+1)));
+
+      if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getFullYear() > monthModel.yearToDisplay) {
         monthModel.yearToDisplay += 1;
       }
-      console.log(monthModel.currentYear)
-      monthModel.getNextWeek(new Date(d.setDate(d.getDate()+1)));
-      console.log(monthModel.arrayWeek)
+
       if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth() != monthModel.monthToDisplay) {
-        
         monthModel.shiftMonthArray(1)
         monthModel.incrementRelative()
         
@@ -36,10 +36,12 @@ class Week extends Component {
 
       handleLeftClick = () => {
         let d = monthModel.arrayWeek[0]
-        if (new Date(d.setDate(d.getDate()-6)).getFullYear() != monthModel.yearToDisplay) {
+        
+        monthModel.getNextWeek(new Date(d.setDate(d.getDate()-1)));
+
+        if (monthModel.arrayWeek[0].getFullYear() < monthModel.yearToDisplay) {
           monthModel.yearToDisplay -= 1;
         }
-        monthModel.getNextWeek(new Date(d.setDate(d.getDate()-1)));
         if (monthModel.arrayWeek[0].getMonth() != monthModel.monthToDisplay) {
           monthModel.shiftMonthArray(-1)
           monthModel.decrementRelative()  
