@@ -1,5 +1,6 @@
 import {observable, action, toJS} from 'mobx'
 import {monthModel} from "./MonthModel";
+import {userModel} from "./UserModel";
 
 
 export class EventModel{
@@ -24,7 +25,7 @@ export class EventModel{
             .filter(event => {
                 let isFilteredEvent = false;
                 this.filters.forEach(filter => {
-                    if (filter === 'OWN') {
+                    if (filter === 'OWN' && event.id === userModel.user.id) {
                         isFilteredEvent = event.privateEvent || isFilteredEvent;
                     } else {
                         isFilteredEvent = filter === event.eventType || isFilteredEvent;

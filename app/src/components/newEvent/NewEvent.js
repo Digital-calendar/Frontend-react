@@ -64,7 +64,8 @@ class NewEvent extends Component {
             contactName: this.state.contactName,
             description: this.state.description,
             participants: this.getSelectedUsers(),
-            privateEvent: this.state.isPrivate
+            privateEvent: this.state.isPrivate,
+            userID: userModel.user.id
         });
         this.onCancelClick();
     };
