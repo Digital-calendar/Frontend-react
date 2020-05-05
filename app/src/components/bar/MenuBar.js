@@ -86,7 +86,6 @@ class MenuBar extends Component {
     };
 
     render() {
-        console.log(monthModel.monthArray);
         if (this.state.isRedirect) {
             return <Redirect to='/newEvent'/>
         }

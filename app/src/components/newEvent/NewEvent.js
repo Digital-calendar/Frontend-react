@@ -165,6 +165,7 @@ class NewEvent extends Component {
                         alt="X"
                         style={{outline: "none"}}
                         tabIndex="13"
+                        onClick={this.onCancelClick}
                     />
                 </div>
 

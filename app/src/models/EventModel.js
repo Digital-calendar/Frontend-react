@@ -52,12 +52,11 @@ export class EventModel{
         if ((monthModel.monthToDisplay - 9) < 0) {
             monthString = '0' + monthString;
         }
+        this.filter();
+        // console.log('filtered', day, toJS(this.filteredEvents));
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
-        // console.log(formatDay);
-        // console.log(toJS(this.filteredEvents));
         this.dayEvents = this.filteredEvents
             .filter(event => {
-                console.log(event.timestamp.startsWith(formatDay));
                 return event.timestamp.startsWith(formatDay);
             })
     }

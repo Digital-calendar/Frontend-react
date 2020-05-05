@@ -4,7 +4,7 @@ import {monthModel} from "../../models/MonthModel";
 import {observer} from "mobx-react";
 import Day from "./Day";
 import DayDropdownMenu from "./DayDropdownMenu";
-import {loadEvents} from "../../actions/loadEvents";
+import {eventModel} from "../../models/EventModel";
 
 @observer
 class Calendar extends Component {
@@ -13,7 +13,6 @@ class Calendar extends Component {
     constructor(props) {
         super(props);
 
-        loadEvents();
         this.arrayWeek = [1, 2, 3, 4, 5, 6, 7];
         this.arrayMonth = [];
         this.height = document.documentElement.clientHeight;
@@ -30,7 +29,14 @@ class Calendar extends Component {
         this.arrayMonth = newArray;
     };
 
+    // componentDidMount() {
+    //     loadEvents();
+    //     console.log(eventModel.events)
+    // }
+
     render() {
+        // console.log(toJS(eventModel.events))
+
 
         this.formMonthArray();
 
@@ -59,7 +65,7 @@ class Calendar extends Component {
                                             if (week > monthModel.monthWeekAmount) {
                                                 return <Day key={day} value={value}/>;
                                             } else {
-                                                return <DayDropdownMenu isNormal={(week > 3)} isCurrent={false} key={day} number={day} value={value}/>;
+                                                return <DayDropdownMenu events={eventModel.events} isNormal={(week > 3)} isCurrent={false} key={day} number={day} value={value}/>;
                                             }
                                         }
 
