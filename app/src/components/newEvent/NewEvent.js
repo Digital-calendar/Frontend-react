@@ -37,7 +37,7 @@ class NewEvent extends Component {
             isPrivate: true,
             eventType: 'INTERNAL',
             contactInfo: '',
-            address: '',
+            contactName: '',
             description: '',
             options: [],
         };
@@ -61,6 +61,7 @@ class NewEvent extends Component {
             location: this.state.location,
             eventType: this.state.eventType,
             contactInfo: this.state.contactInfo,
+            contactName: this.state.contactName,
             description: this.state.description,
             participants: this.getSelectedUsers(),
             privateEvent: this.state.isPrivate
@@ -131,7 +132,7 @@ class NewEvent extends Component {
 
     onAddressInput = event => {
         this.setState({
-            address: event.target.value
+            contactName: event.target.value
         })
     };
 
@@ -146,6 +147,7 @@ class NewEvent extends Component {
         // console.log(toJS(userModel.users));
         // console.log(this.state.options);
 
+        console.log(this.state.contactName)
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
         }

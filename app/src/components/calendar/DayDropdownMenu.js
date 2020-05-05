@@ -26,7 +26,8 @@ class DayDropdownMenu extends React.Component {
             isCurrentDay: monthModel.isCurrent,
             isEventsNotPresent: true,
             events: [],
-            eventTypeView: []
+            eventTypeView: [],
+            dropDownShifts: [],
         };
         // eventModel.filteredEvents()
         eventModel.formDayEvents(this.props.number);
@@ -75,6 +76,7 @@ class DayDropdownMenu extends React.Component {
             isEventsNotPresent: false
         });
         this.formEventTypeView();
+        this.formDropDownMenuShifts();
         // console.log(this.props.number, toJS(eventModel.dayEvents));
     }
 
@@ -115,6 +117,30 @@ class DayDropdownMenu extends React.Component {
             eventTypeView: views
         });
         console.log(this.props.number, views);
+    };
+
+    formDropDownMenuShifts = () => {
+        const shifts = [];
+        if (this.props.isNormal) {
+            switch (this.state.events.length) {
+                case 0:
+                    shifts.push('-4%');
+                    break;
+                case 1:
+                    shifts.push('-9%');
+                    break;
+                case 2:
+                    shifts.push('-14%');
+                    break;
+                case 3:
+                    shifts.push('-19%');
+                    break;
+                default:
+                    shifts.push('-24%');
+            }
+        } else {
+            shifts.push('-4%');
+        }
     };
 
     render() {
