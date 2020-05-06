@@ -13,7 +13,6 @@ export async function loadEvents() {
     eventModel.events = await response.json();
 
     eventModel.filter();
-    // eventModel.periodFiltered("2020-05-01 00:00", "2020-05-30 09:00");
 
     eventModel.isPresent = true;
 }

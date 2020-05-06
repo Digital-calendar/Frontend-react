@@ -9,7 +9,6 @@ import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
 import {eventModel} from "../../models/EventModel";
 import {toJS} from "mobx";
-import Day from "./Day";
 
 
 @observer
@@ -29,11 +28,20 @@ class DayDropdownMenu extends React.Component {
             eventTypeView: [],
             dropDownShift: '',
         };
-        // eventModel.filteredEvents()
         eventModel.formDayEvents(this.props.number);
-        // console.log(this.props.number, eventModel.dayEvents);
+        //key
         this.id = this.props.number + 10;
-        // monthModel.isCurrentDay(this.props.number);
+
+        //init string date to pass it on click 'add new' button in day drop down menu
+        let dayString = this.props.number;
+        if ((this.props.number - 10) < 0) {
+            dayString = '0' + dayString;
+        }
+        let monthString = monthModel.monthToDisplay + 1;
+        if ((monthModel.monthToDisplay - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        this.date = monthModel.yearToDisplay + '-' + monthString +  '-' + dayString;
 
     }
 
@@ -116,7 +124,7 @@ class DayDropdownMenu extends React.Component {
         this.setState({
             eventTypeView: views
         });
-        console.log(this.props.number, views);
+        // console.log(this.props.number, views);
     };
 
     formDropDownMenuShifts = () => {
@@ -149,7 +157,8 @@ class DayDropdownMenu extends React.Component {
     render() {
 
         if (this.state.isRedirect) {
-            return <Redirect to='/newEvent'/>
+            eventModel.dayToCreate = this.date;
+            return <Redirect from='/calendar' to= '/newEvent'/>
         }
 
 

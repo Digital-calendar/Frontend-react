@@ -31,7 +31,7 @@ class NewEvent extends Component {
         this.state = {
             isRedirect: false,
             title: '',
-            date: '',
+            date: this.props.date,
             time: '',
             location: '',
             isPrivate: true,
@@ -41,6 +41,7 @@ class NewEvent extends Component {
             description: '',
             options: [],
         };
+
     }
 
     getSelectedUsers = () => {
@@ -145,10 +146,6 @@ class NewEvent extends Component {
 
 
     render() {
-        // console.log(toJS(userModel.users));
-        // console.log(this.state.options);
-
-        console.log(this.state.contactName)
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
         }
@@ -156,6 +153,7 @@ class NewEvent extends Component {
         if (this.state.isRedirect) {
             return <Redirect to='/calendar'/>
         }
+
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
@@ -215,6 +213,7 @@ class NewEvent extends Component {
                                     autoComplete="off"
                                     tabIndex="2"
                                     required
+                                    value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
                                 <label htmlFor="time"></label>

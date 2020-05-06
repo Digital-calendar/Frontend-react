@@ -14,11 +14,13 @@ class Calendar extends Component {
     constructor(props) {
         super(props);
 
+
+
         this.arrayWeek = [1, 2, 3, 4, 5, 6, 7];
         this.arrayMonth = [];
         this.height = document.documentElement.clientHeight;
-        this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-01';
-        this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-31';
+        // this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-01';
+        // this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-31';
     }
 
     formMonthArray = () => {
@@ -35,14 +37,13 @@ class Calendar extends Component {
 
 
     render() {
-        // console.log(toJS(eventModel.events))
-
 
         this.formMonthArray();
-        loadEvents();
-        eventModel.filter();
-        // eventModel.periodFiltered(this.start, this.end)
 
+        if (!eventModel.isPresent) {
+            loadEvents();
+            eventModel.filter();
+        }
 
         return (
             <div className="wrapper" style={{height: this.height}}>

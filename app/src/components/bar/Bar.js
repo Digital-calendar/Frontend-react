@@ -16,7 +16,6 @@ class Bar extends Component {
     constructor(props) {
         super(props);
 
-        // loadEvents();
 
     }
 
@@ -34,7 +33,6 @@ class Bar extends Component {
     }
 
     render() {
-        console.log(toJS(eventModel.events));
         monthModel.updateMonthInfo();
         return (
           <div>

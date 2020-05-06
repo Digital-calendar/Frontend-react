@@ -4,6 +4,10 @@ import {userModel} from "./UserModel";
 
 
 export class EventModel{
+
+    @observable
+    dayToCreate = '';
+
     @observable
     events = [];
 
