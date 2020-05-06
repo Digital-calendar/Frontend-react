@@ -8,10 +8,10 @@ class Week extends Component {
     constructor(props) {
         super(props);
 
-        if (monthModel.currentMonth != monthModel.monthToDisplay) {
+        if (monthModel.currentMonth !== monthModel.monthToDisplay) {
             monthModel.getNextWeek(new Date(monthModel.yearToDisplay, monthModel.monthToDisplay, 1));
 
-        } else {
+        } else if (monthModel.arrayWeek.length === 0) {
             monthModel.getNextWeek(new Date(monthModel.yearToDisplay, monthModel.monthToDisplay, monthModel.currentDay));
         }
 
@@ -31,10 +31,10 @@ class Week extends Component {
             monthModel.incrementRelative()
 
         }
-    }
+    };
 
     handleLeftClick = () => {
-        let d = monthModel.arrayWeek[0]
+        let d = monthModel.arrayWeek[0];
 
         monthModel.getNextWeek(new Date(d.setDate(d.getDate() - 1)));
 
@@ -42,12 +42,12 @@ class Week extends Component {
             monthModel.yearToDisplay -= 1;
         }
         if (monthModel.arrayWeek[0].getMonth() !== monthModel.monthToDisplay) {
-            monthModel.shiftMonthArray(-1)
+            monthModel.shiftMonthArray(-1);
             monthModel.decrementRelative()
 
         }
 
-    }
+    };
 
 
     render() {
@@ -62,10 +62,19 @@ class Week extends Component {
 
                     {
                         monthModel.arrayWeek.map((date, index) => {
-                            return <div class="events-wind__weekdays-bar__wkd">
-                                <p key={index}
-                                   class="events-wind__weekdays-bar__wkd-text">{date.toString().slice(0, 10)}</p>
-                            </div>
+                            if (date.getDate() === monthModel.currentDay) {
+                                return <div style={{borderBottom: '1px solid red', backgroundColor: '#F2F2F2'}} class="events-wind__weekdays-bar__wkd">
+                                    <p key={index}
+                                       class="events-wind__weekdays-bar__wkd-text">{date.toString().slice(0, 10)}</p>
+                                </div>
+                            } else {
+                                return <div class="events-wind__weekdays-bar__wkd">
+                                    <p key={index}
+                                       class="events-wind__weekdays-bar__wkd-text">{date.toString().slice(0, 10)}</p>
+                                </div>
+                            }
+
+
                         })
                     }
 
@@ -77,19 +86,9 @@ class Week extends Component {
                 </div>
 
                 <div class="events-table">
+
                     <div class="events-table__column">
-                        <div class="events-table__column__event">
-                            <div class="events-table__column__event__text">
-                                test test test test test test test test
-                            </div>
-                            <div class="events-table__column__event__time-and-filters">
-                                <div class="events-table__column__event__time">11:00</div>
-                                <div class="filters">
-                                    <img src={require("../../css/images/internal-filter.svg")} alt="internal-filter"/>
-                                    <div class="filter-internal-popup">Internal event</div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="events-table__column__event">
                             <div class="events-table__column__event__text">
                                 test test test test test test test test
@@ -102,24 +101,8 @@ class Week extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div class="events-table__column__event">
-                            <div class="events-table__column__event__text">
-                                test test test test test test test test
-                            </div>
-                            <div class="events-table__column__event__time-and-filters">
-                                <div class="events-table__column__event__time">19:00</div>
-                                <div class="filters">
-                                    <img src="../../css/images/internal-filter.svg" alt="internal-filter"/>
-                                    <div class="filter-internal-popup">Internal event</div>
-                                    <img
-                                        src="../../css/images/private-filter.svg"
-                                        class="private-filter"
-                                        alt="private-filter"
-                                    />
-                                    <div class="private-filter-name">Private</div>
-                                </div>
-                            </div>
-                        </div>
+
+
                     </div>
                     <div class="events-table__column">
                         <div class="events-table__column__event">
