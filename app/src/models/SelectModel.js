@@ -3,7 +3,7 @@ import { observable } from 'mobx'
 
 export class SelectModel{
     @observable
-    currentView = "month";
+    currentView = "day";
 
     @observable
     filterState = [];

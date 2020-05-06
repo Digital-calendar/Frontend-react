@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../css/registration.css';
-import { Redirect } from 'react-router';
+import {Redirect} from 'react-router';
 import md5 from 'md5';
 
 class Registration extends Component {
@@ -19,9 +19,8 @@ class Registration extends Component {
         }
     }
 
-    
 
-     submitForm = async e => {
+    submitForm = async e => {
         e.preventDefault();
         this.state.data.pass = md5(this.state.data.pass);
         try {
@@ -33,12 +32,12 @@ class Registration extends Component {
                     "Content-Type": "application/json"
                 }
             });
-            
+
             if (!resp.ok) {
                 console.log(resp); //дебаг
                 throw new Error("Неизвестная ошибка сети");
             }
-            
+
             if (resp.status === 205) {
                 throw new Error("Пользователь с таким email уже существует");
             }
@@ -56,11 +55,11 @@ class Registration extends Component {
 
     };
 
-    handleSubmit = e => 
+    handleSubmit = e =>
         this.setState({
-           data : {...this.state.data, [e.target.name]: e.target.value}
+            data: {...this.state.data, [e.target.name]: e.target.value}
         });
-    
+
 
     checkPass = e => {
         if (this.state.data.pass === e.target.value) {
@@ -73,14 +72,12 @@ class Registration extends Component {
     };
 
     render() {
-
-
         return (
-
             <div className="window">
-                {this.state.isSuccess ? <Redirect to = "/login"/> : null}
+                {this.state.isSuccess ? <Redirect to="/login"/> : null}
                 <div className="window__RectTop">
-                    <button className="signInTop" > <a className="signInTop__link" href={'http://localhost:3000/login'}>sign in</a></button>
+                    <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/login'}>sign
+                        in</a></button>
                 </div>
                 <div className="window__mainBg">
                     <div className="window__mainWindow">

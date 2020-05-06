@@ -4,6 +4,7 @@ import MenuBar from './MenuBar';
 import {monthModel} from "../../models/MonthModel";
 import { selectModel } from '../../models/SelectModel';
 import Week from "../calendar_week/Week";
+import DayView from "../day_view/DayView"
 import {observer} from "mobx-react";
 import Calendar from '../calendar/Calendar';
 
@@ -17,7 +18,7 @@ class Bar extends Component {
             case 'week':
                 return <Week/>
             case 'day':
-                //todo
+                return <DayView/>
             default:
                 break;
         }
