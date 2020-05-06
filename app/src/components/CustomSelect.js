@@ -26,6 +26,12 @@ class CustomSelect extends React.Component {
                 color   : "#F14048"
             }
         }),
+        // random code from internet, but it work
+        option: (provided, state) => ({
+            ...provided,
+            color       : '#000000',
+            backgroundColor: state.isSelected ? '#e4e4e4' : '#FFFFFF'
+        }),
     };
 
     constructor(props) {
