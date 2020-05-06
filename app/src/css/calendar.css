@@ -79,6 +79,7 @@ html, body {
     font-family: Oxygen;
     background-color: #ffffff;
     border-style: solid;
+    border-color: #FFFFFF;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     font-size: 18px;
