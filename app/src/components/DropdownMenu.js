@@ -60,7 +60,7 @@ class DropdownMenu extends React.Component {
         }
 
         return (
-            <div  className="dropdown" >
+            <div className="dropdown" style={{ zIndex: userModel.userEditIsOpen ? 0 : 300 }}>
                 <div className="cal-wind__auth-bar__employee" onClick={this.showDropdownMenu}>Employee</div>
                 <img id="vector-image" className="cal-wind__auth-bar__employee-info-btn" alt="" src={vectors} onClick={this.showDropdownMenu}/>
                 { this.state.displayMenu ? (

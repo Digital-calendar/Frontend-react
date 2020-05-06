@@ -27,7 +27,6 @@ const customStyles = {
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',
-        // display: 'inline-block',
     }
 };
 
