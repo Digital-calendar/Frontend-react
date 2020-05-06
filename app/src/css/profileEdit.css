@@ -1,0 +1,243 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+}
+
+.text-style,
+.window-title-style {
+  font-family: 'Oxygen', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  color: #000000;
+}
+
+.window-title-style {
+  font-weight: lighter;
+  margin: auto;
+}
+
+.empty-icon-style {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  margin-left: 15px;
+}
+
+.icon-style {
+  visibility: hidden;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  margin-left: 15px;
+}
+
+/*.window-form,*/
+.window-content,
+.content-container,
+.field-column-container,
+.title-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.window-upper-panel,
+.field-row-container,
+.button-container,
+.button-style {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.window-form {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 15%;
+  bottom: 10%;
+  margin: 0 auto;
+  justify-content: stretch;
+  flex-wrap: nowrap;
+  width: 200px;
+  height: 70%;
+  min-height: 325px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+}
+
+.window-upper-panel {
+  padding-left: 25px;
+  height: 25px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.window-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.window-content::-webkit-scrollbar {width: 4px; }
+.window-content:hover::-webkit-scrollbar-thumb {background: #BDBDBD;}
+
+.content-container{
+  margin: 5% 5%;
+}
+
+.field-column-container {
+  margin-bottom: 10px;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.field-row-container {
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+
+}
+
+.input-label {
+  color: #BDBDBD;
+}
+
+.input-field-style {
+  flex-grow: 1;
+  width: 100%;
+  padding-left: 2%;
+  height: 25px;
+  background: rgba(255, 255, 255, .5); /* #FFFFFF */
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, .25);
+  border-radius: 2px;
+  border: 1px solid rgba(189, 189, 189, .5); /* #BDBDBD */
+  transition: 0.3s;
+}
+
+.input-field-style::-webkit-input-placeholder {
+  color: #BDBDBD;
+}
+
+.input-field-style:focus {
+  outline: none;
+  border-color: #2f2f2f;
+  transition: 0.3s;
+}
+
+.title-item {
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #000000;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
+}
+
+.button-container {
+  margin-top: 35px;
+  margin-bottom: 25px;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+}
+
+.button-style {
+  margin-left: 25px;
+  position: relative;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 150px;
+  height: 30px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+  border: 0;
+  border-radius: 8px;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.button-style:before {
+  content: "";
+  background-color: #FFFFFF;
+  position: absolute;
+  top: -200%;
+  right: -200%;
+  bottom: -200%;
+  left: -200%;
+  transform: scale(.001, .001);
+}
+
+.button-style:focus:before {
+  animation: click-effect .6s ease-in-out;
+  background: #FFFFFF;
+}
+
+.button-style:hover {
+  background: #F2F2F2;
+  transition: .1s;
+}
+
+.button-style:active {
+  background: #FFFFFF;
+  transition: .1s;
+}
+
+@keyframes click-effect {
+  50% {
+    transform: scale(1.5, 1.5);
+    opacity: 0;
+  }
+  99% {
+    transform: scale(.001, .001);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(.001, .001);
+    opacity: 1;
+  }
+}
+
+.pass-show-ico {
+  position: relative;
+  right: 30px;
+}
+
+.icon-wrapper {
+  margin-right: 0;
+  margin-left: 0;
+  background: none;
+  display: inline-block;
+}
+
+.valid-ico {
+  transition: all .3s ease;
+}
+
+.pass-field {
+  padding-right: 35px;
+}
+
+/*когда поле пустое (т.е placeholder=" "), убираем отображение иконки*/
+.pass-field:placeholder-shown ~ .icon-wrapper{
+  background: none;
+}
+.pass-field:placeholder-shown ~ .icon-wrapper .valid-ico {
+  opacity: 0;
+}
+
+/*когда в поле введен неправильный формат пароля (< 6 символов) (minlength="6")*/
+.pass-field:invalid ~ .icon-wrapper {
+  background: url("images/userEdit/slash.svg") no-repeat 50% 50%;
+}
+.pass-field:invalid ~ .icon-wrapper .valid-ico {
+  opacity: 0;
+}

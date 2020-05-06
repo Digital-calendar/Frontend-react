@@ -6,17 +6,36 @@ import { selectModel } from '../../models/SelectModel';
 import Week from "../calendar_week/Week";
 import {observer} from "mobx-react";
 import Calendar from '../calendar/Calendar';
-import {loadEvents} from "../../actions/loadEvents";
-import {eventModel} from "../../models/EventModel";
-import {toJS} from "mobx";
+import Modal from 'react-modal'
+import UserEdit from "../UserEdit";
+import {userModel} from "../../models/UserModel";
+
+
+const customStyles = {
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+    },
+    content: {
+        margin: '0 auto',
+        // marginLeft: '0',
+        padding: 0,
+        width: '1000px',
+        overflow: 'hidden',
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        // display: 'inline-block',
+    }
+};
 
 @observer
 class Bar extends Component {
 
     constructor(props) {
         super(props);
-
-
     }
 
     selectView() {
@@ -32,10 +51,22 @@ class Bar extends Component {
         }
     }
 
+    closeModal() {
+        userModel.userEditIsOpen = false;
+    }
+
     render() {
         monthModel.updateMonthInfo();
+
         return (
-          <div>
+            <div>
+              <Modal
+                  style={customStyles}
+                  isOpen={userModel.userEditIsOpen}
+                  onRequestClose={this.closeModal}
+              >
+                  <UserEdit/>
+              </Modal>
               <UserBar />
               <MenuBar />
               {this.selectView()}

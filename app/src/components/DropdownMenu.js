@@ -5,6 +5,7 @@ import vectorsRed from '../css/images/3vectors-red.svg';
 import '../css/dropdown-menu.css';
 import {userModel} from "../models/UserModel";
 import {observer} from 'mobx-react';
+import {monthModel} from "../models/MonthModel";
 
 
 @observer
@@ -42,10 +43,14 @@ class DropdownMenu extends React.Component {
         }
     };
 
-    onSignOut = event => {
+    onSignOut = () => {
         userModel.user = null;
         this.setState({isRedirect: true})
         localStorage.setItem("user",JSON.stringify(null));
+    };
+
+    onEditClick = () => {
+        userModel.userEditIsOpen = true;
     };
 
     render() {
@@ -62,7 +67,7 @@ class DropdownMenu extends React.Component {
                         <ul>
                             <li className="cal-wind__auth-bar__employee-name"><Link to="#">{userModel.user.first_name}<br/>{userModel.user.last_name}</Link></li>
                             <li className="cal-wind__auth-bar__employee-position">backend developer</li>
-                            <li className="cal-wind__auth-bar__employee-edit"><Link to="/user/edit">edit</Link></li>
+                            <li className="cal-wind__auth-bar__employee-edit" onClick={this.onEditClick}>edit</li>
                             <li className="cal-wind__auth-bar__employee-sing_out" onClick={this.onSignOut} style={{color: "#4F4F4F"}}>sign out</li>
                         </ul>
                     ):
