@@ -89,6 +89,7 @@ html, body {
     margin-top: 3px;
     justify-self: end;
     width: 150px;
+    outline: none;
 }
 
 .cal-wind__menu-bar__button-year {
