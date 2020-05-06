@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import UserBar from '../bar/UserBar';
 import NewEvent from "./NewEvent";
+import {eventModel} from "../../models/EventModel";
 
 class NewEventPage extends Component {
 
@@ -9,10 +10,9 @@ class NewEventPage extends Component {
         return (
           <div>
               <UserBar/>
-              <NewEvent/>
+              <NewEvent date={eventModel.dayToCreate}/>
           </div>
         );
-
     }
 
 }

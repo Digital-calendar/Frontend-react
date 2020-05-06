@@ -1,13 +1,18 @@
 import {observable, action, toJS} from 'mobx'
 import {monthModel} from "./MonthModel";
+import {userModel} from "./UserModel";
 
 
 export class EventModel{
+
+    @observable
+    dayToCreate = '';
+
     @observable
     events = [];
 
     @observable
-    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE"];
+    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE", "INTERNAL"];
 
     @observable
     isPresent = false;
@@ -24,7 +29,7 @@ export class EventModel{
             .filter(event => {
                 let isFilteredEvent = false;
                 this.filters.forEach(filter => {
-                    if (filter === 'OWN') {
+                    if (filter === 'OWN' && event.id === userModel.user.id) {
                         isFilteredEvent = event.privateEvent || isFilteredEvent;
                     } else {
                         isFilteredEvent = filter === event.eventType || isFilteredEvent;
@@ -52,12 +57,10 @@ export class EventModel{
         if ((monthModel.monthToDisplay - 9) < 0) {
             monthString = '0' + monthString;
         }
+        // console.log('filtered', day, toJS(this.filteredEvents));
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
-        // console.log(formatDay);
-        // console.log(toJS(this.filteredEvents));
         this.dayEvents = this.filteredEvents
             .filter(event => {
-                console.log(event.timestamp.startsWith(formatDay));
                 return event.timestamp.startsWith(formatDay);
             })
     }
