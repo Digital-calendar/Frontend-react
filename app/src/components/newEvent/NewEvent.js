@@ -151,7 +151,7 @@ class NewEvent extends Component {
         }
 
         if (this.state.isRedirect) {
-            return <Redirect to='/calendar'/>
+            return <Redirect from='/newEvent' to='/calendar'/>
         }
 
 

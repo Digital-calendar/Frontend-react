@@ -61,12 +61,15 @@ class DayDropdownMenu extends React.Component {
         // console.log(toJS(eventModel.dayEvents));
     };
 
-    hideDropdownMenu = event => {
+    hideDropdownMenu = () => {
         if (!this.state.isRedirect) {
-            document.getElementById(this.id.toString()).setAttribute("visibility", "hidden");
-            this.setState({displayMenu: false}, () => {
-                document.removeEventListener('click', this.hideDropdownMenu);
-            });
+            const menu = document.getElementById(this.id.toString());
+            if (menu != null) {
+                menu.setAttribute("visibility", "hidden");
+                this.setState({displayMenu: false}, () => {
+                    document.removeEventListener('click', this.hideDropdownMenu);
+                });
+            }
         }
     };
 
