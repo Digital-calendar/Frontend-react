@@ -8,7 +8,7 @@ class DayView extends Component {
 
     render() {
         return (
-            <div className="window" style={{height: window.innerHeight - 86}}>
+            <div className="window" style={{height: window.innerHeight - 80}}>
 
                 <div className="window__empty"/>
 
