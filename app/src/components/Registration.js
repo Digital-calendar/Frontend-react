@@ -23,7 +23,7 @@ class Registration extends Component {
 
      submitForm = async e => {
         e.preventDefault();
-        this.state.data.pass = md5(this.state.data.pass);
+        // this.state.data.pass = md5(this.state.data.pass);
         try {
             const resp = await fetch("/api/users/sign_up", {
                 method: "POST",

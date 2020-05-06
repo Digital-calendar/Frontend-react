@@ -6,6 +6,7 @@ import CustomSelect from '../CustomSelect';
 import {observer} from "mobx-react";
 import {monthModel} from "../../models/MonthModel";
 import {Redirect} from 'react-router-dom';
+import {eventModel} from "../../models/EventModel";
 
 
 const imageStyle = {
@@ -79,6 +80,7 @@ class MenuBar extends Component {
                 break;
             default:
         }
+        eventModel.isPresent = false;
     };
 
     onNewEventClick = () => {
@@ -88,9 +90,8 @@ class MenuBar extends Component {
     };
 
     render() {
-        console.log(monthModel.monthArray);
         if (this.state.isRedirect) {
-            return <Redirect to='/newEvent'/>
+            return <Redirect from='/calendar' to='/newEvent'/>
         }
 
 

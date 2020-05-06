@@ -31,16 +31,17 @@ class NewEvent extends Component {
         this.state = {
             isRedirect: false,
             title: '',
-            date: '',
+            date: this.props.date,
             time: '',
             location: '',
             isPrivate: true,
             eventType: 'INTERNAL',
             contactInfo: '',
-            address: '',
+            contactName: '',
             description: '',
             options: [],
         };
+
     }
 
     getSelectedUsers = () => {
@@ -61,9 +62,11 @@ class NewEvent extends Component {
             location: this.state.location,
             eventType: this.state.eventType,
             contactInfo: this.state.contactInfo,
+            contactName: this.state.contactName,
             description: this.state.description,
             participants: this.getSelectedUsers(),
-            privateEvent: this.state.isPrivate
+            privateEvent: this.state.isPrivate,
+            userID: userModel.user.id
         });
         this.onCancelClick();
     };
@@ -131,7 +134,7 @@ class NewEvent extends Component {
 
     onAddressInput = event => {
         this.setState({
-            address: event.target.value
+            contactName: event.target.value
         })
     };
 
@@ -143,16 +146,14 @@ class NewEvent extends Component {
 
 
     render() {
-        // console.log(toJS(userModel.users));
-        // console.log(this.state.options);
-
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
         }
 
         if (this.state.isRedirect) {
-            return <Redirect to='/calendar'/>
+            return <Redirect from='/newEvent' to='/calendar'/>
         }
+
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
@@ -165,6 +166,7 @@ class NewEvent extends Component {
                         alt="X"
                         style={{outline: "none"}}
                         tabIndex="13"
+                        onClick={this.onCancelClick}
                     />
                 </div>
 
@@ -211,6 +213,7 @@ class NewEvent extends Component {
                                     autoComplete="off"
                                     tabIndex="2"
                                     required
+                                    value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
                                 <label htmlFor="time"></label>

@@ -6,10 +6,19 @@ import { selectModel } from '../../models/SelectModel';
 import Week from "../calendar_week/Week";
 import {observer} from "mobx-react";
 import Calendar from '../calendar/Calendar';
+import {loadEvents} from "../../actions/loadEvents";
+import {eventModel} from "../../models/EventModel";
+import {toJS} from "mobx";
 
 @observer
 class Bar extends Component {
-    
+
+    constructor(props) {
+        super(props);
+
+
+    }
+
     selectView() {
         switch (selectModel.currentView) {
             case 'month':

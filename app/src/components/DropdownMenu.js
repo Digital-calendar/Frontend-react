@@ -45,6 +45,7 @@ class DropdownMenu extends React.Component {
     onSignOut = event => {
         userModel.user = null;
         this.setState({isRedirect: true})
+        localStorage.setItem("user",JSON.stringify(null));
     };
 
     render() {
