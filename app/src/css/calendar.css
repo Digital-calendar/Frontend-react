@@ -50,6 +50,7 @@ html, body {
     text-align: left;
     height: 40px;
     padding-top: 2px;
+    outline: none;
 }
 
 .cal-wind__menu-bar__button-month:hover {
