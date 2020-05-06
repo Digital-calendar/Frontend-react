@@ -27,7 +27,7 @@ class DayDropdownMenu extends React.Component {
             isEventsNotPresent: true,
             events: [],
             eventTypeView: [],
-            dropDownShifts: [],
+            dropDownShift: '',
         };
         // eventModel.filteredEvents()
         eventModel.formDayEvents(this.props.number);
@@ -91,7 +91,7 @@ class DayDropdownMenu extends React.Component {
                     alt="private-filter" />);
             } else {
                 switch (event.eventType) {
-                    case 'OWN':
+                    case 'INTERNAL':
                         views.push(<img
                             className="day-list-item-filter"
                             src={internalImage}
@@ -120,27 +120,30 @@ class DayDropdownMenu extends React.Component {
     };
 
     formDropDownMenuShifts = () => {
-        const shifts = [];
+        let shift = '';
         if (this.props.isNormal) {
-            switch (this.state.events.length) {
+            switch (eventModel.dayEvents.length) {
                 case 0:
-                    shifts.push('-4%');
+                    shift = '-4%';
                     break;
                 case 1:
-                    shifts.push('-9%');
+                    shift = '-9%';
                     break;
                 case 2:
-                    shifts.push('-14%');
+                    shift = '-14%';
                     break;
                 case 3:
-                    shifts.push('-19%');
+                    shift = '-19%';
                     break;
                 default:
-                    shifts.push('-24%');
+                    shift = '-24%';
             }
         } else {
-            shifts.push('-4%');
+            shift = '-4%';
         }
+        this.setState({
+            dropDownShift: shift
+        })
     };
 
     render() {
@@ -173,7 +176,7 @@ class DayDropdownMenu extends React.Component {
                     }
                     {/*<div className="days-table__day-submenu"></div>*/}
                 </button>
-                <div id={this.id} className="day-dropdown" style={{ marginTop: this.props.isNormal ? "-27%" : "-4%" }}>
+                <div id={this.id} className="day-dropdown" style={{ marginTop: this.props.isNormal ? this.state.dropDownShift : "-4%" }}>
                 { this.state.displayMenu ?
                         <div className="wrapper2">
                         <ul className="day-list">

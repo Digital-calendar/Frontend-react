@@ -5,6 +5,7 @@ import {observer} from "mobx-react";
 import Day from "./Day";
 import DayDropdownMenu from "./DayDropdownMenu";
 import {eventModel} from "../../models/EventModel";
+import {loadEvents} from "../../actions/loadEvents";
 
 @observer
 class Calendar extends Component {
@@ -16,6 +17,8 @@ class Calendar extends Component {
         this.arrayWeek = [1, 2, 3, 4, 5, 6, 7];
         this.arrayMonth = [];
         this.height = document.documentElement.clientHeight;
+        this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-01';
+        this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-31';
     }
 
     formMonthArray = () => {
@@ -29,16 +32,17 @@ class Calendar extends Component {
         this.arrayMonth = newArray;
     };
 
-    // componentDidMount() {
-    //     loadEvents();
-    //     console.log(eventModel.events)
-    // }
+
 
     render() {
         // console.log(toJS(eventModel.events))
 
 
         this.formMonthArray();
+        loadEvents();
+        eventModel.filter();
+        // eventModel.periodFiltered(this.start, this.end)
+
 
         return (
             <div className="wrapper" style={{height: this.height}}>

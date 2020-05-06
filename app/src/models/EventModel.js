@@ -8,7 +8,7 @@ export class EventModel{
     events = [];
 
     @observable
-    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE"];
+    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE", "INTERNAL"];
 
     @observable
     isPresent = false;
@@ -53,7 +53,6 @@ export class EventModel{
         if ((monthModel.monthToDisplay - 9) < 0) {
             monthString = '0' + monthString;
         }
-        this.filter();
         // console.log('filtered', day, toJS(this.filteredEvents));
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
         this.dayEvents = this.filteredEvents
