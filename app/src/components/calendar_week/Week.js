@@ -63,8 +63,8 @@ class Week extends Component {
         }
 
         return (
-            <div class="main">
-                <div class="wkd-bar">
+            <div class="main" >
+                <div class="wkd-bar" >
                     <div class="events-wind__weekdays-bar__wkd-prev-btn">
                         <button class="wkd-bar__prev-btn" onClick={this.handleLeftClick}>
                             <img src={require("../../css/images/arrow-left.svg")} alt="arrow-left"/>
@@ -99,7 +99,7 @@ class Week extends Component {
                     </div>
                 </div>
 
-                <div class="events-table">
+                <div class="events-table" style={{height: window.innerHeight - 115}}>
 
                     {
                         monthModel.arrayWeek.map((date, index) => {

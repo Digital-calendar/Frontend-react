@@ -78,26 +78,30 @@ class DayEvents extends Component {
 
 
         return (
-            <div className="events-table__column">
-                {
-                    this.getDayEvents(this.props.day).map((event, index) => {
-                            return <div key={index} className="events-table__column__event">
-                                <div className="events-table__column__event__text">
-                                    {event.title}
-                                </div>
-                                <div className="events-table__column__event__time-and-filters">
-                                    <div className="events-table__column__event__time">
-                                        {event.timestamp.slice(-5)}
-                                    </div>
-                                    <div className="filters">
-                                        {this.getMarks(event)}
-                                    </div>
-                                </div>
-                            </div>
 
-                        }
-                    )
-                }
+            <div className="events-table__column">
+                <div className="events-table__column_container">
+                    {
+                        this.getDayEvents(this.props.day).map((event, index) => {
+                                return <div key={index} className="events-table__column__event">
+                                    <div className="events-table__column__event__text">
+                                        {event.title}
+                                    </div>
+                                    <div className="events-table__column__event__time-and-filters">
+                                        <div className="events-table__column__event__time">
+                                            {event.timestamp.slice(-5)}
+                                        </div>
+                                        <div className="filters">
+                                            {this.getMarks(event)}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        )
+
+                    }
+                </div>
             </div>
 
 
