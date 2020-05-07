@@ -5,6 +5,7 @@ import octionEyeClosedImage from '../css/images/userEdit/octicon_eye-closed.svg'
 import octionEyeImgae from '../css/images/userEdit/octicon_eye.svg';
 import contentSaveImage from '../css/images/userEdit/content-save.svg';
 import checkImage from '../css/images/userEdit/check.svg';
+import slashImage from '../css/images/userEdit/slash.svg';
 import {userModel} from "../models/UserModel";
 import {editUser} from "../actions/editUser";
 
@@ -15,18 +16,31 @@ class UserEdit extends Component {
         super(props);
 
         const pos = userModel.user.position === null ? '' : userModel.user.position;
-        const city = userModel.user.city === null ? '' : userModel.user.city;
-        const phone = userModel.user.phone === null ? '' : userModel.user.phone;
-
+        const ct = userModel.user.city === null ? '' : userModel.user.city;
+        const phn = userModel.user.phone === null ? '' : userModel.user.phone;
         this.state = {
             first_name: userModel.user.first_name,
             last_name: userModel.user.last_name,
             position: pos,
-            phone: phone,
-            city: city,
+            phone: phn,
+            city: ct,
             new_password: '',
             confirm_new_password: '',
+            checkPassword: null,
+            checkConfirmPassword: null,
         }
+    }
+
+    componentDidMount() {
+        const checkPassword = document.getElementById("password-valid-ico");
+        const checkConfirmPassword = document.getElementById("confirm-password-valid-ico");
+        this.setState({
+            checkPassword: checkPassword,
+            checkConfirmPassword: checkConfirmPassword,
+        });
+
+        console.log(checkConfirmPassword);
+        console.log(checkPassword);
     }
 
     onFirstNameChange = event => {
@@ -62,14 +76,33 @@ class UserEdit extends Component {
     onNewPasswordChange = event => {
         this.setState({
             new_password: event.target.value,
-        })
+        });
+        if (event.target.value === '') {
+            this.state.checkConfirmPassword.setAttribute('opacity', "0");
+        } else {
+            this.state.checkConfirmPassword.setAttribute('opacity', "1");
+        };
     };
 
     onConfirmNewPasswordChange = event => {
         this.setState({
             confirm_new_password: event.target.value,
-        })
+        });
+        if (event.target.value === '') {
+            this.state.checkConfirmPassword.setAttribute('opacity', "0");
+        } else {
+            if (event.target.value === this.state.new_password) {
+                this.state.checkConfirmPassword.setAttribute('opacity', "1");
+                this.state.checkConfirmPassword.setAttribute("src", checkImage)
+            } else {
+                this.state.checkConfirmPassword.setAttribute("src", slashImage)
+                this.state.checkConfirmPassword.setAttribute('opacity', "1");
+
+            }
+        }
     };
+
+
 
     onSaveUserEdition = () => {
         if (this.state.new_password === this.state.confirm_new_password) {
@@ -109,9 +142,6 @@ class UserEdit extends Component {
     };
 
     render() {
-
-        // console.log(this.state);
-
         return (
             <div
                 name="profile-edit-form"
@@ -275,7 +305,7 @@ class UserEdit extends Component {
                                 />
                                 <img id="img1" src={octionEyeClosedImage} alt="" className="pass-show-ico" onClick={this.onEyeClick}/>
                                     <a className="empty-icon-style icon-wrapper">
-                                        <img src={checkImage} alt="" className="valid-ico"/>
+                                        <img id="password-valid-ico" src={checkImage} alt="" className="valid-ico"/>
                                     </a>
                             </div>
                         </div>
@@ -302,9 +332,9 @@ class UserEdit extends Component {
                                     onChange={this.onConfirmNewPasswordChange}
                                 />
                                 <img id="img2" src={octionEyeClosedImage} alt="" className="pass-show-ico" onClick={this.onEyeClick}/>
-                                    <a className="empty-icon-style icon-wrapper">
-                                        <img src={checkImage} alt="" className="valid-ico"/>
-                                    </a>
+                                <a className="empty-icon-style icon-wrapper">
+                                    <img id="confirm-password-valid-ico" src={checkImage} alt="" className="valid-ico"/>
+                                </a>
                             </div>
                         </div>
 

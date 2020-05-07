@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx'
 import moment from "moment";
-import Week from "../components/calendar_week/Week"
 
 export class MonthModel{
 
@@ -46,7 +45,7 @@ export class MonthModel{
     @action
     getMonday = (d) => {
         let day = d.getDay()
-        let diff = d.getDate() - day + (day == 0 ? -6:1);
+        let diff = d.getDate() - day + (day === 0 ? -6:1);
         return new Date(d.setDate(diff));
     }
 
