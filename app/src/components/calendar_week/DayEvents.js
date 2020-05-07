@@ -26,7 +26,7 @@ class DayEvents extends Component {
         }
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
 
-        eventModel.dayEvents = eventModel.events
+        eventModel.events
             .filter(event => {
 
                 if (event.timestamp.slice(0, 10) === formatDay) {
