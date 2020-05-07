@@ -53,10 +53,15 @@ class Login extends Component {
         
         return (
 
-            <div className="window">
-                <div className="window__RectTop"/>
-                <div className="window__mainBg">
-                    <div className="window__mainWindow">
+            <div className="windowRegistration">
+
+                <div className="windowRegistration__RectTop">
+                    <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/'}>sign
+                        up</a></button>
+                </div>
+
+                <div className="windowRegistration__mainBg">
+                    <div className="windowRegistration__mainWindow">
                         <div className="window__mainWindow__RectCenter"/>
                         <div className="window__mainWindow__formGroup">
                             <form
