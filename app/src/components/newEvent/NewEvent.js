@@ -28,6 +28,8 @@ class NewEvent extends Component {
 
         loadUsers();
         userModel.selectedUsers = [];
+        const contact = userModel.user.phone === null ? '' : userModel.user.phone;
+
         this.state = {
             isRedirect: false,
             title: '',
@@ -36,8 +38,8 @@ class NewEvent extends Component {
             location: '',
             isPrivate: true,
             eventType: 'INTERNAL',
-            contactInfo: '',
-            contactName: '',
+            contactInfo: contact,
+            contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
             description: '',
             options: [],
         };
@@ -272,7 +274,7 @@ class NewEvent extends Component {
                                         alt=""
                                         className="icon-style"
                                     />
-                                    <div className="window-title-style" style={{marginLeft: "3px"}}>
+                                    <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
                                         Private event
                                     </div>
                                 </div>
@@ -318,6 +320,7 @@ class NewEvent extends Component {
                                     placeholder="phone or email"
                                     id="feedback-contact"
                                     form="new-event-form"
+                                    value={this.state.contactInfo}
                                     tabIndex="8"
                                     onChange={this.onContactInput}
                                 />
@@ -338,6 +341,7 @@ class NewEvent extends Component {
                                     id="signature"
                                     form="new-event-form"
                                     tabIndex="9"
+                                    value={this.state.contactName}
                                     onChange={this.onAddressInput}
                                 />
                             </div>

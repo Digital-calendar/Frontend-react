@@ -88,7 +88,6 @@ class DayDropdownMenu extends React.Component {
         });
         this.formEventTypeView();
         this.formDropDownMenuShifts();
-        // console.log(this.props.number, toJS(eventModel.dayEvents));
     }
 
     formEventTypeView = () => {
@@ -167,7 +166,6 @@ class DayDropdownMenu extends React.Component {
 
         const events = this.state.events;
         const views = this.state.eventTypeView;
-        let i = 0;
 
         // console.log(v;iews);
         return (

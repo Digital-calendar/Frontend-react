@@ -19,12 +19,15 @@ const customStyles = {
         bottom: 0,
         right: 0,
         left: 0,
+
     },
     content: {
-        padding: 0,
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',
+        margin: '0 auto',
+        width: '50%',
+        padding: '0'
     }
 };
 
@@ -38,9 +41,9 @@ class Bar extends Component {
     selectView() {
         switch (selectModel.currentView) {
             case 'month':
-                return <Calendar/>
+                return <Calendar/>;
             case 'week':
-                return <Week/>
+                return <Week/>;
             case 'day':
                 //todo
             default:

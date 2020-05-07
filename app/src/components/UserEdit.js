@@ -5,6 +5,8 @@ import octionEyeClosedImage from '../css/images/userEdit/octicon_eye-closed.svg'
 import octionEyeImgae from '../css/images/userEdit/octicon_eye.svg';
 import contentSaveImage from '../css/images/userEdit/content-save.svg';
 import checkImage from '../css/images/userEdit/check.svg';
+import {userModel} from "../models/UserModel";
+import {editUser} from "../actions/editUser";
 
 
 class UserEdit extends Component {
@@ -12,14 +14,85 @@ class UserEdit extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        const pos = userModel.user.position === null ? '' : userModel.user.position;
+        const city = userModel.user.city === null ? '' : userModel.user.city;
+        const phone = userModel.user.phone === null ? '' : userModel.user.phone;
 
+        this.state = {
+            first_name: userModel.user.first_name,
+            last_name: userModel.user.last_name,
+            position: pos,
+            phone: phone,
+            city: city,
+            new_password: '',
+            confirm_new_password: '',
         }
     }
 
+    onFirstNameChange = event => {
+        this.setState({
+            first_name: event.target.value,
+        })
+    };
+
+    onLastNameChange = event => {
+        this.setState({
+            last_name: event.target.value,
+        })
+    };
+
+    onPositionChange = event => {
+        this.setState({
+            position: event.target.value,
+        })
+    };
+
+    onPhoneChange = event => {
+        this.setState({
+            phone: event.target.value,
+        })
+    };
+
+    onCityChange = event => {
+        this.setState({
+            city: event.target.value,
+        })
+    };
+
+    onNewPasswordChange = event => {
+        this.setState({
+            new_password: event.target.value,
+        })
+    };
+
+    onConfirmNewPasswordChange = event => {
+        this.setState({
+            confirm_new_password: event.target.value,
+        })
+    };
+
+    onSaveUserEdition = () => {
+        if (this.state.new_password === this.state.confirm_new_password) {
+            const password = (this.state.new_password === '') ? null : this.state.new_password;
+            console.log(password);
+            editUser({
+                id: userModel.user.id,
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
+                position: this.state.position,
+                phone: this.state.phone,
+                city: this.state.city,
+                pass: password
+            });
+        }
+    };
+
     render() {
+
+        // console.log(this.state);
+
         return (
-            <form
+            <div
                 name="profile-edit-form"
                 className="window-form"
                 style={{width: '300px'}}
@@ -47,11 +120,12 @@ class UserEdit extends Component {
                                     name="first-name"
                                     type="text"
                                     id="first-name"
-                                    value=""
+                                    value={this.state.first_name}
                                     form="profile-edit-form"
                                     autoComplete="off"
                                     tabIndex="1"
                                     required
+                                    onChange={this.onFirstNameChange}
                                 />
                                 <div className="empty-icon-style"></div>
                             </div>
@@ -70,11 +144,12 @@ class UserEdit extends Component {
                                     name="last-name"
                                     type="text"
                                     id="last-name"
-                                    value=""
+                                    value={this.state.last_name}
                                     form="profile-edit-form"
                                     autoComplete="off"
                                     tabIndex="2"
                                     required
+                                    onChange={this.onLastNameChange}
                                 />
                                 <div className="empty-icon-style"></div>
                             </div>
@@ -93,10 +168,11 @@ class UserEdit extends Component {
                                     name="position"
                                     type="text"
                                     id="position"
-                                    value=""
+                                    value={this.state.position}
                                     form="profile-edit-form"
                                     autoComplete="off"
                                     tabIndex="3"
+                                    onChange={this.onPositionChange}
                                 />
                                 <div className="empty-icon-style"></div>
                             </div>
@@ -115,11 +191,12 @@ class UserEdit extends Component {
                                     name="phone"
                                     type="tel"
                                     id="phone"
-                                    value=""
+                                    value={this.state.phone}
                                     pattern="\+?[0-9]\s?[(]{0,1}[0-9]{3}[)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}"
                                     form="profile-edit-form"
                                     autoComplete="off"
                                     tabIndex="4"
+                                    onChange={this.onPhoneChange}
                                 />
                                 <div className="empty-icon-style"></div>
                             </div>
@@ -138,10 +215,11 @@ class UserEdit extends Component {
                                     name="city"
                                     type="text"
                                     id="city"
-                                    value=""
+                                    value={this.state.city}
                                     form="profile-edit-form"
                                     autoComplete="off"
                                     tabIndex="5"
+                                    onChange={this.onCityChange}
                                 />
                                 <div className="empty-icon-style"></div>
                             </div>
@@ -172,6 +250,7 @@ class UserEdit extends Component {
                                     placeholder=" "
                                     autoComplete="off"
                                     tabIndex="6"
+                                    onChange={this.onNewPasswordChange}
                                 />
                                 <img src={octionEyeImgae} alt="" className="pass-show-ico"/>
                                     <a className="empty-icon-style icon-wrapper">
@@ -199,6 +278,7 @@ class UserEdit extends Component {
                                     placeholder=" "
                                     autoComplete="off"
                                     tabIndex="7"
+                                    onChange={this.onConfirmNewPasswordChange}
                                 />
                                 <img src={octionEyeImgae} alt="" className="pass-show-ico"/>
                                     <a className="empty-icon-style icon-wrapper">
@@ -215,7 +295,8 @@ class UserEdit extends Component {
                                 id="save"
                                 formTarget="_self"
                                 tabIndex="8"
-                                onClick="this.blur();">
+                                onClick={this.onSaveUserEdition}
+                            >
                                 <img src={contentSaveImage} alt=""/>
                                     <div className="text-style">Save</div>
                             </button>
@@ -224,7 +305,7 @@ class UserEdit extends Component {
                     </div>
                 </div>
 
-            </form>
+            </div>
         )
     }
 

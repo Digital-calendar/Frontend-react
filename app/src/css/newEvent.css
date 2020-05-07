@@ -23,6 +23,7 @@ body {
 .icon-style {
   flex-grow: 0;
   margin-right: 1%;
+  visibility: visible;
 }
 
 .invisible-ico {
