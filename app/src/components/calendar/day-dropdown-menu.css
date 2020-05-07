@@ -89,6 +89,11 @@
     padding: 1%;
 }
 
+.day-list-add-button:hover {
+    background: #e5e5e5;
+    color: #000000;
+}
+
 .day-list-time {
     font-family: Oxygen, serif;
     font-style: normal;
