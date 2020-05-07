@@ -63,11 +63,11 @@ class Registration extends Component {
 
     checkPass = e => {
         if (this.state.data.pass === e.target.value) {
-            e.target.style.borderColor = 'white';
-            document.getElementsByClassName('password')[0].style.borderColor = 'white';
+            e.target.style.borderColor = '#FFFFFF';
+            document.getElementsByClassName('RegistrationPassword')[0].style.borderColor = '#FFFFFF';
         } else {
-            e.target.style.borderColor = 'red';
-            document.getElementsByClassName('password')[0].style.borderColor = 'red';
+            e.target.style.borderColor = '#F14048';
+            document.getElementsByClassName('RegistrationPassword')[0].style.borderColor = '#F14048';
         }
     };
 
