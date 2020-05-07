@@ -3,41 +3,50 @@ body {
     overflow: hidden;
 }
 
-.window__RectTop {
-    position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 0%;
-    bottom: 95%;
-    background: #f2f2f2;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.windowRegistration {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.window__mainWindow__RectCenter {
+.windowRegistration__RectTop {
+    width: 100%;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    background: #f2f2f2;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+.windowRegistration__mainWindow__RectCenter {
     height: 100px;
     background: url(images/bgInFormReg.png), #e1e1e1;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px 10px 0px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 10%;
 }
 
-.window__mainBg {
-    position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 5%;
-    bottom: 0%;
+.windowRegistration__mainBg {
+    width: 100%;
+    height: 100%;
     background: #f2f2f2;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, .25);
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
 .signInTop {
     display: flex;
     border: none;
-    margin: 0.6% 1% 0 auto;
     justify-content: center;
-    font-family: Oxygen;
+    margin-right: 30px;
+    font-family: Oxygen, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -45,32 +54,40 @@ body {
     text-transform: lowercase;
     font-feature-settings: "liga" off;
     color: #333333;
+    background: inherit;
 }
 
-.window__mainWindow {
+.windowRegistration__mainWindow {
     width: 500px;
     height: 550px;
-    margin: 5% auto;
+    margin: auto;
     background: #ffffff;
-    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, .25);
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
 }
 
-.window__mainWindow__formGroup {
-    padding-top: 9%;
-    text-align: center;
+.windowRegistration__mainWindow__formGroup {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
 }
 
-.firstName,
-.lastName,
-.email,
-.password,
-.passRepeat {
-    margin: 2%;
-    padding-left: 2%;
-    width: 400px;
+
+
+.RegistrationFirstName,
+.RegistrationLastName,
+.RegistrationEmail,
+.RegistrationPassword,
+.RegistrationPassRepeat {
     height: 35px;
+    width: 85%;
     background: #f9f9f9;
+    margin-bottom: 4%;
     box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     font-family: "Oxygen", sans-serif;
@@ -81,13 +98,25 @@ body {
     line-height: 23px;
 }
 
-.signUp {
-    margin: 4%;
+.RegistrationFirstName:focus,
+.RegistrationLastName:focus,
+.RegistrationEmail:focus,
+.RegistrationPassword:focus,
+.RegistrationPassRepeat:focus {
+    outline: none;
+    border-color: #2f2f2f;
+    transition: .3s;
+}
+
+.RegistrationSignUp {
     width: 85px;
     height: 35px;
+    margin-left: 35%;
+    margin-top: 5%;
     background: #f9f9fa;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
     border-radius: 8px;
+    border-width: 0;
     font-family: "Oxygen", sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -97,6 +126,11 @@ body {
     color: #4f4f4f;
     border-style: solid;
     text-align: center;
+}
+
+.RegistrationSignUp:hover {
+    background: #F2F2F2;
+    transition: .1s;
 }
 
 .signInTop__link {
