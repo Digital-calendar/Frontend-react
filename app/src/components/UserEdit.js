@@ -87,6 +87,27 @@ class UserEdit extends Component {
         }
     };
 
+    onEyeClick = event => {
+        if (event.target.id === "img1") {
+            const input = document.getElementById("new-password");
+            this.onVisibilityPasswordChange(event, input);
+        } else {
+            const input = document.getElementById("confirm-new-password");
+            this.onVisibilityPasswordChange(event, input);
+        }
+
+    };
+
+    onVisibilityPasswordChange = (event, input) => {
+        if (event.target.getAttribute("src") === octionEyeImgae) {
+            event.target.setAttribute("src", octionEyeClosedImage);
+            input.setAttribute("type", "password");
+        } else {
+            event.target.setAttribute("src", octionEyeImgae);
+            input.setAttribute("type", "text");
+        }
+    };
+
     render() {
 
         // console.log(this.state);
@@ -252,7 +273,7 @@ class UserEdit extends Component {
                                     tabIndex="6"
                                     onChange={this.onNewPasswordChange}
                                 />
-                                <img src={octionEyeImgae} alt="" className="pass-show-ico"/>
+                                <img id="img1" src={octionEyeClosedImage} alt="" className="pass-show-ico" onClick={this.onEyeClick}/>
                                     <a className="empty-icon-style icon-wrapper">
                                         <img src={checkImage} alt="" className="valid-ico"/>
                                     </a>
@@ -280,7 +301,7 @@ class UserEdit extends Component {
                                     tabIndex="7"
                                     onChange={this.onConfirmNewPasswordChange}
                                 />
-                                <img src={octionEyeImgae} alt="" className="pass-show-ico"/>
+                                <img id="img2" src={octionEyeClosedImage} alt="" className="pass-show-ico" onClick={this.onEyeClick}/>
                                     <a className="empty-icon-style icon-wrapper">
                                         <img src={checkImage} alt="" className="valid-ico"/>
                                     </a>
