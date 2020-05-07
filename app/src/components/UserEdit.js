@@ -141,6 +141,10 @@ class UserEdit extends Component {
         }
     };
 
+    onXClick = () => {
+        userModel.userEditIsOpen = false;
+    };
+
     render() {
         return (
             <div
@@ -151,7 +155,7 @@ class UserEdit extends Component {
 
                 <div className="window-upper-panel">
                     <div className="window-title-style">Profile Edit</div>
-                    <img src={xImage} alt="X"/>
+                    <img src={xImage} alt="X" onClick={this.onXClick}/>
                 </div>
 
                 <div className="window-content">
