@@ -26,6 +26,7 @@ html, body {
 
 .cal-wind__menu-bar {
     display: flex;
+    align-content: center;
     background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     color: black;
@@ -44,12 +45,14 @@ html, body {
     width: 100px;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #ffffff;
     border-style: none;
     font-size: 18px;
     text-align: left;
     height: 40px;
     padding-top: 2px;
+    outline: none;
 }
 
 .cal-wind__menu-bar__button-month:hover {
@@ -61,6 +64,7 @@ html, body {
     width: 100px;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #ffffff;
     border-style: none;
     font-size: 18px;
@@ -76,6 +80,7 @@ html, body {
     font-family: Oxygen;
     background-color: #ffffff;
     border-style: solid;
+    border-color: #FFFFFF;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     font-size: 18px;
@@ -85,6 +90,13 @@ html, body {
     margin-top: 3px;
     justify-self: end;
     width: 150px;
+    outline: none;
+}
+
+.cal-wind__up-bar__new-event-button:hover {
+    background: #F2F2F2;
+    border-color: #F2F2F2;
+    transition: .1s;
 }
 
 .cal-wind__menu-bar__button-year {

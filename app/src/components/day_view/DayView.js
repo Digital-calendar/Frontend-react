@@ -8,7 +8,9 @@ class DayView extends Component {
 
     render() {
         return (
-            <div className="window">
+            <div className="window" style={{height: window.innerHeight - 80}}>
+
+                <div className="window__empty"/>
 
                 <div className="window__main">
                     <div className="window__mainWindow__BgTop">
@@ -16,12 +18,10 @@ class DayView extends Component {
                     </div>
 
                     <div className="window__mainWindow__content">
-                        <p className="window__mainWindow__content__headline">
-                            The quick brown fox jumped over the
-                            lazy green
-                            dog
-                        </p>
-                        <p className="window__mainWindow__content__description">
+                        <div className="window__mainWindow__content__headline">
+                            The quick brown fox jumped over the lazy green dog
+                        </div>
+                        <div className="window__mainWindow__content__description">
                             Far far away, behind the word
                             mountains, far
                             from the countries Vokalia and Consonantia, there live the blind texts. Separated they
@@ -30,23 +30,23 @@ class DayView extends Component {
                             with the
                             necessary
                             regelialia
-                        </p>
-                        <p className="window__mainWindow__content__time">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/timePin.svg")} alt="timePin" className="timePin"/> 27.02.2020 , 13:00
-                        </p>
-                        <p className="window__mainWindow__content__location">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/locationPin.svg")}  alt="locationPin" className="locationPin"/> St.
                             Petersburg,
                             Nevsky Prospect, 28.
-                        </p>
-                        <p className="window__mainWindow__content__email">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/emailPin.svg")}  alt="emailPin"
                                  className="emailPin"/> exampleMail@mail.com ,
                             Your name.
-                        </p>
-                        <div className="window__mainWindow__content__eventMark">
-                            <p className="window__mainWindow__content__eventMark__privateEvent">Private event</p>
-                            <p className="window__mainWindow__content__eventMark__externalEvent">External event</p>
+                        </div>
+                        <div className="window__mainWindow__content__eventMark_container">
+                            <div className="window__mainWindow__content__eventMark privateEvent_border_color">Private event</div>
+                            <div className="window__mainWindow__content__eventMark externalEvent_border_color">External event</div>
                         </div>
                         <div className="window__mainWindow__content__buttons">
                             <button className="window__mainWindow__content__buttons__edit">
@@ -64,12 +64,10 @@ class DayView extends Component {
                     </div>
 
                     <div className="window__mainWindow__content">
-                        <p className="window__mainWindow__content__headline">
-                            The quick brown fox jumped over the
-                            lazy green
-                            dog
-                        </p>
-                        <p className="window__mainWindow__content__description">
+                        <div className="window__mainWindow__content__headline">
+                            The quick brown fox jumped over the lazy green dog
+                        </div>
+                        <div className="window__mainWindow__content__description">
                             Far far away, behind the word
                             mountains, far
                             from the countries Vokalia and Consonantia, there live the blind texts. Separated they
@@ -78,23 +76,31 @@ class DayView extends Component {
                             with the
                             necessary
                             regelialia
-                        </p>
-                        <p className="window__mainWindow__content__time">
+                            Far far away, behind the word
+                            mountains, far
+                            from the countries Vokalia and Consonantia, there live the blind texts. Separated they
+                            live in
+                            Bookmarksgrove right. A small river named Duden flows by their place and supplies it
+                            with the
+                            necessary
+                            regelialia
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/timePin.svg")} alt="timePin" className="timePin"/> 27.02.2020 , 13:00
-                        </p>
-                        <p className="window__mainWindow__content__location">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/locationPin.svg")}  alt="locationPin" className="locationPin"/> St.
                             Petersburg,
                             Nevsky Prospect, 28.
-                        </p>
-                        <p className="window__mainWindow__content__email">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/emailPin.svg")}  alt="emailPin"
                                  className="emailPin"/> exampleMail@mail.com ,
                             Your name.
-                        </p>
-                        <div className="window__mainWindow__content__eventMark">
-                            <p className="window__mainWindow__content__eventMark__privateEvent">Private event</p>
-                            <p className="window__mainWindow__content__eventMark__externalEvent">External event</p>
+                        </div>
+                        <div className="window__mainWindow__content__eventMark_container">
+                            <div className="window__mainWindow__content__eventMark privateEvent_border_color">Private event</div>
+                            <div className="window__mainWindow__content__eventMark externalEvent_border_color">External event</div>
                         </div>
                         <div className="window__mainWindow__content__buttons">
                             <button className="window__mainWindow__content__buttons__edit">
@@ -112,43 +118,37 @@ class DayView extends Component {
                     </div>
 
                     <div className="window__mainWindow__content">
-                        <p className="window__mainWindow__content__headline">
-                            The quick brown fox jumped over the
-                            lazy green
-                            dog
-                        </p>
-                        <p className="window__mainWindow__content__description">
+                        <div className="window__mainWindow__content__headline">
+                            Very very very very very very very very very very very very very very
+                            very very very very very very very very very very very very very very
+                            long headline
+                        </div>
+                        <div className="window__mainWindow__content__description">
                             Far far away, behind the word
                             mountains, far
-                            from the countries Vokalia and Consonantia, there live the blind texts. Separated they
-                            live inns, far
-                            from the countries Vokalia and Consonantia, there live the blind texts. Separated they
-                            live inns, far
-                            from the countries Vokalia and Consonantia, there live the blind texts. Separated they
-                            live inns, far
                             from the countries Vokalia and Consonantia, there live the blind texts. Separated they
                             live in
                             Bookmarksgrove right. A small river named Duden flows by their place and supplies it
                             with the
                             necessary
                             regelialia
-                        </p>
-                        <p className="window__mainWindow__content__time">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/timePin.svg")} alt="timePin" className="timePin"/> 27.02.2020 , 13:00
-                        </p>
-                        <p className="window__mainWindow__content__location">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/locationPin.svg")}  alt="locationPin" className="locationPin"/> St.
                             Petersburg,
                             Nevsky Prospect, 28.
-                        </p>
-                        <p className="window__mainWindow__content__email">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/emailPin.svg")}  alt="emailPin"
                                  className="emailPin"/> exampleMail@mail.com ,
                             Your name.
-                        </p>
-                        <div className="window__mainWindow__content__eventMark">
-                            <p className="window__mainWindow__content__eventMark__privateEvent">Private event</p>
-                            <p className="window__mainWindow__content__eventMark__externalEvent">External event</p>
+                        </div>
+                        <div className="window__mainWindow__content__eventMark_container">
+                            <div className="window__mainWindow__content__eventMark privateEvent_border_color">Private event</div>
+                            <div className="window__mainWindow__content__eventMark externalEvent_border_color">External event</div>
                         </div>
                         <div className="window__mainWindow__content__buttons">
                             <button className="window__mainWindow__content__buttons__edit">
@@ -166,12 +166,10 @@ class DayView extends Component {
                     </div>
 
                     <div className="window__mainWindow__content">
-                        <p className="window__mainWindow__content__headline">
-                            The quick brown fox jumped over the
-                            lazy green
-                            dog
-                        </p>
-                        <p className="window__mainWindow__content__description">
+                        <div className="window__mainWindow__content__headline">
+                            The quick brown fox jumped over the lazy green dog
+                        </div>
+                        <div className="window__mainWindow__content__description">
                             Far far away, behind the word
                             mountains, far
                             from the countries Vokalia and Consonantia, there live the blind texts. Separated they
@@ -180,23 +178,23 @@ class DayView extends Component {
                             with the
                             necessary
                             regelialia
-                        </p>
-                        <p className="window__mainWindow__content__time">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/timePin.svg")} alt="timePin" className="timePin"/> 27.02.2020 , 13:00
-                        </p>
-                        <p className="window__mainWindow__content__location">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/locationPin.svg")}  alt="locationPin" className="locationPin"/> St.
                             Petersburg,
                             Nevsky Prospect, 28.
-                        </p>
-                        <p className="window__mainWindow__content__email">
+                        </div>
+                        <div className="window__mainWindow__content__info">
                             <img src={require("../../css/images/emailPin.svg")}  alt="emailPin"
                                  className="emailPin"/> exampleMail@mail.com ,
                             Your name.
-                        </p>
-                        <div className="window__mainWindow__content__eventMark">
-                            <p className="window__mainWindow__content__eventMark__privateEvent">Private event</p>
-                            <p className="window__mainWindow__content__eventMark__externalEvent">External event</p>
+                        </div>
+                        <div className="window__mainWindow__content__eventMark_container">
+                            <div className="window__mainWindow__content__eventMark privateEvent_border_color">Private event</div>
+                            <div className="window__mainWindow__content__eventMark externalEvent_border_color">External event</div>
                         </div>
                         <div className="window__mainWindow__content__buttons">
                             <button className="window__mainWindow__content__buttons__edit">
@@ -208,6 +206,8 @@ class DayView extends Component {
                         </div>
                     </div>
                 </div>
+
+                <div className="window__empty"/>
 
             </div>
 

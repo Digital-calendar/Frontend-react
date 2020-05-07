@@ -62,29 +62,29 @@ class Registration extends Component {
 
     checkPass = e => {
         if (this.state.data.pass === e.target.value) {
-            e.target.style.borderColor = 'white';
-            document.getElementsByClassName('password')[0].style.borderColor = 'white';
+            e.target.style.borderColor = '#FFFFFF';
+            document.getElementsByClassName('RegistrationPassword')[0].style.borderColor = '#FFFFFF';
         } else {
-            e.target.style.borderColor = 'red';
-            document.getElementsByClassName('password')[0].style.borderColor = 'red';
+            e.target.style.borderColor = '#F14048';
+            document.getElementsByClassName('RegistrationPassword')[0].style.borderColor = '#F14048';
         }
     };
 
     render() {
         return (
-            <div className="window">
+            <div className="windowRegistration">
                 {this.state.isSuccess ? <Redirect to="/login"/> : null}
-                <div className="window__RectTop">
+                <div className="windowRegistration__RectTop">
                     <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/login'}>sign
                         in</a></button>
                 </div>
-                <div className="window__mainBg">
-                    <div className="window__mainWindow">
-                        <div className="window__mainWindow__RectCenter"/>
-                        <div className="window__mainWindow__formGroup">
-                            <form onSubmit={this.submitForm}>
+                <div className="windowRegistration__mainBg">
+                    <div className="windowRegistration__mainWindow">
+                        <div className="windowRegistration__mainWindow__RectCenter"/>
+                        <div>
+                            <form onSubmit={this.submitForm} className="windowRegistration__mainWindow__formGroup">
                                 <input
-                                    className="firstName"
+                                    className="RegistrationFirstName"
                                     type="text"
                                     autoFocus
                                     placeholder="first name"
@@ -93,7 +93,7 @@ class Registration extends Component {
                                     required
                                 />
                                 <input
-                                    className="lastName"
+                                    className="RegistrationLastName"
                                     type="text"
                                     placeholder="last name"
                                     name="last_name"
@@ -101,7 +101,7 @@ class Registration extends Component {
                                     required
                                 />
                                 <input
-                                    className="email"
+                                    className="RegistrationEmail"
                                     type="email"
                                     placeholder="email"
                                     name="email"
@@ -109,7 +109,7 @@ class Registration extends Component {
                                     required
                                 />
                                 <input
-                                    className="password"
+                                    className="RegistrationPassword"
                                     type="password"
                                     placeholder="password"
                                     name="pass"
@@ -117,14 +117,14 @@ class Registration extends Component {
                                     required
                                 />
                                 <input
-                                    className="passRepeat"
+                                    className="RegistrationPassRepeat"
                                     type="password"
                                     placeholder="confirm password"
                                     name="passwordRepeat"
                                     onChange={this.checkPass}
                                     required
                                 />
-                                <input className="signUp" type="submit" value="sign up" name="signUp"/>
+                                <input className="RegistrationSignUp" type="submit" value="sign up" name="signUp"/>
                             </form>
                         </div>
                     </div>

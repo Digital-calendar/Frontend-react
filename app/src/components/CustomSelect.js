@@ -10,7 +10,7 @@ class CustomSelect extends React.Component {
 
     customStyles = {
         container: () => ({
-            minWidth    : '120px',
+            minWidth    : '140px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
             zIndex      : "150",
@@ -26,6 +26,12 @@ class CustomSelect extends React.Component {
             ":hover"    : {
                 color   : "#F14048"
             }
+        }),
+        // random code from internet, but it work
+        option: (provided, state) => ({
+            ...provided,
+            color       : '#000000',
+            backgroundColor: state.isSelected ? '#e4e4e4' : '#FFFFFF'
         }),
     };
 
