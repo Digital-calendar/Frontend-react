@@ -279,7 +279,11 @@ class NewEvent extends Component {
                                         Private event
                                     </div>
                                 </div>
-                                <label className="toggle-switch" id="toggle">
+                                <label
+                                    className="toggle-switch"
+                                    id="toggle"
+                                    style={{visibility: userModel.userEditIsOpen ? "hidden" : "visible"}}
+                                >
                                     <input
                                         name="private-event-toggle"
                                         type="checkbox"

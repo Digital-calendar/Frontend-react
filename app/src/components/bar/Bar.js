@@ -32,22 +32,11 @@ class Bar extends Component {
         }
     }
 
-    closeModal() {
-        userModel.userEditIsOpen = false;
-    }
-
     render() {
         monthModel.updateMonthInfo();
 
         return (
             <div>
-              {/*<Modal*/}
-              {/*    style={customStyles}*/}
-              {/*    isOpen={userModel.userEditIsOpen}*/}
-              {/*    onRequestClose={this.closeModal}*/}
-              {/*>*/}
-              {/*    <UserEdit/>*/}
-              {/*</Modal>*/}
               <UserBar />
               <MenuBar />
               {this.selectView()}
