@@ -1,9 +1,9 @@
-import { observable } from 'mobx'
+import {observable} from 'mobx'
 
 
 export class SelectModel{
     @observable
-    currentView = "month";
+    currentView = "week";
 
 }
 

@@ -8,10 +8,11 @@ class NewEventPage extends Component {
     render() {
 
         return (
-          <div>
-              <UserBar/>
-              <NewEvent date={eventModel.dayToCreate}/>
-          </div>
+            <div>
+                <UserBar/>
+                <NewEvent date={eventModel.dayToCreate}/>
+
+            </div>
         );
     }
 

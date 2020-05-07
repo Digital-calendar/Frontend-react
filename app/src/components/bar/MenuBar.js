@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import monthImage from '../../css/images/month.png';
 import weekImage from '../../css/images/week.svg';
 import dayImage from '../../css/images/day.svg';
@@ -10,22 +10,22 @@ import {eventModel} from "../../models/EventModel";
 
 
 const imageStyle = {
-    width       : '12px',
-    height      : '12px',
-    marginRight : '3px'
+    width: '12px',
+    height: '12px',
+    marginRight: '3px'
 };
 
 const filterOptions = [
-    { value: 'own', label: 'Own' },
-    { value: 'internal', label: 'Internal' },
-    { value: 'external', label: 'External' },
-    { value: 'Correspondence', label: 'Correspondence' },
+    {value: 'own', label: 'Own'},
+    {value: 'internal', label: 'Internal'},
+    {value: 'external', label: 'External'},
+    {value: 'Correspondence', label: 'Correspondence'},
 ];
 
 const viewOptions = [
-    { value: 'month', label: <div><img style={imageStyle} src={monthImage} alt=""/><span>Month</span></div> },
-    { value: 'week', label: <div><img style={imageStyle} src={weekImage} alt=""/><span>Week</span></div> },
-    { value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>  }
+    {value: 'month', label: <div><img style={imageStyle} src={monthImage} alt=""/><span>Month</span></div>},
+    {value: 'week', label: <div><img style={imageStyle} src={weekImage} alt=""/><span>Week</span></div>},
+    {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>}
 ];
 
 const months = [
@@ -54,7 +54,7 @@ class MenuBar extends Component {
         monthModel.shiftMonthArray(shiftMonth);
         this.shiftMonthInModel(shiftMonth);
         monthModel.monthToDisplay = monthModel.monthArray[1];
-        
+
         if ((monthModel.monthArray[0] === 11 && shiftMonth === 1)
             || (monthModel.monthArray[0] === 0 && shiftMonth === 2)
             || (monthModel.monthArray[0] === 11 && shiftMonth === 2)) {
@@ -63,8 +63,8 @@ class MenuBar extends Component {
         if (monthModel.monthArray[2] === 0 && shiftMonth < 0) {
             monthModel.yearToDisplay -= 1;
         }
-        
-        monthModel.getNextWeek(new Date(monthModel.yearToDisplay + "-" + (monthModel.monthToDisplay +1).toString() + "-1"))
+
+        monthModel.getNextWeek(new Date(monthModel.yearToDisplay + "-" + (monthModel.monthToDisplay + 1).toString() + "-1"))
     };
 
     shiftMonthInModel = (shiftMonth) => {

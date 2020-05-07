@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import '../css/registration.css';
 import {Redirect} from 'react-router';
-import md5 from 'md5';
 
 class Registration extends Component {
 
