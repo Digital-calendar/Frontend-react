@@ -13,17 +13,15 @@ import {userModel} from "../../models/UserModel";
 
 const customStyles = {
     overlay: {
-        position: 'fixed',
+        display: 'flex',
+        alignItems: 'center',
         top: 0,
         bottom: 0,
         right: 0,
         left: 0,
     },
     content: {
-        margin: '0 auto',
-        // marginLeft: '0',
         padding: 0,
-        width: '1000px',
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',

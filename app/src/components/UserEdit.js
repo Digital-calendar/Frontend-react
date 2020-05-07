@@ -9,6 +9,13 @@ import checkImage from '../css/images/userEdit/check.svg';
 
 class UserEdit extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+
+        }
+    }
 
     render() {
         return (
