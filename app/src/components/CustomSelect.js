@@ -3,6 +3,7 @@ import Select from 'react-select';
 import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
 import { selectModel } from '../models/SelectModel';
+import {eventModel} from "../models/EventModel";
 
 @observer
 class CustomSelect extends React.Component {
@@ -44,7 +45,9 @@ class CustomSelect extends React.Component {
         }
         if (this.props.isViewSelect) {
             selectModel.currentView = selectedOption.value;
+            eventModel.isPresent = false;
         }
+
     };
 
     render() {

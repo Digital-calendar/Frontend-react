@@ -1,8 +1,7 @@
-import { observable, action } from 'mobx'
+import {action, observable} from 'mobx'
 import moment from "moment";
-import Week from "../components/calendar_week/Week"
 
-export class MonthModel{
+export class MonthModel {
 
     @observable
     arrayWeek = []
@@ -46,13 +45,13 @@ export class MonthModel{
     @action
     getMonday = (d) => {
         let day = d.getDay()
-        let diff = d.getDate() - day + (day == 0 ? -6:1);
+        let diff = d.getDate() - day + (day === 0 ? -6 : 1);
         return new Date(d.setDate(diff));
     }
 
     @action
     getNextDay = (d) => {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate()+1)
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
     }
 
     @action
@@ -60,7 +59,7 @@ export class MonthModel{
         this.arrayWeek = []
         var first = this.getMonday(d)
         for (let i = 0; i <= 6; i++) {
-            let next = new Date(first.getFullYear(), first.getMonth(), first.getDate()+i)
+            let next = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i)
             this.arrayWeek.push(next)
         }
     }
@@ -68,8 +67,8 @@ export class MonthModel{
     @action
     isCurrentDay(day) {
         this.isCurrent = ((this.currentMonth === this.monthToDisplay)
-                            && (day === this.currentDay)
-                            && (this.yearToDisplay === this.currentYear));
+            && (day === this.currentDay)
+            && (this.yearToDisplay === this.currentYear));
     }
 
     @action
@@ -99,20 +98,19 @@ export class MonthModel{
         }
 
         this.monthStartWeekDay = moment()
-            .subtract(this.relativeToCurrentMonthShift,'month')
+            .subtract(this.relativeToCurrentMonthShift, 'month')
             .startOf('month')
             .days();
 
         this.monthEndWeekDay = moment()
-            .subtract(this.relativeToCurrentMonthShift,'month')
+            .subtract(this.relativeToCurrentMonthShift, 'month')
             .endOf('month')
             .days();
 
         this.monthDaysAmount = moment()
-            .subtract(this.relativeToCurrentMonthShift,'month')
+            .subtract(this.relativeToCurrentMonthShift, 'month')
             .startOf('month')
             .daysInMonth();
-
 
 
         let endWeek = moment()
@@ -128,10 +126,10 @@ export class MonthModel{
                 .endOf('month').week());
 
             console.log(moment().subtract(this.relativeToCurrentMonthShift, 'month')
-                .endOf('month').subtract(7,'days').week());
+                .endOf('month').subtract(7, 'days').week());
 
             endWeek = moment().subtract(this.relativeToCurrentMonthShift, 'month')
-                .endOf('month').subtract(7,'days').week() + 1;
+                .endOf('month').subtract(7, 'days').week() + 1;
 
         }
         this.monthWeekAmount = endWeek - startWeek + 1;

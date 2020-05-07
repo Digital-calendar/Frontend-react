@@ -51,6 +51,7 @@
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
     "react-mobx": "0.0.4",
+    "react-overflow-scrolling": "^1.0.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-select": "^3.1.0",
