@@ -11,25 +11,6 @@ import UserEdit from "../UserEdit";
 import {userModel} from "../../models/UserModel";
 
 
-const customStyles = {
-    overlay: {
-        display: 'flex',
-        alignItems: 'center',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
-
-    },
-    content: {
-        overflow: 'hidden',
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-        margin: '0 auto',
-        width: '50%',
-        padding: '0'
-    }
-};
 
 @observer
 class Bar extends Component {
@@ -60,13 +41,13 @@ class Bar extends Component {
 
         return (
             <div>
-              <Modal
-                  style={customStyles}
-                  isOpen={userModel.userEditIsOpen}
-                  onRequestClose={this.closeModal}
-              >
-                  <UserEdit/>
-              </Modal>
+              {/*<Modal*/}
+              {/*    style={customStyles}*/}
+              {/*    isOpen={userModel.userEditIsOpen}*/}
+              {/*    onRequestClose={this.closeModal}*/}
+              {/*>*/}
+              {/*    <UserEdit/>*/}
+              {/*</Modal>*/}
               <UserBar />
               <MenuBar />
               {this.selectView()}
