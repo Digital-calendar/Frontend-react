@@ -18,8 +18,7 @@ class Calendar extends Component {
         this.arrayWeek = [1, 2, 3, 4, 5, 6, 7];
         this.arrayMonth = [];
         this.height = document.documentElement.clientHeight;
-        // this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-01';
-        // this.start = monthModel.yearToDisplay + '-' + (monthModel.monthToDisplay + 1) + '-31';
+        eventModel.isPresent = false;
     }
 
     formMonthArray = () => {

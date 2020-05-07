@@ -17,6 +17,7 @@ import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
+import {eventModel} from "../../models/EventModel";
 
 
 
