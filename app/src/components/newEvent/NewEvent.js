@@ -20,7 +20,6 @@ import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
 
 
-
 @observer
 class NewEvent extends Component {
 
@@ -59,6 +58,7 @@ class NewEvent extends Component {
     };
 
     onSaveClick = () => {
+        eventModel.isPresent = false;
         createEvent({
             title: this.state.title,
             timestamp: this.state.date + ' ' + this.state.time,
@@ -100,6 +100,7 @@ class NewEvent extends Component {
     };
 
     onDateInput = event => {
+
         this.setState({
             date: event.target.value
         })
@@ -417,7 +418,7 @@ class NewEvent extends Component {
                 </div>
 
             </div>
-    );
+        );
 
     }
 
