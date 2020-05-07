@@ -42,10 +42,14 @@ class DropdownMenu extends React.Component {
         }
     };
 
-    onSignOut = event => {
+    onSignOut = () => {
         userModel.user = null;
         this.setState({isRedirect: true})
         localStorage.setItem("user",JSON.stringify(null));
+    };
+
+    onEditClick = () => {
+        userModel.userEditIsOpen = true;
     };
 
     render() {
@@ -55,14 +59,16 @@ class DropdownMenu extends React.Component {
         }
 
         return (
-            <div  className="dropdown" >
+            <div className="dropdown" style={{ zIndex: userModel.userEditIsOpen ? 0 : 300 }}>
                 <div className="cal-wind__auth-bar__employee" onClick={this.showDropdownMenu}>Employee</div>
                 <img id="vector-image" className="cal-wind__auth-bar__employee-info-btn" alt="" src={vectors} onClick={this.showDropdownMenu}/>
                 { this.state.displayMenu ? (
                         <ul>
                             <li className="cal-wind__auth-bar__employee-name"><Link to="#">{userModel.user.first_name}<br/>{userModel.user.last_name}</Link></li>
-                            <li className="cal-wind__auth-bar__employee-position">backend developer</li>
-                            <li className="cal-wind__auth-bar__employee-edit"><Link to="/user/edit">edit</Link></li>
+                            <li className="cal-wind__auth-bar__employee-position">
+                                {userModel.user.position ? userModel.user.position : 'edit your position'}
+                            </li>
+                            <li className="cal-wind__auth-bar__employee-edit" onClick={this.onEditClick}>edit</li>
                             <li className="cal-wind__auth-bar__employee-sing_out" onClick={this.onSignOut} style={{color: "#4F4F4F"}}>sign out</li>
                         </ul>
                     ):

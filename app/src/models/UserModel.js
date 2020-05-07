@@ -17,6 +17,9 @@ export class UserModel{
     @observable
     isPresent = false;
 
+    @observable
+    userEditIsOpen = false;
+
     @action
     dropLoadedFlag() {
         this.isNewUsersLoaded = false;

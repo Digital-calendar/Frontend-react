@@ -7,17 +7,17 @@ import Week from "../calendar_week/Week";
 import DayView from "../day_view/DayView"
 import {observer} from "mobx-react";
 import Calendar from '../calendar/Calendar';
-import {loadEvents} from "../../actions/loadEvents";
-import {eventModel} from "../../models/EventModel";
-import {toJS} from "mobx";
+import Modal from 'react-modal'
+import UserEdit from "../UserEdit";
+import {userModel} from "../../models/UserModel";
+
+
 
 @observer
 class Bar extends Component {
 
     constructor(props) {
         super(props);
-
-
     }
 
     selectView() {
@@ -36,8 +36,9 @@ class Bar extends Component {
 
     render() {
         monthModel.updateMonthInfo();
+
         return (
-          <div>
+            <div>
               <UserBar />
               <MenuBar />
               {this.selectView()}

@@ -1,4 +1,4 @@
-import {observable, action, toJS} from 'mobx'
+import {observable, action} from 'mobx'
 import {monthModel} from "./MonthModel";
 import {userModel} from "./UserModel";
 
