@@ -23,6 +23,9 @@ export class EventModel{
     @observable
     dayEvents = [];
 
+    @observable
+    isNewEventModalOpen = false;
+
     @action
     filter() {
         this.filteredEvents = this.events

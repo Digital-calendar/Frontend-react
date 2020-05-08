@@ -14,7 +14,7 @@ class CustomSelect extends React.Component {
             minWidth    : '140px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
-            zIndex      : userModel.userEditIsOpen ? 0 : 150,
+            zIndex      : userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 150,
             position    : "relative",
             width       : this.props.isNewEvent ? '100%' : '-1'
         }),
@@ -81,7 +81,7 @@ class CustomSelect extends React.Component {
 
         return (
             <Select
-                style={{ zIndex: userModel.userEditIsOpen ? 0 : 300 }}
+                style={{ zIndex: userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 300 }}
                 name="form"
                 value={selectedOption}
                 onChange={this.handleChange}

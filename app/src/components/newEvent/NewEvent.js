@@ -31,7 +31,6 @@ class NewEvent extends Component {
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
 
         this.state = {
-            isRedirect: false,
             title: '',
             date: this.props.date,
             time: '',
@@ -88,9 +87,7 @@ class NewEvent extends Component {
     };
 
     onCancelClick = () => {
-        this.setState({
-            isRedirect: true
-        });
+        eventModel.isNewEventModalOpen = false;
     };
 
     onTitleInput = event => {
@@ -153,11 +150,6 @@ class NewEvent extends Component {
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
         }
-
-        if (this.state.isRedirect) {
-            return <Redirect from='/newEvent' to='/calendar'/>
-        }
-
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">

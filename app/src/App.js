@@ -9,17 +9,20 @@ import {userModel} from "./models/UserModel";
 import UserEdit from "./components/UserEdit";
 import Modal from "react-modal";
 import {eventModel} from "./models/EventModel";
+import NewEvent from "./components/newEvent/NewEvent";
 
-const customStyles = {
-    overlay: {
-        display: 'flex',
-        alignItems: 'center',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
+const customUserEditStyles = {
+    content: {
+        overflow: 'hidden',
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        margin: '0 auto',
+        width: '50%',
+        padding: '0'
+    }
+};
 
-    },
+const customNewEventStyles = {
     content: {
         overflow: 'hidden',
         backgroundColor: 'transparent',
@@ -39,8 +42,12 @@ class App extends Component {
         eventModel.filters = JSON.parse(localStorage.getItem("filters"));
     }
 
-    closeModal() {
+    closeUserEditModal() {
         userModel.userEditIsOpen = false;
+    }
+
+    closeNewEventModal() {
+        eventModel.isNewEventModalOpen = false;
     }
 
     render() {
@@ -48,11 +55,18 @@ class App extends Component {
         return (
             <div>
                 <Modal
-                    style={customStyles}
+                    style={customUserEditStyles}
                     isOpen={userModel.userEditIsOpen}
-                    onRequestClose={this.closeModal}
+                    onRequestClose={this.closeUserEditModal}
                 >
                     <UserEdit/>
+                </Modal>
+                <Modal
+                    style={customNewEventStyles}
+                    isOpen={eventModel.isNewEventModalOpen}
+                    onRequestClose={this.closeNewEventModal}
+                >
+                    <NewEvent date={eventModel.dayToCreate}/>
                 </Modal>
                 <Router>
                     <Switch>

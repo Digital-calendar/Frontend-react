@@ -84,9 +84,10 @@ class MenuBar extends Component {
     };
 
     onNewEventClick = () => {
-        this.setState({
-            isRedirect: true
-        });
+        // this.setState({
+        //     isRedirect: true
+        // });
+        eventModel.isNewEventModalOpen = true;
     };
 
     render() {

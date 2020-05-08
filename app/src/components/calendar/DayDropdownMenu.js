@@ -21,7 +21,6 @@ class DayDropdownMenu extends React.Component {
         monthModel.isCurrentDay(this.props.number);
         this.state = {
             displayMenu: false,
-            isRedirect: false,
             isCurrentDay: monthModel.isCurrent,
             isEventsNotPresent: true,
             events: [],
@@ -44,21 +43,18 @@ class DayDropdownMenu extends React.Component {
     };
 
     hideDropdownMenu = () => {
-        if (!this.state.isRedirect) {
-            const menu = document.getElementById(this.id.toString());
-            if (menu != null) {
-                menu.setAttribute("visibility", "hidden");
-                this.setState({displayMenu: false}, () => {
-                    document.removeEventListener('click', this.hideDropdownMenu);
-                });
-            }
+        const menu = document.getElementById(this.id.toString());
+        if (menu != null) {
+            menu.setAttribute("visibility", "hidden");
+            this.setState({displayMenu: false}, () => {
+                document.removeEventListener('click', this.hideDropdownMenu);
+            });
         }
     };
 
     onAddNewClick = () => {
-        this.setState({
-            isRedirect: true
-        });
+        eventModel.dayToCreate = this.getThisDateString();
+        eventModel.isNewEventModalOpen = true;
     };
 
 
@@ -108,7 +104,6 @@ class DayDropdownMenu extends React.Component {
         this.setState({
             eventTypeView: views
         });
-        // console.log(this.props.number, views);
     };
 
     formDropDownMenuShifts = () => {
@@ -153,12 +148,6 @@ class DayDropdownMenu extends React.Component {
     };
 
     render() {
-
-        if (this.state.isRedirect) {
-            eventModel.dayToCreate = this.getThisDateString();
-            return <Redirect from='/calendar' to= '/newEvent'/>
-        }
-
 
         const events = this.state.events;
         const views = this.state.eventTypeView;
@@ -206,204 +195,6 @@ class DayDropdownMenu extends React.Component {
                                     </li>
                                 })
                             }
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/* <li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/* <li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
                             <li className="day-list-add-button">
                                 <div
                                     className="day-list-add-new-button"
