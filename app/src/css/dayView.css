@@ -10,13 +10,13 @@ html, #root {
 }
 
 .window {
+    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     overflow: auto;
     justify-content: flex-start;
     align-content: center;
-    align-items: center;
 }
 
 .window__empty {
@@ -30,7 +30,7 @@ html, #root {
     min-width: 550px;
     max-width: 550px;
     min-height: 350px;
-    height: 650px;
+    height: 85%;
     margin-right: 50px;
     margin-left: 50px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, .25);
@@ -39,8 +39,7 @@ html, #root {
 }
 
 .window__mainWindow__BgTop {
-    min-height: 100px;
-    max-height: 100px;
+    height: 100px;
     text-align: center;
     background: url(images/bgInDayView.png), #e1e1e1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
