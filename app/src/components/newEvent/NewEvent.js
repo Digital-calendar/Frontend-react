@@ -57,7 +57,6 @@ class NewEvent extends Component {
     };
 
     onSaveClick = () => {
-        eventModel.isPresent = false;
         createEvent({
             title: this.state.title,
             timestamp: this.state.date + ' ' + this.state.time,
@@ -70,6 +69,7 @@ class NewEvent extends Component {
             privateEvent: this.state.isPrivate,
             userID: userModel.user.id
         });
+        eventModel.isPresent = false;
         this.onCancelClick();
     };
 
@@ -82,7 +82,6 @@ class NewEvent extends Component {
             options: newOptions
         });
         userModel.dropLoadedFlag();
-
         console.log(1);
     };
 

@@ -7,6 +7,7 @@ import {observer} from "mobx-react";
 import {monthModel} from "../../models/MonthModel";
 import {Redirect} from 'react-router-dom';
 import {eventModel} from "../../models/EventModel";
+import {userModel} from "../../models/UserModel";
 
 
 const imageStyle = {
@@ -39,10 +40,25 @@ class MenuBar extends Component {
     constructor(props) {
         super(props);
 
-        for (let i = monthModel.currentMonth - 1; i <= monthModel.currentMonth + 2; ++i) {
-            monthModel.monthArray.push(i);
+        if (monthModel.monthArray === null) {
+            monthModel.monthArray = [];
+            for (let i = monthModel.currentMonth - 1; i <= monthModel.currentMonth + 2; ++i) {
+                monthModel.monthArray.push(i);
+            }
         }
-        monthModel.yearToDisplay = monthModel.currentYear;
+
+        if (monthModel.relativeToCurrentMonthShift === null) {
+            monthModel.relativeToCurrentMonthShift = 0;
+        }
+
+
+        if (monthModel.yearToDisplay === null) {
+            monthModel.yearToDisplay = monthModel.currentYear;
+        }
+
+        if (monthModel.monthToDisplay === null) {
+            monthModel.monthToDisplay = monthModel.currentMonth;
+        }
 
         this.state = {
             isRedirect: false
@@ -53,6 +69,8 @@ class MenuBar extends Component {
         const shiftMonth = parseInt(event.target.getAttribute("id")) - 1;
         monthModel.shiftMonthArray(shiftMonth);
         this.shiftMonthInModel(shiftMonth);
+        localStorage.setItem("monthArray",JSON.stringify(monthModel.monthArray));
+        localStorage.setItem("relativeToCurrentMonthShift",JSON.stringify(monthModel.relativeToCurrentMonthShift));
         monthModel.monthToDisplay = monthModel.monthArray[1];
 
         if ((monthModel.monthArray[0] === 11 && shiftMonth === 1)
@@ -63,6 +81,8 @@ class MenuBar extends Component {
         if (monthModel.monthArray[2] === 0 && shiftMonth < 0) {
             monthModel.yearToDisplay -= 1;
         }
+        localStorage.setItem("yearToDisplay",JSON.stringify(monthModel.yearToDisplay));
+        localStorage.setItem("monthToDisplay",JSON.stringify(monthModel.monthToDisplay));
 
         monthModel.getNextWeek(new Date(monthModel.yearToDisplay + "-" + (monthModel.monthToDisplay + 1).toString() + "-1"))
     };

@@ -1,4 +1,5 @@
 import {eventModel} from "../models/EventModel";
+import {toJS} from "mobx";
 
 export async function loadEvents() {
 
@@ -14,4 +15,5 @@ export async function loadEvents() {
 
     eventModel.isPresent = true;
     eventModel.filter();
+    console.log(toJS(eventModel.events));
 }

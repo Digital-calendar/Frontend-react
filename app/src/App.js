@@ -10,6 +10,7 @@ import UserEdit from "./components/UserEdit";
 import Modal from "react-modal";
 import {eventModel} from "./models/EventModel";
 import NewEvent from "./components/newEvent/NewEvent";
+import {monthModel} from "./models/MonthModel";
 
 const customUserEditStyles = {
     content: {
@@ -40,6 +41,12 @@ class App extends Component {
         super(props);
         userModel.user = JSON.parse(localStorage.getItem("user"));
         eventModel.filters = JSON.parse(localStorage.getItem("filters"));
+        monthModel.monthArray = JSON.parse(localStorage.getItem("monthArray"));
+        monthModel.relativeToCurrentMonthShift = JSON.parse(localStorage.getItem("relativeToCurrentMonthShift"));
+        monthModel.yearToDisplay = JSON.parse(localStorage.getItem("yearToDisplay"));
+        monthModel.monthToDisplay = JSON.parse(localStorage.getItem("monthToDisplay"));
+
+        console.log(monthModel.relativeToCurrentMonthShift);
     }
 
     closeUserEditModal() {

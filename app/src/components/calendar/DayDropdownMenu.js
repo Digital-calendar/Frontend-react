@@ -70,7 +70,6 @@ class DayDropdownMenu extends React.Component {
 
     formEventTypeView = () => {
         const views = [];
-        // console.log(this.props.number, );
         eventModel.dayEvents.forEach(event => {
             if (event.privateEvent) {
                 views.push(<img
