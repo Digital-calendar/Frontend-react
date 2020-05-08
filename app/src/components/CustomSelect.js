@@ -4,6 +4,7 @@ import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
 import { selectModel } from '../models/SelectModel';
 import {eventModel} from "../models/EventModel";
+import {toJS} from "mobx";
 
 @observer
 class CustomSelect extends React.Component {
@@ -38,8 +39,19 @@ class CustomSelect extends React.Component {
     constructor(props) {
         super(props);
 
+        const options = this.props.options.filter(item => {
+            const value = item.value.toUpperCase();
+            let isOption = false;
+            eventModel.filters.forEach(filter => {
+                if (value === filter) {
+                    isOption = true;
+                }
+            });
+            return isOption;
+        });
+
         this.state = {
-            selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : [] ,
+            selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : options ,
         };
 
     }
@@ -53,7 +65,15 @@ class CustomSelect extends React.Component {
             selectModel.currentView = selectedOption.value;
             eventModel.isPresent = false;
         }
-
+        if (this.props.isFilter) {
+            if (selectedOption !== null) {
+                eventModel.filters = selectedOption.map(item => item.value.toUpperCase());
+            } else {
+                eventModel.filters = [];
+            }
+            localStorage.setItem("filters",JSON.stringify(eventModel.filters));
+            eventModel.isPresent = false;
+        }
     };
 
     render() {

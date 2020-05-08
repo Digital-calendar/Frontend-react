@@ -8,6 +8,7 @@ import NewEventPage from "./components/newEvent/NewEventPage";
 import {userModel} from "./models/UserModel";
 import UserEdit from "./components/UserEdit";
 import Modal from "react-modal";
+import {eventModel} from "./models/EventModel";
 
 const customStyles = {
     overlay: {
@@ -35,7 +36,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         userModel.user = JSON.parse(localStorage.getItem("user"));
-
+        eventModel.filters = JSON.parse(localStorage.getItem("filters"));
     }
 
     closeModal() {

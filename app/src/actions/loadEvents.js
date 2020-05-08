@@ -12,7 +12,6 @@ export async function loadEvents() {
 
     eventModel.events = await response.json();
 
-    eventModel.filter();
-
     eventModel.isPresent = true;
+    eventModel.filter();
 }

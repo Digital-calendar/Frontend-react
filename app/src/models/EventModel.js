@@ -12,7 +12,7 @@ export class EventModel{
     events = [];
 
     @observable
-    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE", "INTERNAL"];
+    filters = [];//'OWN', "EXTERNAL", "CORRESPONDENCE", "INTERNAL"];
 
     @observable
     isPresent = false;
