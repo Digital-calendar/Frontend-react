@@ -69,6 +69,31 @@ export class EventModel{
                 return event.timestamp.startsWith(formatDay);
             })
     }
+
+    @action
+    getDayEvents(day) {
+        let array = [];
+        let dayString = day;
+        if ((day - 10) < 0) {
+            dayString = '0' + dayString;
+        }
+        let monthString = monthModel.monthToDisplay + 1;
+        if ((monthModel.monthToDisplay - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
+
+        eventModel.filteredEvents
+            .filter(event => {
+
+                if (event.timestamp.slice(0, 10) === formatDay) {
+                    array.push(event);
+                }
+            });
+
+        return array;
+    }
+
 }
 
 export const eventModel = new EventModel();

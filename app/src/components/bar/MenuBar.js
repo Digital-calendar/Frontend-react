@@ -6,7 +6,10 @@ import CustomSelect from '../CustomSelect';
 import {observer} from "mobx-react";
 import {eventModel} from "../../models/EventModel";
 import MonthSlider from "./sliders/MonthSlider";
-
+import {monthModel} from "../../models/MonthModel";
+import {Redirect} from 'react-router-dom';
+import {selectModel} from "../../models/SelectModel";
+import UserBarDayView from "./UserBarDayView";
 
 const imageStyle = {
     width: '12px',
@@ -38,7 +41,7 @@ class MenuBar extends Component {
 
         return (
             <div className="cal-wind__menu-bar">
-                <MonthSlider/>
+                {selectModel.currentView === "day" ? <UserBarDayView/> : <MonthSlider/>}
                 <button
                     className="cal-wind__up-bar__new-event-button"
                     onClick={this.onNewEventClick}

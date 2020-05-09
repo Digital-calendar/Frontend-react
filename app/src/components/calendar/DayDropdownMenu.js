@@ -9,6 +9,7 @@ import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
 import {eventModel} from "../../models/EventModel";
 import {toJS} from "mobx";
+import {selectModel} from "../../models/SelectModel";
 
 
 @observer
@@ -131,6 +132,10 @@ class DayDropdownMenu extends React.Component {
         })
     };
 
+    handleMoreEventsClick = () => {
+        selectModel.dateToShowInDay = new Date(this.props.fullDate);
+        selectModel.currentView = "day"
+    };
 
     getThisDateString = () => {
         //init string date to pass it on click 'add new' button in day drop down menu
@@ -202,7 +207,7 @@ class DayDropdownMenu extends React.Component {
                                 </div>
                             </li>
                         </ul>
-                            <div className="day-list-more-details-button">
+                            <div className="day-list-more-details-button" onClick={this.handleMoreEventsClick}>
                                 more details...
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {eventModel} from "../../models/EventModel";
-import {monthModel} from "../../models/MonthModel";
+import {selectModel} from "../../models/SelectModel";
 
 
 class DayEvents extends Component {
@@ -12,31 +12,6 @@ class DayEvents extends Component {
             <div className="private-filter-name">Private</div>
         ]
     }
-
-
-    getDayEvents(day) {
-        let array = [];
-        let dayString = day;
-        if ((day - 10) < 0) {
-            dayString = '0' + dayString;
-        }
-        let monthString = monthModel.monthToDisplay + 1;
-        if ((monthModel.monthToDisplay - 9) < 0) {
-            monthString = '0' + monthString;
-        }
-        const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
-
-        eventModel.events
-            .filter(event => {
-
-                if (event.timestamp.slice(0, 10) === formatDay) {
-                    array.push(event);
-                }
-            });
-
-        return array;
-    }
-
 
     getMarks = (event) => {
         let view = [];
@@ -74,6 +49,11 @@ class DayEvents extends Component {
         return view;
     };
 
+    handleEventClick = (date) => {
+        selectModel.dateToShowInDay = new Date(date);
+        selectModel.currentView = "day"
+    };
+
     render() {
 
 
@@ -82,8 +62,8 @@ class DayEvents extends Component {
             <div className="events-table__column">
                 <div className="events-table__column_container">
                     {
-                        this.getDayEvents(this.props.day).map((event, index) => {
-                                return <div key={index} className="events-table__column__event">
+                        eventModel.getDayEvents(this.props.day).map((event, index) => {
+                                return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp)}>
                                     <div className="events-table__column__event__text">
                                         {event.title}
                                     </div>
