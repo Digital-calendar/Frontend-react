@@ -41,6 +41,10 @@ html, body {
     width: 100%;
 }
 
+.cal-wind__menu-bar__month-view {
+    display: flex;
+    flex-direction: row;
+}
 
 .cal-wind__menu-bar__button-month {
     font-family: Oxygen;

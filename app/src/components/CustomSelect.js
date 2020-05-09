@@ -4,6 +4,7 @@ import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
 import { selectModel } from '../models/SelectModel';
 import {eventModel} from "../models/EventModel";
+import {toJS} from "mobx";
 
 @observer
 class CustomSelect extends React.Component {

@@ -9,6 +9,7 @@ import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
 import {eventModel} from "../../models/EventModel";
 import {toJS} from "mobx";
+import {selectModel} from "../../models/SelectModel";
 
 
 @observer
@@ -156,6 +157,11 @@ class DayDropdownMenu extends React.Component {
         })
     };
 
+    handleMoreEventsClick = () => {
+        selectModel.dateToShowInDay = new Date(this.props.fullDate);
+        selectModel.currentView = "day"
+    };
+
     render() {
 
         if (this.state.isRedirect) {
@@ -211,204 +217,6 @@ class DayDropdownMenu extends React.Component {
                                     </li>
                                 })
                             }
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/* <li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/* <li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
-                            {/*<li className="day-list-item">*/}
-                            {/*    <div*/}
-                            {/*        className="day-list-time"*/}
-                            {/*    >*/}
-                            {/*        18:30*/}
-                            {/*    </div>*/}
-                            {/*    <div className="day-list-content">*/}
-                            {/*        <div*/}
-                            {/*            className="day-list-text"*/}
-                            {/*        >*/}
-                            {/*            Обсуждение новых проектов*/}
-                            {/*            /!*The birthday of hh.ru company in big hall*!/*/}
-                            {/*        </div>*/}
-                            {/*        <div className="day-list-filters">*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={correspondenceImage}*/}
-                            {/*                alt="correspondence-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={externalImage}*/}
-                            {/*                alt="external-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={internalImage}*/}
-                            {/*                alt="internal-filter" />*/}
-                            {/*            <img*/}
-                            {/*                className="day-list-item-filter"*/}
-                            {/*                src={privateImage}*/}
-                            {/*                alt="private-filter" />*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</li>*/}
                             <li className="day-list-add-button">
                                 <div
                                     className="day-list-add-new-button"
@@ -418,7 +226,7 @@ class DayDropdownMenu extends React.Component {
                                 </div>
                             </li>
                         </ul>
-                            <div className="day-list-more-details-button">
+                            <div className="day-list-more-details-button" onClick={this.handleMoreEventsClick}>
                                 more details...
                             </div>
                         </div>

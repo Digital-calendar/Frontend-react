@@ -3,7 +3,10 @@ import {observable} from 'mobx'
 
 export class SelectModel{
     @observable
-    currentView = "week";
+    currentView = "month";
+
+    @observable
+    dateToShowInDay = null;
 
 }
 

@@ -42,17 +42,32 @@ export class MonthModel {
     @observable
     monthArray = [];
 
+    @observable
+    dayArray = [];
+
     @action
     getMonday = (d) => {
         let day = d.getDay()
         let diff = d.getDate() - day + (day === 0 ? -6 : 1);
         return new Date(d.setDate(diff));
-    }
+    };
 
     @action
-    getNextDay = (d) => {
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
-    }
+    getDay = (d, shift) => {
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate() + shift)
+    };
+
+    @action
+    getWeekForDayView = (currDay) => {
+        this.dayArray = []
+        for (let i = 3; i > 0; i--) {
+            this.dayArray.push(this.getDay(currDay, -i))
+        }
+
+        for (let i = 0; i < 4; i++) {
+            this.dayArray.push(this.getDay(currDay, i))
+        }
+    };
 
     @action
     getNextWeek = (d) => {

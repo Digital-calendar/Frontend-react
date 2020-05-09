@@ -6,6 +6,8 @@ import {observer} from "mobx-react";
 import DayEvents from "./DayEvents";
 import {loadEvents} from "../../actions/loadEvents";
 
+const _ = require('lodash');
+
 @observer
 class Week extends Component {
     constructor(props) {
@@ -23,6 +25,7 @@ class Week extends Component {
 
 
     handleRightClick = () => {
+        eventModel.isPresent = false;
         let d = monthModel.arrayWeek[monthModel.arrayWeek.length - 1];
 
         monthModel.getNextWeek(new Date(d.setDate(d.getDate() + 1)));
@@ -39,7 +42,6 @@ class Week extends Component {
     };
 
     handleLeftClick = () => {
-
         let d = monthModel.arrayWeek[0];
 
         monthModel.getNextWeek(new Date(d.setDate(d.getDate() - 1)));
@@ -54,6 +56,7 @@ class Week extends Component {
         }
 
     };
+
 
     render() {
 
@@ -73,9 +76,8 @@ class Week extends Component {
 
 
                     {
-
                         monthModel.arrayWeek.map((date, index) => {
-                            if (date === new Date(monthModel.currentYear, monthModel.currentMonth, monthModel.currentDay)) {
+                            if (_.isEqual(date, new Date(monthModel.currentYear, monthModel.currentMonth, monthModel.currentDay))) {
                                 return <div style={{borderBottom: '1px solid red', backgroundColor: '#F2F2F2'}}
                                             class="events-wind__weekdays-bar__wkd">
                                     <p key={index}
@@ -103,7 +105,6 @@ class Week extends Component {
 
                     {
                         monthModel.arrayWeek.map((date, index) => {
-                            console.log(date)
                             return <DayEvents key={index} day={date.getDate()}/>
                         })
                     }
