@@ -51,7 +51,11 @@ class CustomSelect extends React.Component {
                 }
             });
             return isOption;
-        }) : [];
+        }) : this.props.options;
+
+        if (eventModel.filters === null) {
+            eventModel.filters = ['OWN', 'INTERNAL', 'EXTERNAL', 'CORRESPONDENCE'];
+        }
 
         this.state = {
             selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : options ,
