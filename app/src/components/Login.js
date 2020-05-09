@@ -18,13 +18,15 @@ class Login extends Component {
     onLoginInput = event => {
         this.setState({
             emailText: event.target.value
-        })
+        });
+        userModel.isInValidLoginOrPassword = false;
     };
 
     onPassInput = event => {
         this.setState({
             passText: event.target.value
-        })
+        });
+        userModel.isInValidLoginOrPassword = false;
     };
 
     onSubmit = event => {
@@ -44,10 +46,11 @@ class Login extends Component {
             passText: '',
             user: userModel.user
         });
+
     };
 
     render() {
-        if (userModel.user !== null) {
+        if (userModel.isPresent) {
             return <Redirect to='/calendar' />;
         }
         
@@ -70,6 +73,9 @@ class Login extends Component {
                                     autoFocus
                                     placeholder="login"
                                     name="login"
+                                    style={{borderColor: userModel.isInValidLoginOrPassword
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     onChange={this.onLoginInput}
                                     required
                                 />
@@ -78,6 +84,9 @@ class Login extends Component {
                                     type="password"
                                     placeholder="password"
                                     name="password"
+                                    style={{borderColor: userModel.isInValidLoginOrPassword
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     onChange={this.onPassInput}
                                     required
                                 />

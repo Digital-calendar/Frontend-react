@@ -22,7 +22,6 @@ class DayDropdownMenu extends React.Component {
         monthModel.isCurrentDay(this.props.number);
         this.state = {
             displayMenu: false,
-            isRedirect: false,
             isCurrentDay: monthModel.isCurrent,
             isEventsNotPresent: true,
             events: [],
@@ -32,52 +31,30 @@ class DayDropdownMenu extends React.Component {
         eventModel.formDayEvents(this.props.number);
         //key
         this.id = this.props.number + 10;
-
-        //init string date to pass it on click 'add new' button in day drop down menu
-        let dayString = this.props.number;
-        if ((this.props.number - 10) < 0) {
-            dayString = '0' + dayString;
-        }
-        let monthString = monthModel.monthToDisplay + 1;
-        if ((monthModel.monthToDisplay - 9) < 0) {
-            monthString = '0' + monthString;
-        }
-        this.date = monthModel.yearToDisplay + '-' + monthString +  '-' + dayString;
-
     }
 
 
     showDropdownMenu = event => {
         event.preventDefault();
-        // if (this.state.events === null) {
-        //     eventModel.formDayEvents(this.props.number);
-        //     console.log(1);
-        //     this.setState({events: eventModel.dayEvents});
-        // }
         document.getElementById(this.id.toString()).setAttribute("visibility", "visible");
         this.setState({ displayMenu: true }, () => {
             document.addEventListener('click', this.hideDropdownMenu);
         });
-        console.log(this.props.number, toJS(this.state.events));
-        // console.log(toJS(eventModel.dayEvents));
     };
 
     hideDropdownMenu = () => {
-        if (!this.state.isRedirect) {
-            const menu = document.getElementById(this.id.toString());
-            if (menu != null) {
-                menu.setAttribute("visibility", "hidden");
-                this.setState({displayMenu: false}, () => {
-                    document.removeEventListener('click', this.hideDropdownMenu);
-                });
-            }
+        const menu = document.getElementById(this.id.toString());
+        if (menu != null) {
+            menu.setAttribute("visibility", "hidden");
+            this.setState({displayMenu: false}, () => {
+                document.removeEventListener('click', this.hideDropdownMenu);
+            });
         }
     };
 
     onAddNewClick = () => {
-        this.setState({
-            isRedirect: true
-        });
+        eventModel.dayToCreate = this.getThisDateString();
+        eventModel.isNewEventModalOpen = true;
     };
 
 
@@ -93,7 +70,6 @@ class DayDropdownMenu extends React.Component {
 
     formEventTypeView = () => {
         const views = [];
-        // console.log(this.props.number, );
         eventModel.dayEvents.forEach(event => {
             if (event.privateEvent) {
                 views.push(<img
@@ -127,7 +103,6 @@ class DayDropdownMenu extends React.Component {
         this.setState({
             eventTypeView: views
         });
-        // console.log(this.props.number, views);
     };
 
     formDropDownMenuShifts = () => {
@@ -162,18 +137,24 @@ class DayDropdownMenu extends React.Component {
         selectModel.currentView = "day"
     };
 
-    render() {
-
-        if (this.state.isRedirect) {
-            eventModel.dayToCreate = this.date;
-            return <Redirect from='/calendar' to= '/newEvent'/>
+    getThisDateString = () => {
+        //init string date to pass it on click 'add new' button in day drop down menu
+        let dayString = this.props.number;
+        if ((this.props.number - 10) < 0) {
+            dayString = '0' + dayString;
         }
+        let monthString = monthModel.monthToDisplay + 1;
+        if ((monthModel.monthToDisplay - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        return monthModel.yearToDisplay + '-' + monthString +  '-' + dayString;
+    };
 
+    render() {
 
         const events = this.state.events;
         const views = this.state.eventTypeView;
 
-        // console.log(v;iews);
         return (
             <div  className={(this.props.value > 0 && this.props.value < 6) ? "days-table__day" : "days-table__day-off"} onClick={this.showDropdownMenu} >
                 {/*<div className="cal-wind__auth-bar__employee" onClick={this.showDropdownMenu}>7</div>*/}
@@ -182,7 +163,7 @@ class DayDropdownMenu extends React.Component {
                     // onClick={this.showDropdownMenu}
                 >
                     <div className="days-table__day-btn__text-container">
-                        <p className={this.state.isCurrentDay ? "current" : "text"}>
+                        <p className={this.state.isCurrentDay && (monthModel.relativeToCurrentMonthShift === 0) ? "current" : "text"}>
                             {this.props.number}
                         </p>
                     </div>

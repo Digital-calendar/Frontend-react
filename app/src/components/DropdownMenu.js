@@ -5,6 +5,7 @@ import vectorsRed from '../css/images/3vectors-red.svg';
 import '../css/dropdown-menu.css';
 import {userModel} from "../models/UserModel";
 import {observer} from 'mobx-react';
+import {eventModel} from "../models/EventModel";
 
 
 @observer
@@ -28,7 +29,7 @@ class DropdownMenu extends React.Component {
         });
     };
 
-    hideDropdownMenu = event => {
+    hideDropdownMenu = () => {
         if (!this.state.isRedirect) {
             const image = document.getElementById("vector-image");
 
@@ -44,8 +45,8 @@ class DropdownMenu extends React.Component {
 
     onSignOut = () => {
         userModel.user = null;
+        localStorage.clear();
         this.setState({isRedirect: true})
-        localStorage.setItem("user",JSON.stringify(null));
     };
 
     onEditClick = () => {
@@ -59,7 +60,9 @@ class DropdownMenu extends React.Component {
         }
 
         return (
-            <div className="dropdown" style={{ zIndex: userModel.userEditIsOpen ? 0 : 300 }}>
+            <div className="dropdown"
+                 style={{ zIndex: userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 300 }}
+            >
                 <div className="cal-wind__auth-bar__employee" onClick={this.showDropdownMenu}>Employee</div>
                 <img id="vector-image" className="cal-wind__auth-bar__employee-info-btn" alt="" src={vectors} onClick={this.showDropdownMenu}/>
                 { this.state.displayMenu ? (

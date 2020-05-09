@@ -4,7 +4,7 @@ import moment from "moment";
 export class MonthModel {
 
     @observable
-    arrayWeek = []
+    arrayWeek = [];
 
     @observable
     monthStartWeekDay = -1;
@@ -28,13 +28,13 @@ export class MonthModel {
     currentYear = -1;
 
     @observable
-    monthToDisplay = -1;
+    monthToDisplay = null;
 
     @observable
-    yearToDisplay = -1;
+    yearToDisplay = null;
 
     @observable
-    relativeToCurrentMonthShift = 0;
+    relativeToCurrentMonthShift = null;
 
     @observable
     isCurrent = false;
@@ -53,6 +53,7 @@ export class MonthModel {
     };
 
     @action
+
     getDay = (d, shift) => {
         return new Date(d.getFullYear(), d.getMonth(), d.getDate() + shift)
     };
@@ -108,9 +109,6 @@ export class MonthModel {
         this.currentMonth = moment().toDate().getMonth();
         this.currentYear = moment().toDate().getFullYear();
 
-        if (this.monthToDisplay === -1) {
-            this.monthToDisplay = this.currentMonth;
-        }
 
         this.monthStartWeekDay = moment()
             .subtract(this.relativeToCurrentMonthShift, 'month')

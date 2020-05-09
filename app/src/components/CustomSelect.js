@@ -14,7 +14,7 @@ class CustomSelect extends React.Component {
             minWidth    : '140px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
-            zIndex      : userModel.userEditIsOpen ? 0 : 150,
+            zIndex      : userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 150,
             position    : "relative",
             width       : this.props.isNewEvent ? '100%' : '-1'
         }),
@@ -39,8 +39,19 @@ class CustomSelect extends React.Component {
     constructor(props) {
         super(props);
 
+        const options = eventModel.filters !== null ? this.props.options.filter(item => {
+            const value = item.value.toUpperCase();
+            let isOption = false;
+            eventModel.filters.forEach(filter => {
+                if (value === filter) {
+                    isOption = true;
+                }
+            });
+            return isOption;
+        }) : [];
+
         this.state = {
-            selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : [] ,
+            selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : options ,
         };
 
     }
@@ -54,7 +65,15 @@ class CustomSelect extends React.Component {
             selectModel.currentView = selectedOption.value;
             eventModel.isPresent = false;
         }
-
+        if (this.props.isFilter) {
+            if (selectedOption !== null) {
+                eventModel.filters = selectedOption.map(item => item.value.toUpperCase());
+            } else {
+                eventModel.filters = [];
+            }
+            localStorage.setItem("filters",JSON.stringify(eventModel.filters));
+            eventModel.isPresent = false;
+        }
     };
 
     render() {
@@ -62,7 +81,7 @@ class CustomSelect extends React.Component {
 
         return (
             <Select
-                style={{ zIndex: userModel.userEditIsOpen ? 0 : 300 }}
+                style={{ zIndex: userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 300 }}
                 name="form"
                 value={selectedOption}
                 onChange={this.handleChange}

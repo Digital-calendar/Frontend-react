@@ -31,7 +31,6 @@ class NewEvent extends Component {
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
 
         this.state = {
-            isRedirect: false,
             title: '',
             date: this.props.date,
             time: '',
@@ -48,17 +47,18 @@ class NewEvent extends Component {
 
     getSelectedUsers = () => {
 
-        const selectedUsers = [];
+        let selectedUsers = [];
 
         userModel.selectedUsers.forEach(item => {
             selectedUsers.push(userModel.users.find(el => el.id === item.id));
         });
 
+        selectedUsers.push(userModel.user);
+
         return selectedUsers;
     };
 
     onSaveClick = () => {
-        eventModel.isPresent = false;
         createEvent({
             title: this.state.title,
             timestamp: this.state.date + ' ' + this.state.time,
@@ -71,6 +71,7 @@ class NewEvent extends Component {
             privateEvent: this.state.isPrivate,
             userID: userModel.user.id
         });
+        eventModel.isPresent = false;
         this.onCancelClick();
     };
 
@@ -83,14 +84,10 @@ class NewEvent extends Component {
             options: newOptions
         });
         userModel.dropLoadedFlag();
-
-        console.log(1);
     };
 
     onCancelClick = () => {
-        this.setState({
-            isRedirect: true
-        });
+        eventModel.isNewEventModalOpen = false;
     };
 
     onTitleInput = event => {
@@ -153,11 +150,6 @@ class NewEvent extends Component {
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
         }
-
-        if (this.state.isRedirect) {
-            return <Redirect from='/newEvent' to='/calendar'/>
-        }
-
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">

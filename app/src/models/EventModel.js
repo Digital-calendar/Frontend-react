@@ -12,7 +12,7 @@ export class EventModel{
     events = [];
 
     @observable
-    filters = ['OWN', "EXTERNAL", "CORRESPONDENCE", "INTERNAL"];
+    filters = [];
 
     @observable
     isPresent = false;
@@ -23,8 +23,14 @@ export class EventModel{
     @observable
     dayEvents = [];
 
+    @observable
+    isNewEventModalOpen = false;
+
     @action
     filter() {
+        if (this.filters === null) {
+            this.filters = [];
+        }
         this.filteredEvents = this.events
             .filter(event => {
                 let isFilteredEvent = false;
