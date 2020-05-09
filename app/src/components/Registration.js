@@ -78,7 +78,7 @@ class Registration extends Component {
                     <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/login'}>sign
                         in</a></button>
                 </div>
-                <div className="windowRegistration__mainBg">
+                <div className="windowRegistration__mainBg" style={{height: window.innerHeight - 40}}>
                     <div className="windowRegistration__mainWindow">
                         <div className="windowRegistration__mainWindow__RectCenter"/>
                         <div>
