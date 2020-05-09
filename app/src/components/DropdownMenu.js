@@ -29,7 +29,7 @@ class DropdownMenu extends React.Component {
         });
     };
 
-    hideDropdownMenu = event => {
+    hideDropdownMenu = () => {
         if (!this.state.isRedirect) {
             const image = document.getElementById("vector-image");
 
@@ -45,8 +45,8 @@ class DropdownMenu extends React.Component {
 
     onSignOut = () => {
         userModel.user = null;
+        localStorage.clear();
         this.setState({isRedirect: true})
-        localStorage.setItem("user",JSON.stringify(null));
     };
 
     onEditClick = () => {

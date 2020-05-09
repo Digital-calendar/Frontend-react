@@ -45,8 +45,6 @@ class App extends Component {
         monthModel.relativeToCurrentMonthShift = JSON.parse(localStorage.getItem("relativeToCurrentMonthShift"));
         monthModel.yearToDisplay = JSON.parse(localStorage.getItem("yearToDisplay"));
         monthModel.monthToDisplay = JSON.parse(localStorage.getItem("monthToDisplay"));
-
-        console.log(monthModel.relativeToCurrentMonthShift);
     }
 
     closeUserEditModal() {
