@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {monthModel} from "../../models/MonthModel";
-import {toJS} from "mobx";
 import {observer} from "mobx-react";
 import {selectModel} from "../../models/SelectModel";
 
@@ -31,12 +30,13 @@ class UserBarDayView extends Component {
                 {
                     monthModel.dayArray.map((date, index) => {
                         if (_.isEqual(monthModel.dayArray[3], date)) {
-                            return <button id = "${index}" className="cal-wind__menu-bar__button-month_selected" >
+                            return <button id="${index}" className="cal-wind__menu-bar__button-month_selected">
                                 {date.toString().slice(0, 3) + " " + date.toString().slice(8, 10)}
                             </button>
                         } else {
-                            return <button id = "${index}" className="cal-wind__menu-bar__button-month" onClick={() => this.onDayClick(date)} >
-                                {date.toString().slice(0, 3) + " " + date.toString().slice(8, 10) }
+                            return <button id="${index}" className="cal-wind__menu-bar__button-month"
+                                           onClick={() => this.onDayClick(date)}>
+                                {date.toString().slice(0, 3) + " " + date.toString().slice(8, 10)}
                             </button>
                         }
 
