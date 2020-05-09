@@ -32,7 +32,10 @@ class CustomSelect extends React.Component {
         option: (provided, state) => ({
             ...provided,
             color       : '#000000',
-            backgroundColor: state.isSelected ? '#e4e4e4' : '#FFFFFF'
+            backgroundColor: state.isSelected ? '#e4e4e4' : '#FFFFFF',
+            ":hover"    : {
+                backgroundColor: "#F2F2F2"
+            }
         }),
     };
 

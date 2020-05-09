@@ -96,6 +96,15 @@ class DayEvent extends Component {
                                 <img src={require("../../css/images/trashButton.svg")}  alt="trashButton" className="trashButton"/>
                             </button>
                         </div>
+                        <hr className="line"/>
+                        <div className="invited_people_container">
+                            <div className="invited_people_title">Invited people:</div>
+                            <div className="invited_people_column">
+                                <div className="invited_people_text">First name Last name</div>
+                                <div className="invited_people_text" style={{marginRight:10}}>,</div>
+                                <div className="invited_people_text">Employee's position</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             })
