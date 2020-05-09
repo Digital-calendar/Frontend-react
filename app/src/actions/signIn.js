@@ -14,5 +14,6 @@ export async function userSignIn(userAuthData) {
 
     userModel.user = await response.json();
     localStorage.setItem("user",JSON.stringify(userModel.user));
-    console.log(userModel.user);
+    userModel.isPresent = response.status === 200;
+    userModel.isInValidLoginOrPassword = !userModel.isPresent;
 }

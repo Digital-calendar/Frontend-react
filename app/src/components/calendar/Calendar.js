@@ -19,8 +19,6 @@ class Calendar extends Component {
         this.arrayMonth = [];
         this.height = document.documentElement.clientHeight;
         eventModel.isPresent = false;
-        loadEvents();
-        eventModel.filter();
     }
 
     formMonthArray = () => {

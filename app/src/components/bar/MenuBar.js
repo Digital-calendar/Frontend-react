@@ -5,7 +5,7 @@ import dayImage from '../../css/images/day.svg';
 import CustomSelect from '../CustomSelect';
 import {observer} from "mobx-react";
 import {eventModel} from "../../models/EventModel";
-import MonthSlider from "./MonthSlider";
+import MonthSlider from "./sliders/MonthSlider";
 
 
 const imageStyle = {
@@ -39,7 +39,12 @@ class MenuBar extends Component {
         return (
             <div className="cal-wind__menu-bar">
                 <MonthSlider/>
-                <button className="cal-wind__up-bar__new-event-button" onClick={this.onNewEventClick}>New Event</button>
+                <button
+                    className="cal-wind__up-bar__new-event-button"
+                    onClick={this.onNewEventClick}
+                >
+                    New Event
+                </button>
                 <CustomSelect
                     options={filterOptions}
                     name={'filterType'}

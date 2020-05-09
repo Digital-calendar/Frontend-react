@@ -18,6 +18,9 @@ export class UserModel{
     isPresent = false;
 
     @observable
+    isInValidLoginOrPassword = false;
+
+    @observable
     userEditIsOpen = false;
 
     @action

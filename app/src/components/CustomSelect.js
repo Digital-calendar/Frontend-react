@@ -39,7 +39,7 @@ class CustomSelect extends React.Component {
     constructor(props) {
         super(props);
 
-        const options = this.props.options.filter(item => {
+        const options = eventModel.filters !== null ? this.props.options.filter(item => {
             const value = item.value.toUpperCase();
             let isOption = false;
             eventModel.filters.forEach(filter => {
@@ -48,7 +48,7 @@ class CustomSelect extends React.Component {
                 }
             });
             return isOption;
-        });
+        }) : [];
 
         this.state = {
             selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : options ,

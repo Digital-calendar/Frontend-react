@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {monthModel} from "../../models/MonthModel";
-import {eventModel} from "../../models/EventModel";
+import {monthModel} from "../../../models/MonthModel";
+import {eventModel} from "../../../models/EventModel";
 import {observer} from "mobx-react";
 
 const months = [
