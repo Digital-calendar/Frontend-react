@@ -125,6 +125,7 @@ body {
     color: #4f4f4f;
     border-style: solid;
     text-align: center;
+    outline: none;
 }
 
 .RegistrationSignUp:hover {
