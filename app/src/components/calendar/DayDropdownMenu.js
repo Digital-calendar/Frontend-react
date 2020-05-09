@@ -39,7 +39,6 @@ class DayDropdownMenu extends React.Component {
         this.setState({ displayMenu: true }, () => {
             document.addEventListener('click', this.hideDropdownMenu);
         });
-        console.log(this.props.number, toJS(this.state.events));
     };
 
     hideDropdownMenu = () => {

@@ -1,9 +1,9 @@
 import {eventModel} from "../models/EventModel";
-import {toJS} from "mobx";
+import {userModel} from "../models/UserModel";
 
 export async function loadEvents() {
 
-    const response = await fetch('/api/events/', {
+    const response = await fetch('/api/users/' + userModel.user.id +'/events', {
         method: "GET",
         dataType: "JSON",
         headers: {
@@ -15,5 +15,4 @@ export async function loadEvents() {
 
     eventModel.isPresent = true;
     eventModel.filter();
-    console.log(toJS(eventModel.events));
 }

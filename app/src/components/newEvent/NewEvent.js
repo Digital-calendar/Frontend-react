@@ -47,11 +47,13 @@ class NewEvent extends Component {
 
     getSelectedUsers = () => {
 
-        const selectedUsers = [];
+        let selectedUsers = [];
 
         userModel.selectedUsers.forEach(item => {
             selectedUsers.push(userModel.users.find(el => el.id === item.id));
         });
+
+        selectedUsers.push(userModel.user);
 
         return selectedUsers;
     };
@@ -82,7 +84,6 @@ class NewEvent extends Component {
             options: newOptions
         });
         userModel.dropLoadedFlag();
-        console.log(1);
     };
 
     onCancelClick = () => {
