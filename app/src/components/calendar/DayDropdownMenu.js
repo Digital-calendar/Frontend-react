@@ -9,6 +9,7 @@ import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
 import {eventModel} from "../../models/EventModel";
 import {toJS} from "mobx";
+import {handleInputChange} from "react-select/src/utils";
 
 
 @observer
@@ -155,6 +156,8 @@ class DayDropdownMenu extends React.Component {
             dropDownShift: shift
         })
     };
+
+    handle
 
     render() {
 
@@ -418,7 +421,7 @@ class DayDropdownMenu extends React.Component {
                                 </div>
                             </li>
                         </ul>
-                            <div className="day-list-more-details-button">
+                            <div className="day-list-more-details-button" onClick={}>
                                 more details...
                             </div>
                         </div>

@@ -149,7 +149,7 @@ html, #root {
     color: #333333;
     background: #FFFFFF;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-    margin-left: 2%;
+    padding-left: 2%;
 }
 
 .privateEvent_border_color {
@@ -159,6 +159,15 @@ html, #root {
 
 .externalEvent_border_color {
     border-bottom: 2px solid #50A9FD;
+}
+
+.correspondenceEvent_border_color {
+    border-bottom: 2px solid #333333;
+    min-width: 200px;
+}
+
+.internalEvent_border_color {
+    border-bottom: 2px solid #6FCF97;
 }
 
 .window__mainWindow__content__buttons {

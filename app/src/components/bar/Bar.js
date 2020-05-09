@@ -21,14 +21,13 @@ class Bar extends Component {
     }
 
     selectView() {
-
         switch (selectModel.currentView) {
             case 'month':
                 return <Calendar/>;
             case 'week':
                 return <Week/>;
             case 'day':
-                return <DayView/>;
+                return <DayView date = {selectModel.dateToShowInDay}/>;
             default:
                 break;
         }

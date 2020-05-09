@@ -25,6 +25,7 @@ class Week extends Component {
 
 
     handleRightClick = () => {
+        eventModel.isPresent = false;
         let d = monthModel.arrayWeek[monthModel.arrayWeek.length - 1];
 
         monthModel.getNextWeek(new Date(d.setDate(d.getDate() + 1)));
@@ -41,7 +42,6 @@ class Week extends Component {
     };
 
     handleLeftClick = () => {
-
         let d = monthModel.arrayWeek[0];
 
         monthModel.getNextWeek(new Date(d.setDate(d.getDate() - 1)));
@@ -56,6 +56,7 @@ class Week extends Component {
         }
 
     };
+
 
     render() {
 
