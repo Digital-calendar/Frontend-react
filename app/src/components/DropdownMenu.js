@@ -11,10 +11,14 @@ import {eventModel} from "../models/EventModel";
 @observer
 class DropdownMenu extends React.Component {
 
-    state = {
-        displayMenu: false,
-        isRedirect: false
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            displayMenu: false,
+            isRedirect: false
+        };
+    }
 
 
     showDropdownMenu = event => {
@@ -44,9 +48,9 @@ class DropdownMenu extends React.Component {
     };
 
     onSignOut = () => {
-        userModel.user = null;
+        this.setState({isRedirect: true});
+        userModel.isPresent = false;
         localStorage.clear();
-        this.setState({isRedirect: true})
     };
 
     onEditClick = () => {
@@ -55,8 +59,9 @@ class DropdownMenu extends React.Component {
 
     render() {
 
+        console.log(this.state.isRedirect)
         if (this.state.isRedirect) {
-            return <Redirect to="/login"/>;
+            return <Redirect to="/login/"/>;
         }
 
         return (
