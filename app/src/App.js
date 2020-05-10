@@ -14,6 +14,7 @@ import {monthModel} from "./models/MonthModel";
 
 const customUserEditStyles = {
     content: {
+        paddingTop: '6%',
         position: 'static',
         overflow: 'hidden',
         backgroundColor: 'transparent',
@@ -27,6 +28,7 @@ const customUserEditStyles = {
 
 const customNewEventStyles = {
     content: {
+        paddingTop: '6%',
         position: 'static',
         overflow: 'hidden',
         backgroundColor: 'transparent',
