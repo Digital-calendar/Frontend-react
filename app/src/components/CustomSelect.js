@@ -4,14 +4,20 @@ import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
 import { selectModel } from '../models/SelectModel';
 import {eventModel} from "../models/EventModel";
-import {toJS} from "mobx";
+import dayImage from "../css/images/day.svg";
+
+const imageStyle = {
+    width: '12px',
+    height: '12px',
+    marginRight: '3px'
+};
 
 @observer
 class CustomSelect extends React.Component {
 
     customStyles = {
         container: () => ({
-            minWidth    : '140px',
+            minWidth    : this.props.isViewSelect && selectModel.currentView === "day" ? '100px' : '140px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
             zIndex      : userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 150,
@@ -64,6 +70,7 @@ class CustomSelect extends React.Component {
     }
 
     handleChange = selectedOption => {
+        selectModel.isMoreDetailsClicked = false;
         this.setState({ selectedOption });
         if (this.props.isNewEvent) {
             userModel.selectedUsers = selectedOption;
@@ -71,6 +78,7 @@ class CustomSelect extends React.Component {
         if (this.props.isViewSelect) {
             selectModel.currentView = selectedOption.value;
             eventModel.isPresent = false;
+            selectModel.isMoreDetailsClicked = false;
         }
         if (this.props.isFilter) {
             if (selectedOption !== null) {
@@ -84,7 +92,12 @@ class CustomSelect extends React.Component {
     };
 
     render() {
-        const { selectedOption } = this.state;
+        let selectedOption;
+        if (selectModel.isMoreDetailsClicked && this.props.isViewSelect) {
+            selectedOption = {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>};
+        } else {
+            selectedOption  = this.state.selectedOption;
+        }
 
         return (
             <Select

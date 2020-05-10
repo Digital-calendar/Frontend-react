@@ -10,6 +10,7 @@ import {eventModel} from "../../models/EventModel";
 import {selectModel} from "../../models/SelectModel";
 
 
+
 @observer
 class DayDropdownMenu extends React.Component {
 
@@ -132,7 +133,8 @@ class DayDropdownMenu extends React.Component {
 
     handleMoreEventsClick = () => {
         selectModel.dateToShowInDay = new Date(this.props.fullDate);
-        selectModel.currentView = "day"
+        selectModel.currentView = "day";
+        selectModel.isMoreDetailsClicked = true;
     };
 
     getThisDateString = () => {

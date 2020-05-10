@@ -51,7 +51,8 @@ class DayEvents extends Component {
 
     handleEventClick = (date) => {
         selectModel.dateToShowInDay = new Date(date);
-        selectModel.currentView = "day"
+        selectModel.currentView = "day";
+        selectModel.isMoreDetailsClicked = true;
     };
 
     render() {
