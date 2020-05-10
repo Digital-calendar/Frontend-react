@@ -14,24 +14,28 @@ import {monthModel} from "./models/MonthModel";
 
 const customUserEditStyles = {
     content: {
+        position: 'static',
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         margin: '0 auto',
-        width: '50%',
-        padding: '0'
+        width: '42%',
+        minWidth: '590px',
+        height: '100%',
     }
 };
 
 const customNewEventStyles = {
     content: {
+        position: 'static',
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         margin: '0 auto',
-        width: '50%',
-        padding: '0'
-    }
+        width: '42%',
+        minWidth: '590px',
+        height: '100%',
+    },
 };
 
 @observer
@@ -58,7 +62,7 @@ class App extends Component {
     render() {
 
         return (
-            <div>
+            <div style={{minWidth: '1315px'}}>
                 <Modal
                     style={customUserEditStyles}
                     isOpen={userModel.userEditIsOpen}
