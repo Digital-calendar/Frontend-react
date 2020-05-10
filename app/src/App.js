@@ -79,8 +79,8 @@ class App extends Component {
                 </Modal>
                 <Router>
                     <Switch>
-                        <Route path='/' exact component={Registration}/>
-                        <Route path='/login' exact component={Login}/>
+                        <Route path='/' exact component={Login}/>
+                        <Route path='/signUp' exact component={Registration}/>
                         <Route path='/newEvent' exact component={NewEventPage}/>
                         <Route path='/calendar' exact component={Bar}/>
                     </Switch>

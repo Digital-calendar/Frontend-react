@@ -8,6 +8,7 @@ class Registration extends Component {
         super(props);
         this.state = {
             data: {
+                isRedirectToSignIn: false,
                 first_name: "",
                 last_name: "",
                 email: "",
@@ -70,13 +71,28 @@ class Registration extends Component {
         }
     };
 
+    onSignInClick = () => {
+        this.setState({
+            isRedirectToSignIn: true,
+        })
+    };
+
     render() {
+
+        if (this.state.isRedirectToSignIn) {
+            return <Redirect to='/'/>
+        }
+
         return (
             <div className="windowRegistration">
                 {this.state.isSuccess ? <Redirect to="/login"/> : null}
                 <div className="windowRegistration__RectTop">
-                    <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/login'}>sign
-                        in</a></button>
+                    <button
+                        className="signInTop"
+                        onClick={this.onSignInClick}
+                    >
+                            sign in
+                    </button>
                 </div>
                 <div className="windowRegistration__mainBg">
                     <div className="windowRegistration__mainWindow">

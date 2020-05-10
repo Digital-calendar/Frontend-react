@@ -59,9 +59,8 @@ class DropdownMenu extends React.Component {
 
     render() {
 
-        console.log(this.state.isRedirect)
         if (this.state.isRedirect) {
-            return <Redirect to="/login/"/>;
+            return <Redirect to="/"/>;
         }
 
         return (
