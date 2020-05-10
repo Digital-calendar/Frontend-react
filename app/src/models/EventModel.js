@@ -71,6 +71,16 @@ export class EventModel{
     }
 
     @action
+    deleteById(id) {
+        this.dayEvents = this.dayEvents
+            .filter(event => {
+                if (id !== event.id) {
+                    return event;
+                }
+            })
+    }
+
+    @action
     getDayEvents(day) {
         let array = [];
         let dayString = day;

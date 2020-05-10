@@ -66,6 +66,7 @@ class CustomSelect extends React.Component {
         }
         if (this.props.isViewSelect) {
             selectModel.currentView = selectedOption.value;
+            localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
             eventModel.isPresent = false;
         }
         if (this.props.isFilter) {

@@ -21,6 +21,7 @@ class Bar extends Component {
     }
 
     selectView() {
+        localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
         switch (selectModel.currentView) {
             case 'month':
                 return <Calendar/>;
