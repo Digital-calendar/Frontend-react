@@ -7,8 +7,7 @@ import Week from "../calendar_week/Week";
 import DayView from "../day_view/DayView"
 import {observer} from "mobx-react";
 import Calendar from '../calendar/Calendar';
-import Modal from 'react-modal'
-import UserEdit from "../UserEdit";
+import {Redirect} from 'react-router-dom';
 import {userModel} from "../../models/UserModel";
 
 
@@ -34,6 +33,11 @@ class Bar extends Component {
     }
 
     render() {
+
+        if (userModel.user === null) {
+            return <Redirect to='/'/>;
+        }
+
         monthModel.updateMonthInfo();
 
         return (
