@@ -176,7 +176,7 @@ class NewEvent extends Component {
                                     <img
                                         src={lBImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -197,7 +197,7 @@ class NewEvent extends Component {
                                     <img
                                         src={lCImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -231,7 +231,7 @@ class NewEvent extends Component {
                                     <img
                                         src={bSLImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -250,7 +250,7 @@ class NewEvent extends Component {
                                     <img
                                         src={pAOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <CustomSelect
@@ -266,7 +266,7 @@ class NewEvent extends Component {
                                     <img
                                         src={rBOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                     <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
                                         Private event
@@ -307,7 +307,7 @@ class NewEvent extends Component {
                                     <img
                                         src={aUOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -328,7 +328,7 @@ class NewEvent extends Component {
                                     <img
                                         src={pPOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -353,12 +353,12 @@ class NewEvent extends Component {
                                     <img
                                         src={cEOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                         style={{marginTop: 0, alignSelf: "start"}}
                                     />
                                 </label>
                                 <textarea
-                                    className="text-style input-field-style textarea-field"
+                                    className="-new-event-text-style new-event-input-field-style new-event-textarea-field"
                                     name="description"
                                     id="description"
                                     placeholder="enter the description"

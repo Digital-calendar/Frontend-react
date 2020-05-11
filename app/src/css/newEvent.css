@@ -6,7 +6,7 @@ body {
   background: rgba(0, 0, 0, 0);
 }
 
-.text-style,
+.new-event-text-style,
 .window-title-style {
   font-family: 'Oxygen', sans-serif;
   font-style: normal;
@@ -119,7 +119,7 @@ body {
   /*background: #fc06f0;*/
 }
 
-.input-field-style {
+.new-event-input-field-style {
   flex-grow: 1;
   padding-left: 2%;
   width: 100%;
@@ -131,11 +131,11 @@ body {
   transition: .3s;
 }
 
-.input-field-style::-webkit-input-placeholder {
+.new-event-input-field-style::-webkit-input-placeholder {
   color: #BDBDBD;
 }
 
-.input-field-style:focus,
+.new-event-input-field-style:focus,
 .input-time-field-style:focus,
 .select-event:focus {
   outline: none;
@@ -147,6 +147,7 @@ body {
   flex-grow: 1;
   width: 70px;
   height: 25px;
+  font-size: 18px;
   align-self: center;
   margin-left: 5%;
   padding-left: 2%;
@@ -272,8 +273,9 @@ input[type="date"]::-webkit-inner-spin-button {
   box-shadow: 0 1px 0 rgba(0, 0, 0, .25);
 }
 
-.textarea-field {
+.new-event-textarea-field {
   height: 460px;
+  font-size: 18px;
   resize: none;
   overflow: auto;
 }
