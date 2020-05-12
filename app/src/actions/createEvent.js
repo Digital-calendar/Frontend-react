@@ -1,3 +1,4 @@
+import {eventModel} from "../models/EventModel";
 
 export async function createEvent(data) {
 
@@ -14,4 +15,7 @@ export async function createEvent(data) {
 
     console.log(response.status);
     console.log(await response.json());
+    if (response.ok) {
+        eventModel.isNewEventModalOpen = false;
+    }
 }

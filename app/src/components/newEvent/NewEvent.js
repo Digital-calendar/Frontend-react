@@ -30,16 +30,19 @@ class NewEvent extends Component {
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
 
         this.state = {
-            title: '',
+            title: null,
             date: this.props.date,
             time: '00:00',
-            location: '',
+            location: null,
             isPrivate: false,
             eventType: 'INTERNAL',
             contactInfo: contact,
             contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
             description: '',
             options: [],
+            isTitleRequired: false,
+            isDateRequired: false,
+            isLocationRequired: false,
         };
 
     }
@@ -71,7 +74,11 @@ class NewEvent extends Component {
             userID: userModel.user.id
         });
         eventModel.isPresent = false;
-        this.onCancelClick();
+        this.setState({
+            isTitleRequired: this.state.title === null,
+            isDateRequired: this.state.date === '',
+            isLocationRequired: this.state.location === null,
+        })
     };
 
     onOptionChange = event => {
@@ -91,14 +98,15 @@ class NewEvent extends Component {
 
     onTitleInput = event => {
         this.setState({
-            title: event.target.value
+            title: event.target.value,
+            isTitleRequired: false
         })
     };
 
     onDateInput = event => {
-
         this.setState({
-            date: event.target.value
+            date: event.target.value,
+            isDateRequired: false
         })
     };
 
@@ -110,7 +118,8 @@ class NewEvent extends Component {
 
     onLocationInput = event => {
         this.setState({
-            location: event.target.value
+            location: event.target.value,
+            isLocationRequired: false
         })
     };
 
@@ -163,7 +172,7 @@ class NewEvent extends Component {
             this.onOptionChange();
         }
 
-        console.log(this.state.eventType);
+        console.log(this.state.date);
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
@@ -202,6 +211,9 @@ class NewEvent extends Component {
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="1"
+                                    style={{borderColor: this.state.isTitleRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     onChange={this.onTitleInput}
                                     required
                                 />
@@ -223,6 +235,9 @@ class NewEvent extends Component {
                                     autoComplete="off"
                                     tabIndex="2"
                                     required
+                                    style={{borderColor: this.state.isDateRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
@@ -256,6 +271,9 @@ class NewEvent extends Component {
                                     id="location"
                                     form="new-event-form"
                                     tabIndex="4"
+                                    style={{borderColor: this.state.isLocationRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     onChange={this.onLocationInput}
                                 />
                             </div>
