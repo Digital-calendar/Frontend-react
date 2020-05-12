@@ -20,7 +20,7 @@ class CustomSelect extends React.Component {
             minWidth    : this.props.isViewSelect && selectModel.currentView === "day" ? '100px' : '140px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
-            zIndex      : userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 150,
+            zIndex      : (userModel.userEditIsOpen || eventModel.isNewEventModalOpen) && this.props.isNewEvent === undefined ? 0 : 150,
             position    : "relative",
             width       : this.props.isNewEvent ? '100%' : '-1'
         }),

@@ -256,7 +256,7 @@ class NewEvent extends Component {
                                     options={this.state.options}
                                     name={'filterType'}
                                     isMulti={true}
-                                    placeholder={'Filter'}
+                                    placeholder={'Пригласить людей'}
                                     isNewEvent={true}
                                 />
                             </div>
