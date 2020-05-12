@@ -11,7 +11,6 @@ import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg'
 import cSImage from '../../css/images/newEvent/content-save.svg';
 import tOImage from '../../css/images/newEvent/trash-outline.svg';
 import '../../css/newEvent.css';
-import {Redirect} from 'react-router-dom';
 import CustomSelect from "../CustomSelect";
 import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
@@ -35,7 +34,7 @@ class NewEvent extends Component {
             date: this.props.date,
             time: '',
             location: '',
-            isPrivate: true,
+            isPrivate: false,
             eventType: 'INTERNAL',
             contactInfo: contact,
             contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
@@ -287,8 +286,15 @@ class NewEvent extends Component {
                                     <span></span>
                                 </label>
                                 <label htmlFor="select"></label>
-                                <select className="text-style select-event" name="select" id="select"
-                                        form="new-event-form" tabIndex="7" onClick={this.onEventTypeChange}>
+                                <select
+                                    className="text-style select-event"
+                                    name="select"
+                                    id="select"
+                                    form="new-event-form"
+                                    tabIndex="7"
+                                    onClick={this.onEventTypeChange}
+                                    style={{visibility: this.state.isPrivate ? "hidden" : "visible"}}
+                                >
                                     <option defaultValue="INTERNAL">Internal</option>
                                     <option defaultValue="EXTERNAL">External</option>
                                     <option defaultValue="CORRESPONDENCE">Correspondence</option>
