@@ -155,7 +155,7 @@ class NewEvent extends Component {
 
                 <div className="window-upper-panel">
                     <div className="invisible-ico"/>
-                    <div className="window-title-style">New Event</div>
+                    <div className="window-title-style">Новое событие</div>
                     <img
                         src={xImage}
                         alt="X"

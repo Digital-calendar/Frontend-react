@@ -47,13 +47,13 @@ class Calendar extends Component {
         return (
             <div className="wrapper" style={{height: this.height}}>
                 <div className="days-table__wkd-bar">
-                    <div className="weekdays-bar__wkd">mon</div>
-                    <div className="weekdays-bar__wkd">tue</div>
-                    <div className="weekdays-bar__wkd">wed</div>
-                    <div className="weekdays-bar__wkd">thu</div>
-                    <div className="weekdays-bar__wkd">fri</div>
-                    <div className="weekdays-bar__day-off">sat</div>
-                    <div className="weekdays-bar__day-off">sun</div>
+                    <div className="weekdays-bar__wkd">пн</div>
+                    <div className="weekdays-bar__wkd">вт</div>
+                    <div className="weekdays-bar__wkd">ср</div>
+                    <div className="weekdays-bar__wkd">чт</div>
+                    <div className="weekdays-bar__wkd">пт</div>
+                    <div className="weekdays-bar__day-off">сб</div>
+                    <div className="weekdays-bar__day-off">вс</div>
                 </div>
                 <div className="days-table">
                     {

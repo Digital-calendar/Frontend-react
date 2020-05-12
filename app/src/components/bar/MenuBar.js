@@ -18,16 +18,16 @@ const imageStyle = {
 };
 
 const filterOptions = [
-    {value: 'own', label: 'Own'},
-    {value: 'internal', label: 'Internal'},
-    {value: 'external', label: 'External'},
-    {value: 'Correspondence', label: 'Correspondence'},
+    {value: 'own', label: 'Свои'},
+    {value: 'internal', label: 'Внутренни'},
+    {value: 'external', label: 'Внешние'},
+    {value: 'Correspondence', label: 'Очные'},
 ];
 
 const viewOptions = [
-    {value: 'month', label: <div><img style={imageStyle} src={monthImage} alt=""/><span>Month</span></div>},
-    {value: 'week', label: <div><img style={imageStyle} src={weekImage} alt=""/><span>Week</span></div>},
-    {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>}
+    {value: 'month', label: <div><img style={imageStyle} src={monthImage} alt=""/><span>Месяц</span></div>},
+    {value: 'week', label: <div><img style={imageStyle} src={weekImage} alt=""/><span>Неделя</span></div>},
+    {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>День</span></div>}
 ];
 
 @observer
@@ -46,13 +46,13 @@ class MenuBar extends Component {
                     className="cal-wind__up-bar__new-event-button"
                     onClick={this.onNewEventClick}
                 >
-                    New Event
+                    Создать событие
                 </button>
                 <CustomSelect
                     options={filterOptions}
                     name={'filterType'}
                     isMulti={true}
-                    placeholder={'Filter'}
+                    placeholder={'Фильтр'}
                     isFilter={true}
                 />
                 <CustomSelect

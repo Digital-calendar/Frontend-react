@@ -200,12 +200,12 @@ class DayDropdownMenu extends React.Component {
                                     className="day-list-add-new-button"
                                     onClick={this.onAddNewClick}
                                 >
-                                    add new
+                                    добавить
                                 </div>
                             </li>
                         </ul>
                             <div className="day-list-more-details-button" onClick={this.handleMoreEventsClick}>
-                                more details...
+                                детально...
                             </div>
                         </div>
                     :
