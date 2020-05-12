@@ -91,7 +91,7 @@ class Registration extends Component {
                         className="signInTop"
                         onClick={this.onSignInClick}
                     >
-                            sign in
+                            вход
                     </button>
                 </div>
                 <div className="windowRegistration__mainBg">
@@ -103,7 +103,7 @@ class Registration extends Component {
                                     className="RegistrationFirstName"
                                     type="text"
                                     autoFocus
-                                    placeholder="first name"
+                                    placeholder="имя"
                                     name="first_name"
                                     onChange={this.handleSubmit}
                                     required
@@ -111,7 +111,7 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationLastName"
                                     type="text"
-                                    placeholder="last name"
+                                    placeholder="фамилия"
                                     name="last_name"
                                     onChange={this.handleSubmit}
                                     required
@@ -119,7 +119,7 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationEmail"
                                     type="email"
-                                    placeholder="email"
+                                    placeholder="почта"
                                     name="email"
                                     onChange={this.handleSubmit}
                                     required
@@ -127,7 +127,7 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationPassword"
                                     type="password"
-                                    placeholder="password"
+                                    placeholder="пароль"
                                     name="pass"
                                     onChange={this.handleSubmit}
                                     required
@@ -135,12 +135,12 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationPassRepeat"
                                     type="password"
-                                    placeholder="confirm password"
+                                    placeholder="подтверждение пароля"
                                     name="passwordRepeat"
                                     onChange={this.checkPass}
                                     required
                                 />
-                                <input className="RegistrationSignUp" type="submit" value="sign up" name="signUp"/>
+                                <input className="RegistrationSignUp" type="submit" value="создать" name="signUp"/>
                             </form>
                         </div>
                     </div>

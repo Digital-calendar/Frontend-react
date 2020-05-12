@@ -32,7 +32,7 @@ class NewEvent extends Component {
         this.state = {
             title: '',
             date: this.props.date,
-            time: '',
+            time: '00:00',
             location: '',
             isPrivate: false,
             eventType: 'INTERNAL',
@@ -121,8 +121,21 @@ class NewEvent extends Component {
     };
 
     onEventTypeChange = event => {
+        let type = '';
+        switch (event.target.value) {
+            case 'Внутреннее':
+                type = 'INTERNAL';
+                break;
+            case 'Внешнее':
+                type = 'EXTERNAL';
+                break;
+            case 'Очное':
+                type = 'CORRESPONDENCE';
+                break;
+            default:
+        }
         this.setState({
-            eventType: event.target.value.toUpperCase()
+            eventType: type
         })
     };
 
@@ -149,6 +162,8 @@ class NewEvent extends Component {
         if (userModel.isNewUsersLoaded) {
             this.onOptionChange();
         }
+
+        console.log(this.state.eventType);
 
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
@@ -182,7 +197,7 @@ class NewEvent extends Component {
                                     className="text-style input-field-style"
                                     name="title"
                                     type="text"
-                                    placeholder="enter the title"
+                                    placeholder="Заголовок"
                                     id="title"
                                     form="new-event-form"
                                     autoComplete="off"
@@ -237,7 +252,7 @@ class NewEvent extends Component {
                                     className="text-style input-field-style"
                                     name="location"
                                     type="text"
-                                    placeholder="enter location"
+                                    placeholder="Местоположение"
                                     id="location"
                                     form="new-event-form"
                                     tabIndex="4"
@@ -268,7 +283,7 @@ class NewEvent extends Component {
                                         className="new-event-icon-style"
                                     />
                                     <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
-                                        Private event
+                                        Приватное
                                     </div>
                                 </div>
                                 <label
@@ -295,16 +310,16 @@ class NewEvent extends Component {
                                     onClick={this.onEventTypeChange}
                                     style={{visibility: this.state.isPrivate ? "hidden" : "visible"}}
                                 >
-                                    <option defaultValue="INTERNAL">Internal</option>
-                                    <option defaultValue="EXTERNAL">External</option>
-                                    <option defaultValue="CORRESPONDENCE">Correspondence</option>
+                                    <option defaultValue="Внутреннее">Внутреннее</option>
+                                    <option defaultValue="Внешнее">Внешнее</option>
+                                    <option defaultValue="Очное">Очное</option>
                                 </select>
                             </div>
                             <div className="field-container">
                                 <div className="feedback-item">
                                     <span></span>
                                     <div className="text-style" style={{margin: 0}}>
-                                        Feedback
+                                        Обратная связь
                                     </div>
                                 </div>
                             </div>
@@ -321,7 +336,7 @@ class NewEvent extends Component {
                                     name="feedback-contact"
                                     type="text"
                                     pattern="(\+?[0-9]\s?[(]{0,1}[0-9]{3}[)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2})|(^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$)"
-                                    placeholder="phone or email"
+                                    placeholder="телефон или электронная почта"
                                     id="feedback-contact"
                                     form="new-event-form"
                                     value={this.state.contactInfo}
@@ -341,7 +356,7 @@ class NewEvent extends Component {
                                     className="text-style input-field-style"
                                     name="signature"
                                     type="text"
-                                    placeholder="how can address you?"
+                                    placeholder="как к вам можно обращаться?"
                                     id="signature"
                                     form="new-event-form"
                                     tabIndex="9"
@@ -367,7 +382,7 @@ class NewEvent extends Component {
                                     className="-new-event-text-style new-event-input-field-style new-event-textarea-field"
                                     name="description"
                                     id="description"
-                                    placeholder="enter the description"
+                                    placeholder="описание"
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="10"
@@ -390,7 +405,7 @@ class NewEvent extends Component {
                                         alt=""
                                     />
                                     <div className="text-style">
-                                        Save
+                                        Создать
                                     </div>
                                 </button>
                                 <button
@@ -405,7 +420,7 @@ class NewEvent extends Component {
                                         alt=""
                                     />
                                     <div className="text-style">
-                                        Cancel
+                                        Отмена
                                     </div>
                                 </button>
                             </div>

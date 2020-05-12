@@ -74,7 +74,7 @@ class Login extends Component {
                         className="signInTop"
                         onClick={this.onSignUpClick}
                     >
-                            sign up
+                            регистрация
                     </button>
                 </div>
 
@@ -91,7 +91,7 @@ class Login extends Component {
                                     className="login"
                                     type="email"
                                     autoFocus
-                                    placeholder="login"
+                                    placeholder="логин"
                                     name="login"
                                     style={{borderColor: userModel.isInValidLoginOrPassword
                                             ? 'rgba(201, 6, 52, 1)'
@@ -102,7 +102,7 @@ class Login extends Component {
                                 <input
                                     className="pass"
                                     type="password"
-                                    placeholder="password"
+                                    placeholder="пароль"
                                     name="password"
                                     style={{borderColor: userModel.isInValidLoginOrPassword
                                             ? 'rgba(201, 6, 52, 1)'
@@ -113,7 +113,7 @@ class Login extends Component {
                                 <input
                                     className="signIn"
                                     type="submit"
-                                    value="sign in"
+                                    value="войти"
                                     name="signIn"
                                 />
                             </form>
