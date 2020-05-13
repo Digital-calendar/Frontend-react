@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import UserBar from '../bar/UserBar';
 import NewEvent from "./NewEvent";
 import {eventModel} from "../../models/EventModel";
+import {toJS} from "mobx";
 
 class NewEventPage extends Component {
 
@@ -10,7 +11,8 @@ class NewEventPage extends Component {
         return (
             <div>
                 <UserBar/>
-                <NewEvent date={eventModel.dayToCreate}/>
+                {console.log(123)}
+                <NewEvent date={eventModel.dayToCreate} event = {toJS(eventModel.eventForEdit)}/>
 
             </div>
         );

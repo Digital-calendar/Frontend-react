@@ -17,6 +17,8 @@ import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
+import {toJS} from "mobx";
+import {editEvent} from "../../actions/editEvent";
 
 
 @observer
@@ -28,23 +30,42 @@ class NewEvent extends Component {
         loadUsers();
         userModel.selectedUsers = [];
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
+        console.log(this.props.event)
+        if (this.props.event == null) {
+            this.state = {
+              title: null,
+              date: this.props.date,
+              time: '00:00',
+              location: null,
+              isPrivate: false,
+              eventType: 'INTERNAL',
+              contactInfo: contact,
+              contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
+              description: '',
+              options: [],
+              isTitleRequired: false,
+              isDateRequired: false,
+              isLocationRequired: false,
+            };
+        } else {
 
-        this.state = {
-            title: null,
-            date: this.props.date,
-            time: '00:00',
-            location: null,
-            isPrivate: false,
-            eventType: 'INTERNAL',
-            contactInfo: contact,
-            contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
-            description: '',
-            options: [],
-            isTitleRequired: false,
-            isDateRequired: false,
-            isLocationRequired: false,
-        };
-
+            this.state = {
+                title: this.props.event.title,
+                date: this.props.event.timestamp.slice(0, 10),
+                time: this.props.event.timestamp.slice(-5),
+                location: this.props.event.location,
+                isPrivate: this.props.event.isPrivate,
+                eventType: this.props.event.eventType,
+                contactInfo: this.props.event.contactInfo,
+                contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
+                description: this.props.event.description,
+                options: [],
+                isTitleRequired: false,
+                isDateRequired: false,
+                isLocationRequired: false,
+            };
+            console.log(this.state.date)
+        }
     }
 
     getSelectedUsers = () => {
@@ -61,18 +82,33 @@ class NewEvent extends Component {
     };
 
     onSaveClick = () => {
-        createEvent({
-            title: this.state.title,
-            timestamp: this.state.date + ' ' + this.state.time,
-            location: this.state.location,
-            eventType: this.state.eventType,
-            contactInfo: this.state.contactInfo,
-            contactName: this.state.contactName,
-            description: this.state.description,
-            participants: this.getSelectedUsers(),
-            privateEvent: this.state.isPrivate,
-            userID: userModel.user.id
-        });
+        if (this.props.event == null) {
+            createEvent({
+                title: this.state.title,
+                timestamp: this.state.date + ' ' + this.state.time,
+                location: this.state.location,
+                eventType: this.state.eventType,
+                contactInfo: this.state.contactInfo,
+                contactName: this.state.contactName,
+                description: this.state.description,
+                participants: this.getSelectedUsers(),
+                privateEvent: this.state.isPrivate,
+                userID: userModel.user.id
+            });
+        } else {
+            editEvent({
+                title: this.state.title,
+                timestamp: this.state.date + ' ' + this.state.time,
+                location: this.state.location,
+                eventType: this.state.eventType,
+                contactInfo: this.state.contactInfo,
+                contactName: this.state.contactName,
+                description: this.state.description,
+                participants: this.getSelectedUsers(),
+                privateEvent: this.state.isPrivate,
+                userID: userModel.user.id
+            }, this.props.event.id);
+        }
         eventModel.isPresent = false;
         this.setState({
             isTitleRequired: this.state.title === null,
@@ -93,6 +129,7 @@ class NewEvent extends Component {
     };
 
     onCancelClick = () => {
+        eventModel.eventForEdit = null;
         eventModel.isNewEventModalOpen = false;
     };
 
@@ -166,6 +203,42 @@ class NewEvent extends Component {
         })
     };
 
+    getMarks = () => {
+        let view = []
+
+        switch (this.state.eventType) {
+            case "INTERNAL":
+                view.push(
+                    <option selected="selected" defaultValue="Внутреннее">Внутреннее</option>,
+                    <option defaultValue="Внешнее">Внешнее</option>,
+                    <option defaultValue="Очное">Очное</option>
+                );
+                break;
+            case "EXTERNAL":
+                view.push(               
+                    <option defaultValue="Внутреннее">Внутреннее</option>,
+                    <option selected="selected" defaultValue="Внешнее">Внешнее</option>,
+                    <option defaultValue="Очное">Очное</option>
+                );
+                break;
+            case "CORRESPONDENCE":
+                view.push(              
+                    <option defaultValue="Внутреннее">Внутреннее</option>,
+                    <option defaultValue="Внешнее">Внешнее</option>,
+                    <option selected="selected" defaultValue="Очное">Очное</option>
+                );
+                break;
+            default:
+                view.push(
+                    <option defaultValue="Внутреннее">Внутреннее</option>,
+                    <option defaultValue="Внешнее">Внешнее</option>,
+                    <option defaultValue="Очное">Очное</option>
+                )
+                break;
+        }
+
+        return view
+    };
 
     render() {
         if (userModel.isNewUsersLoaded) {
@@ -179,7 +252,7 @@ class NewEvent extends Component {
 
                 <div className="window-upper-panel">
                     <div className="invisible-ico"/>
-                    <div className="window-title-style">Новое событие</div>
+                    <div className="window-title-style">{this.props.event == null ? "Новое событие" : "Редактирование события"}</div>
                     <img
                         src={xImage}
                         alt="X"
@@ -214,6 +287,7 @@ class NewEvent extends Component {
                                     style={{borderColor: this.state.isTitleRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : 'rgba(0, 0, 0, 0.25)'}}
+                                    value={this.state.title}
                                     onChange={this.onTitleInput}
                                     required
                                 />
@@ -252,6 +326,7 @@ class NewEvent extends Component {
                                     // form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="3"
+                                    value={this.state.time}
                                     onChange={this.onTimeInput}
                                 />
                             </div>
@@ -270,6 +345,7 @@ class NewEvent extends Component {
                                     placeholder="Местоположение"
                                     id="location"
                                     form="new-event-form"
+                                    value={this.state.location}
                                     tabIndex="4"
                                     style={{borderColor: this.state.isLocationRequired
                                             ? 'rgba(201, 6, 52, 1)'
@@ -313,12 +389,14 @@ class NewEvent extends Component {
                                         name="private-event-toggle"
                                         type="checkbox"
                                         form="new-event-form"
+                                        value={this.state.isPrivate}
                                         tabIndex="6"
                                         onChange={this.onPrivateClick}
                                     />
                                     <span></span>
                                 </label>
                                 <label htmlFor="select"></label>
+
                                 <select
                                     className="text-style select-event"
                                     name="select"
@@ -328,9 +406,7 @@ class NewEvent extends Component {
                                     onClick={this.onEventTypeChange}
                                     style={{visibility: this.state.isPrivate ? "hidden" : "visible"}}
                                 >
-                                    <option defaultValue="Внутреннее">Внутреннее</option>
-                                    <option defaultValue="Внешнее">Внешнее</option>
-                                    <option defaultValue="Очное">Очное</option>
+                                    {this.getMarks()}
                                 </select>
                             </div>
                             <div className="field-container">
@@ -404,6 +480,7 @@ class NewEvent extends Component {
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="10"
+                                    value={this.state.description}
                                     onChange={this.onDescriptionInput}
                                 />
                                 <label htmlFor="description"/>

@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx'
+import {observable, action, toJS} from 'mobx'
 import {monthModel} from "./MonthModel";
 import {userModel} from "./UserModel";
 
@@ -22,6 +22,9 @@ export class EventModel{
 
     @observable
     dayEvents = [];
+
+    @observable
+    eventForEdit = null;
 
     @observable
     isNewEventModalOpen = false;
@@ -54,6 +57,23 @@ export class EventModel{
     }
 
     @action
+    makeDayEvents(date) {
+        let dayString = date.getDate();
+        if ((date.getDate() - 10) < 0) {
+            dayString = '0' + dayString;
+        }
+        let monthString = date.getMonth() + 1;
+        if ((date.getMonth() - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        const formatDay = date.getFullYear() + '-' + monthString + '-' + dayString;
+        this.dayEvents = this.filteredEvents
+            .filter(event => {
+                return event.timestamp.startsWith(formatDay);
+            })
+    }
+
+    @action
     formDayEvents(day) {
         let dayString = day;
         if ((day - 10) < 0) {
@@ -68,6 +88,18 @@ export class EventModel{
             .filter(event => {
                 return event.timestamp.startsWith(formatDay);
             })
+    }
+
+    @action
+    deleteById(id) {
+        console.log(toJS(this.dayEvents))
+        this.dayEvents = this.dayEvents
+            .filter(event => {
+                if (id !== event.id) {
+                    return event;
+                }
+            })
+        console.log(toJS(this.dayEvents))
     }
 
     @action

@@ -5,6 +5,7 @@ import {eventModel} from "../../models/EventModel";
 import {observer} from "mobx-react";
 import DayEvents from "./DayEvents";
 import {loadEvents} from "../../actions/loadEvents";
+import {toJS} from "mobx";
 
 const _ = require('lodash');
 
@@ -63,6 +64,7 @@ class Week extends Component {
         if (!eventModel.isPresent) {
             loadEvents();
             eventModel.filter();
+            console.log(toJS(eventModel.events));
         }
 
         return (
@@ -105,7 +107,7 @@ class Week extends Component {
 
                     {
                         monthModel.arrayWeek.map((date, index) => {
-                            return <DayEvents key={index} day={date.getDate()}/>
+                            return <DayEvents key={index}  day={date.getDate()}/>
                         })
                     }
                 </div>

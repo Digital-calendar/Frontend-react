@@ -11,6 +11,7 @@ import Modal from "react-modal";
 import {eventModel} from "./models/EventModel";
 import NewEvent from "./components/newEvent/NewEvent";
 import {monthModel} from "./models/MonthModel";
+import {selectModel} from "./models/SelectModel";
 
 const customUserEditStyles = {
     content: {
@@ -51,6 +52,11 @@ class App extends Component {
         monthModel.relativeToCurrentMonthShift = JSON.parse(localStorage.getItem("relativeToCurrentMonthShift"));
         monthModel.yearToDisplay = JSON.parse(localStorage.getItem("yearToDisplay"));
         monthModel.monthToDisplay = JSON.parse(localStorage.getItem("monthToDisplay"));
+        if (JSON.parse(localStorage.getItem("currentView")) === null) {
+            localStorage.setItem("currentView",JSON.stringify(selectModel.currentView ));
+        }
+        selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));
+        selectModel.dateToShowInDay = new Date(JSON.parse(localStorage.getItem("dateToShowInDay")));
     }
 
     closeUserEditModal() {
@@ -58,6 +64,7 @@ class App extends Component {
     }
 
     closeNewEventModal() {
+        eventModel.eventForEdit = null;
         eventModel.isNewEventModalOpen = false;
     }
 
@@ -77,7 +84,7 @@ class App extends Component {
                     isOpen={eventModel.isNewEventModalOpen}
                     onRequestClose={this.closeNewEventModal}
                 >
-                    <NewEvent date={eventModel.dayToCreate}/>
+                    <NewEvent date={eventModel.dayToCreate} event = {eventModel.eventForEdit}/>
                 </Modal>
                 <Router>
                     <Switch>

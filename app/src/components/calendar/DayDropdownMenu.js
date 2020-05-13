@@ -135,6 +135,8 @@ class DayDropdownMenu extends React.Component {
         selectModel.dateToShowInDay = new Date(this.props.fullDate);
         selectModel.currentView = "day";
         selectModel.isMoreDetailsClicked = true;
+        localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
+        localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
     };
 
     getThisDateString = () => {

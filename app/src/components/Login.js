@@ -78,7 +78,7 @@ class Login extends Component {
                     </button>
                 </div>
 
-                <div className="windowRegistration__mainBg">
+                <div className="windowRegistration__mainBg" style={{height: window.innerHeight - 40}}>
                     <div className="windowRegistration__mainWindow">
                         <div className="window__mainWindow__RectCenter"/>
                         <div className="window__mainWindow__formGroup">
