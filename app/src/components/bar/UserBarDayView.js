@@ -19,7 +19,7 @@ class UserBarDayView extends Component {
 
     onDayClick = (day) => {
         monthModel.getWeekForDayView(day);
-        selectModel.dateToShowInDay = monthModel.dayArray[3]
+        selectModel.dateToShowInDay = monthModel.dayArray[3];
         localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
     };
 

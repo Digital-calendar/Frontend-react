@@ -54,6 +54,24 @@ export class EventModel{
     }
 
     @action
+    makeDayEvents(date) {
+        let dayString = date.getDate();
+        if ((date.getDate() - 10) < 0) {
+            dayString = '0' + dayString;
+        }
+        let monthString = date.getMonth() + 1;
+        if ((date.getMonth() - 9) < 0) {
+            monthString = '0' + monthString;
+        }
+        const formatDay = date.getFullYear() + '-' + monthString + '-' + dayString;
+        console.log(formatDay)
+        this.dayEvents = this.filteredEvents
+            .filter(event => {
+                return event.timestamp.startsWith(formatDay);
+            })
+    }
+
+    @action
     formDayEvents(day) {
         let dayString = day;
         if ((day - 10) < 0) {

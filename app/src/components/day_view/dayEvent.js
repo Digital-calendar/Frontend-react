@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
-import {deleteEvent} from "../../actions/deleteEvent";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -58,15 +57,16 @@ class DayEvent extends Component {
 
     handleDeleteButtonClick = (id) => {
 
-        if (deleteEvent(id)) {
-            // eventModel.deleteById(id);
-            eventModel.isPresent = false
-        }
+        // deleteEvent(id)
+        eventModel.deleteById(id);
     };
 
     render() {
-        eventModel.filter();
-        eventModel.formDayEvents(parseInt(this.state.date.toString().slice(8, 10)));
+
+        eventModel.filter()
+
+        eventModel.makeDayEvents(this.state.date);
+
         if (eventModel.dayEvents.length === 0) {
             return (
                 <p>Кажется на сегодня событий нет :)</p>
