@@ -11,7 +11,6 @@ import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg'
 import cSImage from '../../css/images/newEvent/content-save.svg';
 import tOImage from '../../css/images/newEvent/trash-outline.svg';
 import '../../css/newEvent.css';
-import {Redirect} from 'react-router-dom';
 import CustomSelect from "../CustomSelect";
 import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
@@ -34,16 +33,19 @@ class NewEvent extends Component {
         console.log(this.props.event)
         if (this.props.event == null) {
             this.state = {
-                title: '',
-                date: this.props.date,
-                time: '00:00',
-                location: '',
-                isPrivate: true,
-                eventType: 'INTERNAL',
-                contactInfo: contact,
-                contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
-                description: '',
-                options: [],
+              title: null,
+              date: this.props.date,
+              time: '00:00',
+              location: null,
+              isPrivate: false,
+              eventType: 'INTERNAL',
+              contactInfo: contact,
+              contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
+              description: '',
+              options: [],
+              isTitleRequired: false,
+              isDateRequired: false,
+              isLocationRequired: false,
             };
         } else {
 
@@ -58,11 +60,12 @@ class NewEvent extends Component {
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
                 options: [],
+                isTitleRequired: false,
+                isDateRequired: false,
+                isLocationRequired: false,
             };
             console.log(this.state.date)
         }
-
-
     }
 
     getSelectedUsers = () => {
@@ -107,7 +110,11 @@ class NewEvent extends Component {
             }, this.props.event.id);
         }
         eventModel.isPresent = false;
-        this.onCancelClick();
+        this.setState({
+            isTitleRequired: this.state.title === null,
+            isDateRequired: this.state.date === '',
+            isLocationRequired: this.state.location === null,
+        })
     };
 
     onOptionChange = event => {
@@ -128,14 +135,15 @@ class NewEvent extends Component {
 
     onTitleInput = event => {
         this.setState({
-            title: event.target.value
+            title: event.target.value,
+            isTitleRequired: false
         })
     };
 
     onDateInput = event => {
-
         this.setState({
-            date: event.target.value
+            date: event.target.value,
+            isDateRequired: false
         })
     };
 
@@ -147,7 +155,8 @@ class NewEvent extends Component {
 
     onLocationInput = event => {
         this.setState({
-            location: event.target.value
+            location: event.target.value,
+            isLocationRequired: false
         })
     };
 
@@ -158,8 +167,21 @@ class NewEvent extends Component {
     };
 
     onEventTypeChange = event => {
+        let type = '';
+        switch (event.target.value) {
+            case 'Внутреннее':
+                type = 'INTERNAL';
+                break;
+            case 'Внешнее':
+                type = 'EXTERNAL';
+                break;
+            case 'Очное':
+                type = 'CORRESPONDENCE';
+                break;
+            default:
+        }
         this.setState({
-            eventType: event.target.value.toUpperCase()
+            eventType: type
         })
     };
 
@@ -187,30 +209,30 @@ class NewEvent extends Component {
         switch (this.state.eventType) {
             case "INTERNAL":
                 view.push(
-                    <option selected="selected" defaultValue="INTERNAL">Internal</option>,
-                    <option defaultValue="EXTERNAL">External</option>,
-                    <option defaultValue="CORRESPONDENCE">Correspondence</option>
+                    <option selected="selected" defaultValue="Внутреннее">Внутреннее</option>,
+                    <option defaultValue="Внешнее">Внешнее</option>,
+                    <option defaultValue="Очное">Очное</option>
                 );
                 break;
             case "EXTERNAL":
-                view.push(
-                    <option defaultValue="INTERNAL">Internal</option>,
-                    <option selected="selected" defaultValue="EXTERNAL">External</option>,
-                    <option defaultValue="CORRESPONDENCE">Correspondence</option>
+                view.push(               
+                    <option defaultValue="Внутреннее">Внутреннее</option>,
+                    <option selected="selected" defaultValue="Внешнее">Внешнее</option>,
+                    <option defaultValue="Очное">Очное</option>
                 );
                 break;
             case "CORRESPONDENCE":
-                view.push(
-                    <option defaultValue="INTERNAL">Internal</option>,
-                    <option defaultValue="EXTERNAL">External</option>,
-                    <option selected="selected" defaultValue="CORRESPONDENCE">Correspondence</option>
+                view.push(              
+                    <option defaultValue="Внутреннее">Внутреннее</option>,
+                    <option defaultValue="Внешнее">Внешнее</option>,
+                    <option selected="selected" defaultValue="Очное">Очное</option>
                 );
                 break;
             default:
                 view.push(
-                    <option defaultValue="INTERNAL">Internal</option>,
-                    <option defaultValue="EXTERNAL">External</option>,
-                    <option  defaultValue="CORRESPONDENCE">Correspondence</option>
+                    <option defaultValue="Внутреннее">Внутреннее</option>,
+                    <option defaultValue="Внешнее">Внешнее</option>,
+                    <option defaultValue="Очное">Очное</option>
                 )
                 break;
         }
@@ -223,12 +245,14 @@ class NewEvent extends Component {
             this.onOptionChange();
         }
 
+        console.log(this.state.date);
+
         return (
             <div id="new-event-form" name="new-event-form" className="window-form">
 
                 <div className="window-upper-panel">
                     <div className="invisible-ico"/>
-                    <div className="window-title-style">{this.props.event == null ? "New Event" : "Edit Event"}</div>
+                    <div className="window-title-style">{this.props.event == null ? "Новое событие" : "Редактирование события"}</div>
                     <img
                         src={xImage}
                         alt="X"
@@ -248,18 +272,21 @@ class NewEvent extends Component {
                                     <img
                                         src={lBImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
                                     className="text-style input-field-style"
                                     name="title"
                                     type="text"
-                                    placeholder="enter the title"
+                                    placeholder="Заголовок"
                                     id="title"
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="1"
+                                    style={{borderColor: this.state.isTitleRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     value={this.state.title}
                                     onChange={this.onTitleInput}
                                     required
@@ -270,7 +297,7 @@ class NewEvent extends Component {
                                     <img
                                         src={lCImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -282,6 +309,9 @@ class NewEvent extends Component {
                                     autoComplete="off"
                                     tabIndex="2"
                                     required
+                                    style={{borderColor: this.state.isDateRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
@@ -305,18 +335,21 @@ class NewEvent extends Component {
                                     <img
                                         src={bSLImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
                                     className="text-style input-field-style"
                                     name="location"
                                     type="text"
-                                    placeholder="enter location"
+                                    placeholder="Местоположение"
                                     id="location"
                                     form="new-event-form"
                                     value={this.state.location}
                                     tabIndex="4"
+                                    style={{borderColor: this.state.isLocationRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : 'rgba(0, 0, 0, 0.25)'}}
                                     onChange={this.onLocationInput}
                                 />
                             </div>
@@ -325,14 +358,14 @@ class NewEvent extends Component {
                                     <img
                                         src={pAOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <CustomSelect
                                     options={this.state.options}
                                     name={'filterType'}
                                     isMulti={true}
-                                    placeholder={'Filter'}
+                                    placeholder={'Пригласить людей'}
                                     isNewEvent={true}
                                 />
                             </div>
@@ -341,10 +374,10 @@ class NewEvent extends Component {
                                     <img
                                         src={rBOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                     <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
-                                        Private event
+                                        Приватное
                                     </div>
                                 </div>
                                 <label
@@ -363,8 +396,16 @@ class NewEvent extends Component {
                                     <span></span>
                                 </label>
                                 <label htmlFor="select"></label>
-                                <select className="text-style select-event" name="select" id="select"
-                                        form="new-event-form" tabIndex="7" onClick={this.onEventTypeChange}>
+
+                                <select
+                                    className="text-style select-event"
+                                    name="select"
+                                    id="select"
+                                    form="new-event-form"
+                                    tabIndex="7"
+                                    onClick={this.onEventTypeChange}
+                                    style={{visibility: this.state.isPrivate ? "hidden" : "visible"}}
+                                >
                                     {this.getMarks()}
                                 </select>
                             </div>
@@ -372,7 +413,7 @@ class NewEvent extends Component {
                                 <div className="feedback-item">
                                     <span></span>
                                     <div className="text-style" style={{margin: 0}}>
-                                        Feedback
+                                        Обратная связь
                                     </div>
                                 </div>
                             </div>
@@ -381,7 +422,7 @@ class NewEvent extends Component {
                                     <img
                                         src={aUOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
@@ -389,7 +430,7 @@ class NewEvent extends Component {
                                     name="feedback-contact"
                                     type="text"
                                     pattern="(\+?[0-9]\s?[(]{0,1}[0-9]{3}[)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2})|(^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$)"
-                                    placeholder="phone or email"
+                                    placeholder="телефон или электронная почта"
                                     id="feedback-contact"
                                     form="new-event-form"
                                     value={this.state.contactInfo}
@@ -402,14 +443,14 @@ class NewEvent extends Component {
                                     <img
                                         src={pPOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                     />
                                 </label>
                                 <input
                                     className="text-style input-field-style"
                                     name="signature"
                                     type="text"
-                                    placeholder="how can address you?"
+                                    placeholder="как к вам можно обращаться?"
                                     id="signature"
                                     form="new-event-form"
                                     tabIndex="9"
@@ -427,15 +468,15 @@ class NewEvent extends Component {
                                     <img
                                         src={cEOImage}
                                         alt=""
-                                        className="icon-style"
+                                        className="new-event-icon-style"
                                         style={{marginTop: 0, alignSelf: "start"}}
                                     />
                                 </label>
                                 <textarea
-                                    className="text-style input-field-style textarea-field"
+                                    className="-new-event-text-style new-event-input-field-style new-event-textarea-field"
                                     name="description"
                                     id="description"
-                                    placeholder="enter the description"
+                                    placeholder="описание"
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="10"
@@ -459,7 +500,7 @@ class NewEvent extends Component {
                                         alt=""
                                     />
                                     <div className="text-style">
-                                        Save
+                                        Создать
                                     </div>
                                 </button>
                                 <button
@@ -474,7 +515,7 @@ class NewEvent extends Component {
                                         alt=""
                                     />
                                     <div className="text-style">
-                                        Cancel
+                                        Отмена
                                     </div>
                                 </button>
                             </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
 import '../../css/day-dropdown-menu.css';
 import {observer} from 'mobx-react';
 import {monthModel} from "../../models/MonthModel";
@@ -8,8 +7,8 @@ import internalImage from '../../css/images/filters/internal-filter.svg';
 import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
 import {eventModel} from "../../models/EventModel";
-import {toJS} from "mobx";
 import {selectModel} from "../../models/SelectModel";
+
 
 
 @observer
@@ -135,6 +134,7 @@ class DayDropdownMenu extends React.Component {
     handleMoreEventsClick = () => {
         selectModel.dateToShowInDay = new Date(this.props.fullDate);
         selectModel.currentView = "day";
+        selectModel.isMoreDetailsClicked = true;
         localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
         localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
     };
@@ -159,10 +159,8 @@ class DayDropdownMenu extends React.Component {
 
         return (
             <div  className={(this.props.value > 0 && this.props.value < 6) ? "days-table__day" : "days-table__day-off"} onClick={this.showDropdownMenu} >
-                {/*<div className="cal-wind__auth-bar__employee" onClick={this.showDropdownMenu}>7</div>*/}
                 <button
                     className={(this.props.value > 0 && this.props.value < 6) ? "days-table__day-btn" : "days-table__day-off-btn"}
-                    // onClick={this.showDropdownMenu}
                 >
                     <div className="days-table__day-btn__text-container">
                         <p className={this.state.isCurrentDay && (monthModel.relativeToCurrentMonthShift === 0) ? "current" : "text"}>
@@ -170,10 +168,9 @@ class DayDropdownMenu extends React.Component {
                         </p>
                     </div>
                     { (this.state.events != null && this.state.events.length > 0)
-                        ?  <div className="days-table__day-btn__busy-circle"></div>
-                        : null
+                        ?  <div className="days-table__day-btn__busy-circle"/>
+                        :  <div className="days-table__day-btn__busy-circle" style={{opacity: 0}}/>
                     }
-                    {/*<div className="days-table__day-submenu"></div>*/}
                 </button>
                 <div id={this.id} className="day-dropdown" style={{ marginTop: this.props.isNormal ? this.state.dropDownShift : "-4%" }}>
                 { this.state.displayMenu ?
@@ -205,12 +202,12 @@ class DayDropdownMenu extends React.Component {
                                     className="day-list-add-new-button"
                                     onClick={this.onAddNewClick}
                                 >
-                                    add new
+                                    добавить
                                 </div>
                             </li>
                         </ul>
                             <div className="day-list-more-details-button" onClick={this.handleMoreEventsClick}>
-                                more details...
+                                детально...
                             </div>
                         </div>
                     :

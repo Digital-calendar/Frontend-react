@@ -10,6 +10,7 @@ class Login extends Component {
 
 
     state = {
+        isRedirectToSignUp: false,
         emailText: '',
         passText: '',
         user: {}
@@ -49,9 +50,19 @@ class Login extends Component {
 
     };
 
+    onSignUpClick = () => {
+        this.setState({
+            isRedirectToSignUp: true,
+        })
+    };
+
     render() {
         if (userModel.isPresent) {
-            return <Redirect to='/calendar' />;
+            return <Redirect to='/calendar'/>;
+        }
+
+        if (this.state.isRedirectToSignUp) {
+            return <Redirect to='/signUp'/>
         }
         
         return (
@@ -59,8 +70,12 @@ class Login extends Component {
             <div className="windowRegistration">
 
                 <div className="windowRegistration__RectTop">
-                    <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/'}>sign
-                        up</a></button>
+                    <button
+                        className="signInTop"
+                        onClick={this.onSignUpClick}
+                    >
+                            регистрация
+                    </button>
                 </div>
 
                 <div className="windowRegistration__mainBg" style={{height: window.innerHeight - 40}}>
@@ -76,7 +91,7 @@ class Login extends Component {
                                     className="login"
                                     type="email"
                                     autoFocus
-                                    placeholder="login"
+                                    placeholder="логин"
                                     name="login"
                                     style={{borderColor: userModel.isInValidLoginOrPassword
                                             ? 'rgba(201, 6, 52, 1)'
@@ -87,7 +102,7 @@ class Login extends Component {
                                 <input
                                     className="pass"
                                     type="password"
-                                    placeholder="password"
+                                    placeholder="пароль"
                                     name="password"
                                     style={{borderColor: userModel.isInValidLoginOrPassword
                                             ? 'rgba(201, 6, 52, 1)'
@@ -98,7 +113,7 @@ class Login extends Component {
                                 <input
                                     className="signIn"
                                     type="submit"
-                                    value="sign in"
+                                    value="войти"
                                     name="signIn"
                                 />
                             </form>

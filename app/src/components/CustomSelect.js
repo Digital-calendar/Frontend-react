@@ -4,17 +4,23 @@ import {userModel} from "../models/UserModel";
 import {observer} from "mobx-react";
 import { selectModel } from '../models/SelectModel';
 import {eventModel} from "../models/EventModel";
-import {toJS} from "mobx";
+import dayImage from "../css/images/day.svg";
+
+const imageStyle = {
+    width: '12px',
+    height: '12px',
+    marginRight: '3px'
+};
 
 @observer
 class CustomSelect extends React.Component {
 
     customStyles = {
         container: () => ({
-            minWidth    : '140px',
+            minWidth    : this.props.isViewSelect && selectModel.currentView === "day" ? '100px' : '140px',
             marginLeft  : this.props.defaultValue ? '0px' : '10px',
             marginRight : '10px',
-            zIndex      : userModel.userEditIsOpen || eventModel.isNewEventModalOpen ? 0 : 150,
+            zIndex      : (userModel.userEditIsOpen || eventModel.isNewEventModalOpen) && this.props.isNewEvent === undefined ? 0 : 150,
             position    : "relative",
             width       : this.props.isNewEvent ? '100%' : '-1'
         }),
@@ -51,7 +57,11 @@ class CustomSelect extends React.Component {
                 }
             });
             return isOption;
-        }) : [];
+        }) : this.props.options;
+
+        if (eventModel.filters === null) {
+            eventModel.filters = ['OWN', 'INTERNAL', 'EXTERNAL', 'CORRESPONDENCE'];
+        }
 
         this.state = {
             selectedOption: props.defaultValue ? props.options.find(item => item.value === selectModel.currentView) : options ,
@@ -60,6 +70,7 @@ class CustomSelect extends React.Component {
     }
 
     handleChange = selectedOption => {
+        selectModel.isMoreDetailsClicked = false;
         this.setState({ selectedOption });
         if (this.props.isNewEvent) {
             userModel.selectedUsers = selectedOption;
@@ -68,6 +79,7 @@ class CustomSelect extends React.Component {
             selectModel.currentView = selectedOption.value;
             localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
             eventModel.isPresent = false;
+            selectModel.isMoreDetailsClicked = false;
         }
         if (this.props.isFilter) {
             if (selectedOption !== null) {
@@ -81,7 +93,12 @@ class CustomSelect extends React.Component {
     };
 
     render() {
-        const { selectedOption } = this.state;
+        let selectedOption;
+        if (selectModel.isMoreDetailsClicked && this.props.isViewSelect) {
+            selectedOption = {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>};
+        } else {
+            selectedOption  = this.state.selectedOption;
+        }
 
         return (
             <Select

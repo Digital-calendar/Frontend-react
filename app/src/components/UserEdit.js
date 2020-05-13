@@ -154,7 +154,7 @@ class UserEdit extends Component {
             >
 
                 <div className="window-upper-panel">
-                    <div className="window-title-style">Profile Edit</div>
+                    <div className="window-title-style">Редактирование профиля</div>
                     <img src={xImage} alt="X" onClick={this.onXClick}/>
                 </div>
 
@@ -167,7 +167,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                First name
+                                Имя
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -191,7 +191,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                Last name
+                                Фамилия
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -215,7 +215,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                Employee's position
+                                Должность
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -238,7 +238,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                Phone
+                                Телефон
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -262,7 +262,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                City
+                                Город
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -282,7 +282,7 @@ class UserEdit extends Component {
                         <div className="field-column-container">
                             <div className="title-item">
                                 <span></span>
-                                <div className="text-style" style={{ margin: '0'}}>Change password</div>
+                                <div className="text-style" style={{ margin: '0'}}>Изменение пароля</div>
                             </div>
                         </div>
                         <div className="field-column-container">
@@ -291,7 +291,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                New password
+                                Новый пароль
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -319,7 +319,7 @@ class UserEdit extends Component {
                                 className="text-style input-label"
                                 style={{color: "#BDBDBD"}}
                             >
-                                Confirm new password
+                                Подтверждение нового пароля
                             </label>
                             <div className="field-row-container">
                                 <input
@@ -353,7 +353,7 @@ class UserEdit extends Component {
                                 onClick={this.onSaveUserEdition}
                             >
                                 <img src={contentSaveImage} alt=""/>
-                                    <div className="text-style">Save</div>
+                                    <div className="text-style">Сохранить</div>
                             </button>
                         </div>
 

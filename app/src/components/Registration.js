@@ -8,6 +8,7 @@ class Registration extends Component {
         super(props);
         this.state = {
             data: {
+                isRedirectToSignIn: false,
                 first_name: "",
                 last_name: "",
                 email: "",
@@ -70,13 +71,28 @@ class Registration extends Component {
         }
     };
 
+    onSignInClick = () => {
+        this.setState({
+            isRedirectToSignIn: true,
+        })
+    };
+
     render() {
+
+        if (this.state.isRedirectToSignIn) {
+            return <Redirect to='/'/>
+        }
+
         return (
             <div className="windowRegistration">
                 {this.state.isSuccess ? <Redirect to="/login"/> : null}
                 <div className="windowRegistration__RectTop">
-                    <button className="signInTop"><a className="signInTop__link" href={'http://localhost:3000/login'}>sign
-                        in</a></button>
+                    <button
+                        className="signInTop"
+                        onClick={this.onSignInClick}
+                    >
+                            вход
+                    </button>
                 </div>
                 <div className="windowRegistration__mainBg" style={{height: window.innerHeight - 40}}>
                     <div className="windowRegistration__mainWindow">
@@ -87,7 +103,7 @@ class Registration extends Component {
                                     className="RegistrationFirstName"
                                     type="text"
                                     autoFocus
-                                    placeholder="first name"
+                                    placeholder="имя"
                                     name="first_name"
                                     onChange={this.handleSubmit}
                                     required
@@ -95,7 +111,7 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationLastName"
                                     type="text"
-                                    placeholder="last name"
+                                    placeholder="фамилия"
                                     name="last_name"
                                     onChange={this.handleSubmit}
                                     required
@@ -103,7 +119,7 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationEmail"
                                     type="email"
-                                    placeholder="email"
+                                    placeholder="почта"
                                     name="email"
                                     onChange={this.handleSubmit}
                                     required
@@ -111,7 +127,7 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationPassword"
                                     type="password"
-                                    placeholder="password"
+                                    placeholder="пароль"
                                     name="pass"
                                     onChange={this.handleSubmit}
                                     required
@@ -119,12 +135,12 @@ class Registration extends Component {
                                 <input
                                     className="RegistrationPassRepeat"
                                     type="password"
-                                    placeholder="confirm password"
+                                    placeholder="подтверждение пароля"
                                     name="passwordRepeat"
                                     onChange={this.checkPass}
                                     required
                                 />
-                                <input className="RegistrationSignUp" type="submit" value="sign up" name="signUp"/>
+                                <input className="RegistrationSignUp" type="submit" value="создать" name="signUp"/>
                             </form>
                         </div>
                     </div>

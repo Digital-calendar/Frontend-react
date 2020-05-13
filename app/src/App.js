@@ -15,24 +15,30 @@ import {selectModel} from "./models/SelectModel";
 
 const customUserEditStyles = {
     content: {
+        paddingTop: '6%',
+        position: 'static',
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         margin: '0 auto',
-        width: '50%',
-        padding: '0'
+        width: '42%',
+        minWidth: '590px',
+        height: '100%',
     }
 };
 
 const customNewEventStyles = {
     content: {
+        paddingTop: '6%',
+        position: 'static',
         overflow: 'hidden',
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         margin: '0 auto',
-        width: '50%',
-        padding: '0'
-    }
+        width: '42%',
+        minWidth: '590px',
+        height: '100%',
+    },
 };
 
 @observer
@@ -65,7 +71,7 @@ class App extends Component {
     render() {
 
         return (
-            <div>
+            <div style={{minWidth: '1315px'}}>
                 <Modal
                     style={customUserEditStyles}
                     isOpen={userModel.userEditIsOpen}
@@ -82,8 +88,8 @@ class App extends Component {
                 </Modal>
                 <Router>
                     <Switch>
-                        <Route path='/' exact component={Registration}/>
-                        <Route path='/login' exact component={Login}/>
+                        <Route path='/' exact component={Login}/>
+                        <Route path='/signUp' exact component={Registration}/>
                         <Route path='/newEvent' exact component={NewEventPage}/>
                         <Route path='/calendar' exact component={Bar}/>
                     </Switch>

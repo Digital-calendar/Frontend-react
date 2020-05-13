@@ -38,9 +38,9 @@ export class EventModel{
             .filter(event => {
                 let isFilteredEvent = false;
                 this.filters.forEach(filter => {
-                    if (filter === 'OWN' && event.id === userModel.user.id) {
+                    if (filter === 'OWN') {
                         isFilteredEvent = event.privateEvent || isFilteredEvent;
-                    } else {
+                    } else if (!event.privateEvent) {
                         isFilteredEvent = filter === event.eventType || isFilteredEvent;
                     }
                 });

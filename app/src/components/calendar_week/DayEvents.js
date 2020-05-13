@@ -54,6 +54,7 @@ class DayEvents extends Component {
     handleEventClick = (date) => {
         selectModel.dateToShowInDay = new Date(date);
         selectModel.currentView = "day";
+        selectModel.isMoreDetailsClicked = true;
         localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
         localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
     };
