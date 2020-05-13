@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
+import {deleteEvent} from "../../actions/deleteEvent";
+import {toJS} from "mobx";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -18,7 +20,7 @@ class DayEvent extends Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         this.setState({date: nextProps.date})
-
+        console.log("поймал - отрисовал " + nextProps.date)
     }
 
     getMarks = (event) => {
@@ -55,15 +57,23 @@ class DayEvent extends Component {
         return view
     };
 
-    handleDeleteButtonClick = (id) => {
+    onNewEventClick = (event) => {
+        console.log(321)
+        eventModel.eventForEdit = event;
+        eventModel.isNewEventModalOpen = true;
 
-        // deleteEvent(id)
+    };
+
+    handleDeleteButtonClick = (id) => {
+        deleteEvent(id);
         eventModel.deleteById(id);
+        eventModel.isPresent = false;
+        // selectModel.currentView = "day"
     };
 
     render() {
 
-        eventModel.filter()
+        eventModel.filter();
 
         eventModel.makeDayEvents(this.state.date);
 
@@ -108,7 +118,7 @@ class DayEvent extends Component {
                                 {this.getMarks(event)}
                             </div>
                             <div className="window__mainWindow__content__buttons">
-                                <button className="window__mainWindow__content__buttons__edit">
+                                <button className="window__mainWindow__content__buttons__edit" onClick={() => this.onNewEventClick(event)}>
                                     <img src={require("../../css/images/editButton.svg")} alt="editButton"
                                          className="editButton"/>
                                 </button>
@@ -121,14 +131,21 @@ class DayEvent extends Component {
                             <hr className="line"/>
                             <div className="invited_people_container">
                                 <div className="invited_people_title">Invited people:</div>
-                                <div className="invited_people_column">
-                                    <div className="invited_people_text">
-                                        {event.participants.first_name}
-                                        {event.participants.last_name}
-                                    </div>
-                                    <div className="invited_people_text" style={{marginRight: 10}}>,</div>
-                                    <div className="invited_people_text">{event.participants.position}</div>
-                                </div>
+
+                                {
+                                    event.participants.map((participant, index) => {
+                                        return <div key={index} className="invited_people_column">
+                                            <div className="invited_people_text">
+                                                {participant.first_name}
+                                                {participant.last_name}
+                                            </div>
+                                            <div className="invited_people_text" style={{marginRight: 10}}>,</div>
+                                            <div className="invited_people_text">{participant.position}</div>
+                                        </div>
+                                    })
+                                }
+
+
                             </div>
                         </div>
                     </div>

@@ -58,6 +58,7 @@ class App extends Component {
     }
 
     closeNewEventModal() {
+        eventModel.eventForEdit = null;
         eventModel.isNewEventModalOpen = false;
     }
 
@@ -77,7 +78,7 @@ class App extends Component {
                     isOpen={eventModel.isNewEventModalOpen}
                     onRequestClose={this.closeNewEventModal}
                 >
-                    <NewEvent date={eventModel.dayToCreate}/>
+                    <NewEvent date={eventModel.dayToCreate} event = {eventModel.eventForEdit}/>
                 </Modal>
                 <Router>
                     <Switch>

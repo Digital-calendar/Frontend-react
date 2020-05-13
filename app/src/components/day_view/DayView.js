@@ -14,6 +14,7 @@ class DayView extends Component {
     render() {
 
         if (!eventModel.isPresent) {
+            console.log(this.props.date)
             loadEvents();
             eventModel.filter()
         }
