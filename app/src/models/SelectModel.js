@@ -7,6 +7,8 @@ export class SelectModel {
 
     @observable
     dateToShowInDay = null;
+
+
 }
 
 export const selectModel = new SelectModel();

@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import {eventModel} from "../../models/EventModel";
 import {selectModel} from "../../models/SelectModel";
-
+import {observer} from "mobx-react";
 
 class DayEvents extends Component {
     constructor(props) {
         super(props);
 
+
+
         this.view = [
-            <img src={require("../../css/images/private-filter.svg")} className="private-filter" alt="private-filter"/>,
-            <div className="private-filter-name">Private</div>
+
         ]
     }
+
 
     getMarks = (event) => {
         let view = [];
@@ -51,7 +53,9 @@ class DayEvents extends Component {
 
     handleEventClick = (date) => {
         selectModel.dateToShowInDay = new Date(date);
-        selectModel.currentView = "day"
+        selectModel.currentView = "day";
+        localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
+        localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
     };
 
     render() {
@@ -61,6 +65,7 @@ class DayEvents extends Component {
 
             <div className="events-table__column">
                 <div className="events-table__column_container">
+
                     {
                         eventModel.getDayEvents(this.props.day).map((event, index) => {
                                 return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp)}>
