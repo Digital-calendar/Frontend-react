@@ -115,6 +115,7 @@ class NewEvent extends Component {
             isDateRequired: this.state.date === '',
             isLocationRequired: this.state.location === null,
         })
+        eventModel.isNewEventModalOpen = false;
     };
 
     onOptionChange = event => {
@@ -500,7 +501,7 @@ class NewEvent extends Component {
                                         alt=""
                                     />
                                     <div className="text-style">
-                                        Создать
+                                        {this.props.event === null ? "Создать" : "Обновить"}
                                     </div>
                                 </button>
                                 <button

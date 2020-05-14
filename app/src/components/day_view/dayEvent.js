@@ -2,7 +2,9 @@ import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
-import {toJS} from "mobx";
+import {Redirect} from 'react-router-dom';
+import {selectModel} from "../../models/SelectModel";
+import {observer} from "mobx-react";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -66,15 +68,13 @@ class DayEvent extends Component {
 
     handleDeleteButtonClick = (id) => {
         deleteEvent(id);
-        eventModel.deleteById(id);
         eventModel.isPresent = false;
-        // selectModel.currentView = "day"
+        setTimeout(() => window.location.reload(), 55)
+
     };
 
     render() {
-
         eventModel.filter();
-
         eventModel.makeDayEvents(this.state.date);
 
         if (eventModel.dayEvents.length === 0) {

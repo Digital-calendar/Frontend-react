@@ -52,11 +52,13 @@ class App extends Component {
         monthModel.relativeToCurrentMonthShift = JSON.parse(localStorage.getItem("relativeToCurrentMonthShift"));
         monthModel.yearToDisplay = JSON.parse(localStorage.getItem("yearToDisplay"));
         monthModel.monthToDisplay = JSON.parse(localStorage.getItem("monthToDisplay"));
-        if (JSON.parse(localStorage.getItem("currentView")) === null) {
-            localStorage.setItem("currentView",JSON.stringify(selectModel.currentView ));
-        }
         selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));
-        selectModel.dateToShowInDay = new Date(JSON.parse(localStorage.getItem("dateToShowInDay")));
+        if (JSON.parse(localStorage.getItem("dateToShowInDay")) === null) {
+            selectModel.dateToShowInDay = new Date();
+        } else {
+            selectModel.dateToShowInDay = new Date(JSON.parse(localStorage.getItem("dateToShowInDay")));
+        }
+
     }
 
     closeUserEditModal() {
