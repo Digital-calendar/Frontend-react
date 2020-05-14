@@ -17,7 +17,6 @@ import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
-import {toJS} from "mobx";
 import {editEvent} from "../../actions/editEvent";
 
 
@@ -30,7 +29,6 @@ class NewEvent extends Component {
         loadUsers();
         userModel.selectedUsers = [];
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
-        console.log(this.props.event)
         if (this.props.event == null) {
             this.state = {
               title: null,
@@ -117,10 +115,13 @@ class NewEvent extends Component {
         })
     };
 
-    onOptionChange = event => {
-        const newOptions = userModel.users.map(item => {
-            const value = item.first_name + ' ' + item.last_name;
-            return {value: value, label: value, id: item.id};
+    onOptionChange = () => {
+        const newOptions = [];
+        userModel.users.forEach(item => {
+            if (item.id !== userModel.user.id) {
+                const value = item.first_name + ' ' + item.last_name;
+                newOptions.push({value: value + item.id, label: value, id: item.id});
+            }
         });
         this.setState({
             options: newOptions
@@ -233,7 +234,7 @@ class NewEvent extends Component {
                     <option defaultValue="Внутреннее">Внутреннее</option>,
                     <option defaultValue="Внешнее">Внешнее</option>,
                     <option defaultValue="Очное">Очное</option>
-                )
+                );
                 break;
         }
 
