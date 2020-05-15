@@ -46,6 +46,10 @@ export class EventModel{
                 });
                 return isFilteredEvent;
             });
+        this.filteredEvents = this.filteredEvents.sort((a, b) =>
+            (new Date(a.timestamp) > new Date(b.timestamp)) ? 1
+            : ((new Date(b.timestamp) > new Date(a.timestamp)) ? -1 : 0));
+
     };
 
     @action
