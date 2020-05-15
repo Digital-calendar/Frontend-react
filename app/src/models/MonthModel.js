@@ -3,6 +3,14 @@ import moment from "moment";
 
 export class MonthModel {
 
+    options = {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short'
+    };
+
+    days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+
     @observable
     arrayWeek = [];
 
@@ -46,6 +54,11 @@ export class MonthModel {
     dayArray = [];
 
     @action
+    getWeekDay = (date) => {
+        return this.days[date.getDay()]
+    };
+
+    @action
     getMonday = (d) => {
         let day = d.getDay()
         let diff = d.getDate() - day + (day === 0 ? -6 : 1);
@@ -53,7 +66,6 @@ export class MonthModel {
     };
 
     @action
-
     getDay = (d, shift) => {
         return new Date(d.getFullYear(), d.getMonth(), d.getDate() + shift)
     };

@@ -83,12 +83,16 @@ class Week extends Component {
                                 return <div style={{borderBottom: '1px solid red', backgroundColor: '#F2F2F2'}}
                                             class="events-wind__weekdays-bar__wkd">
                                     <p key={index}
-                                       class="events-wind__weekdays-bar__wkd-text">{date.toString().slice(0, 10)}</p>
+                                       class="events-wind__weekdays-bar__wkd-text">
+                                        {date.toLocaleString('ru', monthModel.options)}
+                                    </p>
                                 </div>
                             } else {
                                 return <div class="events-wind__weekdays-bar__wkd">
-                                    <p key={index}
-                                       class="events-wind__weekdays-bar__wkd-text">{date.toString().slice(0, 10)}</p>
+                                    <p key={index} class="events-wind__weekdays-bar__wkd-text">
+                                        {/*{monthModel.getWeekDay(date)} {date.toLocaleString('ru', monthModel.options).slice(0, 6)}*/}
+                                        {date.toLocaleString('ru', monthModel.options)}
+                                    </p>
                                 </div>
                             }
 

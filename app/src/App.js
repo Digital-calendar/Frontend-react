@@ -13,6 +13,8 @@ import NewEvent from "./components/newEvent/NewEvent";
 import {monthModel} from "./models/MonthModel";
 import {selectModel} from "./models/SelectModel";
 
+
+
 const customUserEditStyles = {
     content: {
         paddingTop: '6%',

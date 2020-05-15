@@ -379,7 +379,7 @@ class NewEvent extends Component {
                                         className="new-event-icon-style"
                                     />
                                     <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
-                                        Приватное
+                                        Личное
                                     </div>
                                 </div>
                                 <label

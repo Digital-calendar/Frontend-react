@@ -18,8 +18,8 @@ const imageStyle = {
 };
 
 const filterOptions = [
-    {value: 'own', label: 'Свои'},
-    {value: 'internal', label: 'Внутренни'},
+    {value: 'own', label: 'Личные'},
+    {value: 'internal', label: 'Внутренние'},
     {value: 'external', label: 'Внешние'},
     {value: 'Correspondence', label: 'Очные'},
 ];

@@ -21,26 +21,26 @@ class DayEvents extends Component {
             view.push(
                 <img src={require("../../css/images/private-filter.svg")} className="private-filter"
                      alt="private-filter"/>,
-                <div className="private-filter-name">Private</div>
+                <div className="private-filter-name">Личное</div>
             );
         } else {
             switch (event.eventType) {
                 case "INTERNAL":
                     view.push(
                         <img src={require("../../css/images/internal-filter.svg")} alt="internal-filter"/>,
-                        <div className="filter-internal-popup">Internal event</div>
+                        <div className="filter-internal-popup">Внутреннее</div>
                     );
                     break;
                 case "EXTERNAL":
                     view.push(
                         <img src={require("../../css/images/external-filter.svg")} alt="external-filter"/>,
-                        <div className="filter-external-popup">External event</div>
+                        <div className="filter-external-popup">Внешнее</div>
                     );
                     break;
                 case "CORRESPONDENCE":
                     view.push(
                         <img src={require("../../css/images/correspondence-filter.svg")} alt="correspondence-filter"/>,
-                        <div className="filter-corresp-popup">Correspondence</div>
+                        <div className="filter-corresp-popup">Очное</div>
                     );
                     break;
                 default:
