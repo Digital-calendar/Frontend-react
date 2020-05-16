@@ -9,4 +9,3 @@ export async function deleteEvent(id) {
 
     return response.ok;
 }
-}
