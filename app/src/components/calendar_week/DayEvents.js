@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {eventModel} from "../../models/EventModel";
 import {selectModel} from "../../models/SelectModel";
-import {observer} from "mobx-react";
 
 class DayEvents extends Component {
     constructor(props) {

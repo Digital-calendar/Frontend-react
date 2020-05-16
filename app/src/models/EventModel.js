@@ -1,6 +1,5 @@
 import {observable, action, toJS} from 'mobx'
 import {monthModel} from "./MonthModel";
-import {userModel} from "./UserModel";
 
 
 export class EventModel{
@@ -120,8 +119,7 @@ export class EventModel{
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
 
         eventModel.filteredEvents
-            .filter(event => {
-
+            .forEach(event => {
                 if (event.timestamp.slice(0, 10) === formatDay) {
                     array.push(event);
                 }

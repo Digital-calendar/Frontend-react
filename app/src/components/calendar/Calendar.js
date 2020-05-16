@@ -39,7 +39,6 @@ class Calendar extends Component {
         this.formMonthArray();
 
         if (!eventModel.isPresent) {
-            // console.log(123);
             loadEvents();
             eventModel.filter();
         }

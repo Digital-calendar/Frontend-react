@@ -112,8 +112,7 @@ class NewEvent extends Component {
             isTitleRequired: this.state.title === null,
             isDateRequired: this.state.date === '',
             isLocationRequired: this.state.location === null,
-        })
-        eventModel.isNewEventModalOpen = false;
+        });
     };
 
     onOptionChange = () => {

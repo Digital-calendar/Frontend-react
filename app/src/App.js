@@ -79,6 +79,7 @@ class App extends Component {
                 <Modal
                     style={customUserEditStyles}
                     isOpen={userModel.userEditIsOpen}
+                    ariaHideApp={false}
                     onRequestClose={this.closeUserEditModal}
                 >
                     <UserEdit/>
@@ -86,6 +87,7 @@ class App extends Component {
                 <Modal
                     style={customNewEventStyles}
                     isOpen={eventModel.isNewEventModalOpen}
+                    ariaHideApp={false}
                     onRequestClose={this.closeNewEventModal}
                 >
                     <NewEvent date={eventModel.dayToCreate} event = {eventModel.eventForEdit}/>

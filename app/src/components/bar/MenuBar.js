@@ -6,8 +6,6 @@ import CustomSelect from '../CustomSelect';
 import {observer} from "mobx-react";
 import {eventModel} from "../../models/EventModel";
 import MonthSlider from "./sliders/MonthSlider";
-import {monthModel} from "../../models/MonthModel";
-import {Redirect} from 'react-router-dom';
 import {selectModel} from "../../models/SelectModel";
 import UserBarDayView from "./UserBarDayView";
 
