@@ -29,12 +29,14 @@ class NewEvent extends Component {
         loadUsers();
         userModel.selectedUsers = [];
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
+        const location = userModel.user.city === null ? '' : userModel.user.city;
+        console.log(userModel.user)
         if (this.props.event == null) {
             this.state = {
               title: null,
               date: this.props.date,
               time: '00:00',
-              location: null,
+              location: location,
               isPrivate: false,
               eventType: 'INTERNAL',
               contactInfo: contact,

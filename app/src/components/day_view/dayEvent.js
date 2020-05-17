@@ -64,7 +64,7 @@ class DayEvent extends Component {
     };
 
     onNewEventClick = (event) => {
-        console.log(321)
+        // console.log(321)
         eventModel.eventForEdit = event;
         eventModel.isNewEventModalOpen = true;
     };
@@ -114,8 +114,7 @@ class DayEvent extends Component {
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/emailPin.svg")} alt="emailPin"
                                      className="emailPin"/>
-                                {event.contactInfo} ,
-                                {event.contactName}
+                                {event.contactInfo}, {event.contactName}
                             </div>
                             <div className="window__mainWindow__content__eventMark_container">
                                 {this.getMarks(event)}

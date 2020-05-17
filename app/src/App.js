@@ -54,6 +54,13 @@ class App extends Component {
         monthModel.relativeToCurrentMonthShift = JSON.parse(localStorage.getItem("relativeToCurrentMonthShift"));
         monthModel.yearToDisplay = JSON.parse(localStorage.getItem("yearToDisplay"));
         monthModel.monthToDisplay = JSON.parse(localStorage.getItem("monthToDisplay"));
+
+        if (JSON.parse(localStorage.getItem("arrayWeek")) === null) {
+            monthModel.arrayWeek = [];
+        } else {
+            monthModel.setArrayWeek(JSON.parse(localStorage.getItem("arrayWeek")));
+        }
+
         selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));
         if (JSON.parse(localStorage.getItem("dateToShowInDay")) === null) {
             selectModel.dateToShowInDay = new Date();

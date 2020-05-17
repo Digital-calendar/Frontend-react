@@ -10,12 +10,4 @@ export async function deleteEvent(id) {
         }
     });
 
-    if (response.ok) {
-        return true
-    } else {
-        return false
-    }
-
-
-
 }
