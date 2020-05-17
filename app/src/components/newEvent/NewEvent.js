@@ -212,35 +212,35 @@ class NewEvent extends Component {
     };
 
     getMarks = () => {
-        let view = []
+        let view = [];
 
         switch (this.state.eventType) {
             case "INTERNAL":
                 view.push(
-                    <option selected="selected" defaultValue="Внутреннее">Внутреннее</option>,
-                    <option defaultValue="Внешнее">Внешнее</option>,
-                    <option defaultValue="Очное">Очное</option>
+                    <option key={1} selected defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} defaultValue="Очное">Очное</option>
                 );
                 break;
             case "EXTERNAL":
                 view.push(               
-                    <option defaultValue="Внутреннее">Внутреннее</option>,
-                    <option selected="selected" defaultValue="Внешнее">Внешнее</option>,
-                    <option defaultValue="Очное">Очное</option>
+                    <option key={1} defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} selected defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} defaultValue="Очное">Очное</option>
                 );
                 break;
             case "CORRESPONDENCE":
                 view.push(              
-                    <option defaultValue="Внутреннее">Внутреннее</option>,
-                    <option defaultValue="Внешнее">Внешнее</option>,
-                    <option selected="selected" defaultValue="Очное">Очное</option>
+                    <option key={1} defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} selected defaultValue="Очное">Очное</option>
                 );
                 break;
             default:
                 view.push(
-                    <option defaultValue="Внутреннее">Внутреннее</option>,
-                    <option defaultValue="Внешнее">Внешнее</option>,
-                    <option defaultValue="Очное">Очное</option>
+                    <option key={1} defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} defaultValue="Очное">Очное</option>
                 );
                 break;
         }
@@ -295,7 +295,7 @@ class NewEvent extends Component {
                                     style={{borderColor: this.state.isTitleRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : 'rgba(0, 0, 0, 0.25)'}}
-                                    value={this.state.title}
+                                    value={this.state.title === null ? '' : this.state.title}
                                     onChange={this.onTitleInput}
                                     required
                                 />
@@ -329,7 +329,6 @@ class NewEvent extends Component {
                                     name="time"
                                     type="text"
                                     pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
-                                    defaultValue="00:00"
                                     id="time"
                                     // form="new-event-form"
                                     autoComplete="off"
@@ -353,7 +352,7 @@ class NewEvent extends Component {
                                     placeholder="Местоположение"
                                     id="location"
                                     form="new-event-form"
-                                    value={this.state.location}
+                                    value={this.state.location === null ? '' : this.state.location}
                                     tabIndex="4"
                                     style={{borderColor: this.state.isLocationRequired
                                             ? 'rgba(201, 6, 52, 1)'

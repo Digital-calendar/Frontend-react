@@ -2,9 +2,6 @@ import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
-import {Redirect} from 'react-router-dom';
-import {selectModel} from "../../models/SelectModel";
-import {observer} from "mobx-react";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -21,7 +18,7 @@ class DayEvent extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        this.setState({date: nextProps.date})
+        this.setState({date: nextProps.date});
         console.log("поймал - отрисовал " + nextProps.date)
     }
 
@@ -64,7 +61,6 @@ class DayEvent extends Component {
     };
 
     onNewEventClick = (event) => {
-        // console.log(321)
         eventModel.eventForEdit = event;
         eventModel.isNewEventModalOpen = true;
     };

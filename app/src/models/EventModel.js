@@ -92,7 +92,6 @@ export class EventModel {
                 return event.timestamp.startsWith(formatDay);
             })
     }
-
     // @action
     // deleteById(id) {
     //     console.log(toJS(this.dayEvents))

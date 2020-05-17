@@ -110,6 +110,7 @@ class CustomSelect extends React.Component {
                 styles={ this.customStyles }
                 isMulti={this.props.isMulti}
                 placeholder={this.props.placeholder}
+                noOptionsMessage={() => this.props.isFilter ? "Нет фильтров" : "Нет групп"}
                 theme={theme => ({
                     ...theme,
                     colors: {

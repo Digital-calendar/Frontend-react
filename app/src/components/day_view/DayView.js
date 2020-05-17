@@ -7,14 +7,11 @@ import {observer} from "mobx-react";
 
 @observer
 class DayView extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 
         if (!eventModel.isPresent) {
-            console.log(this.props.date)
+            console.log(this.props.date);
             loadEvents();
             eventModel.filter()
         }

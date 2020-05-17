@@ -76,10 +76,10 @@ class Week extends Component {
         }
 
         return (
-            <div class="main" >
-                <div class="wkd-bar" >
-                    <div class="events-wind__weekdays-bar__wkd-prev-btn">
-                        <button class="wkd-bar__prev-btn" onClick={this.handleLeftClick}>
+            <div className="main" >
+                <div className="wkd-bar" >
+                    <div className="events-wind__weekdays-bar__wkd-prev-btn">
+                        <button className="wkd-bar__prev-btn" onClick={this.handleLeftClick}>
                             <img src={require("../../css/images/arrow-left.svg")} alt="arrow-left"/>
                         </button>
                     </div>
@@ -88,10 +88,10 @@ class Week extends Component {
                     {
                         monthModel.arrayWeek.map((date, index) => {
                             if (_.isEqual(date, new Date(monthModel.currentYear, monthModel.currentMonth, monthModel.currentDay))) {
-                                return <div style={{borderBottom: '1px solid red', backgroundColor: '#F2F2F2'}}
-                                            class="events-wind__weekdays-bar__wkd">
+                                return <div key={index} style={{borderBottom: '1px solid red', backgroundColor: '#F2F2F2'}}
+                                            className="events-wind__weekdays-bar__wkd">
                                     <p key={index}
-                                       class="events-wind__weekdays-bar__wkd-text">
+                                       className="events-wind__weekdays-bar__wkd-text">
                                         {date.toLocaleString('ru', monthModel.options)}
                                     </p>
                                 </div>
@@ -107,14 +107,14 @@ class Week extends Component {
                         })
                     }
 
-                    <div class="events-wind__weekdays-bar__wkd-next-btn">
+                    <div className="events-wind__weekdays-bar__wkd-next-btn">
                         <button className="wkd-bar__next-btn" onClick={this.handleRightClick}>
                             <img src={require("../../css/images/arrow-right.svg")} alt="arrow-right"/>
                         </button>
                     </div>
                 </div>
 
-                <div class="events-table" style={{height: window.innerHeight - 115}}>
+                <div className="events-table" style={{height: window.innerHeight - 115}}>
 
                     {
                         monthModel.arrayWeek.map((date, index) => {
