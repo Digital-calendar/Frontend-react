@@ -6,6 +6,4 @@ export async function deleteEvent(id) {
             "Content-Type": "application/json"
         }
     });
-
-    return response.ok;
 }

@@ -16,12 +16,11 @@ class Week extends Component {
 
         if (monthModel.currentMonth !== monthModel.monthToDisplay) {
             monthModel.getNextWeek(new Date(monthModel.yearToDisplay, monthModel.monthToDisplay, 1));
-
         } else if (monthModel.arrayWeek.length === 0) {
             monthModel.getNextWeek(new Date(monthModel.yearToDisplay, monthModel.monthToDisplay, monthModel.currentDay));
         }
-        this.array = []
-
+        this.array = [];
+        localStorage.setItem("arrayWeek",JSON.stringify(monthModel.arrayWeek));
     }
 
 
@@ -33,13 +32,17 @@ class Week extends Component {
 
         if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getFullYear() > monthModel.yearToDisplay) {
             monthModel.yearToDisplay += 1;
+            localStorage.setItem("yearToDisplay",JSON.stringify(monthModel.yearToDisplay));
         }
 
         if (monthModel.arrayWeek[monthModel.arrayWeek.length - 1].getMonth() !== monthModel.monthToDisplay) {
             monthModel.shiftMonthArray(1);
-            monthModel.incrementRelative()
-
+            monthModel.incrementRelative();
+            localStorage.setItem("monthToDisplay",JSON.stringify(monthModel.monthToDisplay));
+            localStorage.setItem("monthArray",JSON.stringify(monthModel.monthArray));
         }
+
+        localStorage.setItem("arrayWeek", JSON.stringify(monthModel.arrayWeek));
     };
 
     handleLeftClick = () => {
@@ -49,18 +52,23 @@ class Week extends Component {
 
         if (monthModel.arrayWeek[0].getFullYear() < monthModel.yearToDisplay) {
             monthModel.yearToDisplay -= 1;
+            localStorage.setItem("yearToDisplay",JSON.stringify(monthModel.yearToDisplay));
         }
         if (monthModel.arrayWeek[0].getMonth() !== monthModel.monthToDisplay) {
             monthModel.shiftMonthArray(-1);
-            monthModel.decrementRelative()
-
+            monthModel.decrementRelative();
+            localStorage.setItem("monthToDisplay",JSON.stringify(monthModel.monthToDisplay));
+            localStorage.setItem("monthArray",JSON.stringify(monthModel.monthArray));
         }
 
+
+        localStorage.setItem("arrayWeek", JSON.stringify(monthModel.arrayWeek));
     };
 
 
     render() {
-
+        console.log(monthModel.monthToDisplay)
+        console.log(localStorage)
         if (!eventModel.isPresent) {
             loadEvents();
             eventModel.filter();
@@ -88,9 +96,8 @@ class Week extends Component {
                                     </p>
                                 </div>
                             } else {
-                                return <div key={index} className="events-wind__weekdays-bar__wkd">
-                                    <p key={index} className="events-wind__weekdays-bar__wkd-text">
-                                        {/*{monthModel.getWeekDay(date)} {date.toLocaleString('ru', monthModel.options).slice(0, 6)}*/}
+                                return <div class="events-wind__weekdays-bar__wkd">
+                                    <p key={index} class="events-wind__weekdays-bar__wkd-text">
                                         {date.toLocaleString('ru', monthModel.options)}
                                     </p>
                                 </div>
@@ -111,7 +118,7 @@ class Week extends Component {
 
                     {
                         monthModel.arrayWeek.map((date, index) => {
-                            return <DayEvents key={index}  day={date.getDate()}/>
+                            return <DayEvents key={index}  day={date}/>
                         })
                     }
                 </div>

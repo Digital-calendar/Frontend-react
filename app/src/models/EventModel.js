@@ -1,8 +1,8 @@
-import {observable, action, toJS} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {monthModel} from "./MonthModel";
 
 
-export class EventModel{
+export class EventModel {
 
     @observable
     dayToCreate = '';
@@ -47,17 +47,17 @@ export class EventModel{
             });
         this.filteredEvents = this.filteredEvents.sort((a, b) =>
             (new Date(a.timestamp) > new Date(b.timestamp)) ? 1
-            : ((new Date(b.timestamp) > new Date(a.timestamp)) ? -1 : 0));
+                : ((new Date(b.timestamp) > new Date(a.timestamp)) ? -1 : 0));
 
     };
-
-    @action
-    periodFiltered(start, end) {
-        this.filteredEvents = this.filteredEvents
-            .filter(event => {
-                return event.timestamp > start && event.timestamp < end;
-            })
-    }
+    //
+    // @action
+    // periodFiltered(start, end) {
+    //     this.filteredEvents = this.filteredEvents
+    //         .filter(event => {
+    //             return event.timestamp > start && event.timestamp < end;
+    //         })
+    // }
 
     @action
     makeDayEvents(date) {
@@ -92,41 +92,41 @@ export class EventModel{
                 return event.timestamp.startsWith(formatDay);
             })
     }
+    // @action
+    // deleteById(id) {
+    //     console.log(toJS(this.dayEvents))
+    //     this.dayEvents = this.dayEvents
+    //         .filter(event => {
+    //             if (id !== event.id) {
+    //                 return event;
+    //             }
+    //         })
+    //     console.log(toJS(this.dayEvents))
+    // }
 
-    @action
-    deleteById(id) {
-        console.log(toJS(this.dayEvents))
-        this.dayEvents = this.dayEvents
-            .filter(event => {
-                if (id !== event.id) {
-                    return event;
-                }
-            })
-        console.log(toJS(this.dayEvents))
-    }
-
-    @action
-    getDayEvents(day) {
-        let array = [];
-        let dayString = day;
-        if ((day - 10) < 0) {
-            dayString = '0' + dayString;
-        }
-        let monthString = monthModel.monthToDisplay + 1;
-        if ((monthModel.monthToDisplay - 9) < 0) {
-            monthString = '0' + monthString;
-        }
-        const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
-
-        eventModel.filteredEvents
-            .forEach(event => {
-                if (event.timestamp.slice(0, 10) === formatDay) {
-                    array.push(event);
-                }
-            });
-
-        return array;
-    }
+    // @action
+    // getDayEvents(day) {
+    //     let array = [];
+    //     let dayString = day;
+    //     if ((day - 10) < 0) {
+    //         dayString = '0' + dayString;
+    //     }
+    //     let monthString = monthModel.monthToDisplay + 1;
+    //     if ((monthModel.monthToDisplay - 9) < 0) {
+    //         monthString = '0' + monthString;
+    //     }
+    //     const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
+    //
+    //     eventModel.filteredEvents
+    //         .filter(event => {
+    //
+    //             if (event.timestamp.slice(0, 10) === formatDay) {
+    //                 array.push(event);
+    //             }
+    //         });
+    //
+    //     return array;
+    // }
 
 }
 

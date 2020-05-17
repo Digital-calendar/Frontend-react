@@ -12,7 +12,7 @@ export class MonthModel {
     days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 
     @observable
-    arrayWeek = [];
+    arrayWeek;
 
     @observable
     monthStartWeekDay = -1;
@@ -112,6 +112,7 @@ export class MonthModel {
             return newNumber;
         });
         this.monthToDisplay = this.monthArray[1];
+
     }
 
     @action
@@ -192,6 +193,12 @@ export class MonthModel {
         monthModel.updateMonthInfo();
     }
 
+    @action
+    setArrayWeek(week) {
+        this.arrayWeek = week.map(string => {
+            return new Date(string)
+        })
+    }
 }
 
 export const monthModel = new MonthModel();

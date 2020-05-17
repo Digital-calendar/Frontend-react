@@ -63,7 +63,6 @@ class DayEvent extends Component {
     onNewEventClick = (event) => {
         eventModel.eventForEdit = event;
         eventModel.isNewEventModalOpen = true;
-
     };
 
     handleDeleteButtonClick = (id) => {
@@ -111,8 +110,7 @@ class DayEvent extends Component {
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/emailPin.svg")} alt="emailPin"
                                      className="emailPin"/>
-                                {event.contactInfo} ,
-                                {event.contactName}
+                                {event.contactInfo}, {event.contactName}
                             </div>
                             <div className="window__mainWindow__content__eventMark_container">
                                 {this.getMarks(event)}
