@@ -85,7 +85,7 @@ class Registration extends Component {
 
         return (
             <div className="windowRegistration">
-                {this.state.isSuccess ? <Redirect to="/login"/> : null}
+                {this.state.isSuccess ? <Redirect to="/"/> : null}
                 <div className="windowRegistration__RectTop">
                     <button
                         className="signInTop"
