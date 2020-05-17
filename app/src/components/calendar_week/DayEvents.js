@@ -1,17 +1,13 @@
 import React, {Component} from 'react'
 import {eventModel} from "../../models/EventModel";
 import {selectModel} from "../../models/SelectModel";
-import {observer} from "mobx-react";
 
 class DayEvents extends Component {
     constructor(props) {
         super(props);
 
 
-
-        this.view = [
-
-        ]
+        this.view = []
     }
 
 
@@ -55,8 +51,8 @@ class DayEvents extends Component {
         selectModel.dateToShowInDay = new Date(date);
         selectModel.currentView = "day";
         selectModel.isMoreDetailsClicked = true;
-        localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
-        localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
+        localStorage.setItem("currentView", JSON.stringify(selectModel.currentView));
+        localStorage.setItem("dateToShowInDay", JSON.stringify(selectModel.dateToShowInDay));
     };
 
     render() {
@@ -69,7 +65,8 @@ class DayEvents extends Component {
 
                     {
                         eventModel.dayEvents.map((event, index) => {
-                                return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp)}>
+                                return <div key={index} className="events-table__column__event"
+                                            onClick={() => this.handleEventClick(event.timestamp)}>
                                     <div className="events-table__column__event__text">
                                         {event.title}
                                     </div>

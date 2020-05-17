@@ -61,7 +61,11 @@ class App extends Component {
             monthModel.setArrayWeek(JSON.parse(localStorage.getItem("arrayWeek")));
         }
 
-        selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));
+        if (JSON.parse(localStorage.getItem("currentView")) === null) {
+            selectModel.currentView = "month";
+        } else {
+            selectModel.currentView = selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));;
+        }
         if (JSON.parse(localStorage.getItem("dateToShowInDay")) === null) {
             selectModel.dateToShowInDay = new Date();
         } else {

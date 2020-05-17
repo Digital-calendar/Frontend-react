@@ -54,7 +54,7 @@ class NewEvent extends Component {
                 date: this.props.event.timestamp.slice(0, 10),
                 time: this.props.event.timestamp.slice(-5),
                 location: this.props.event.location,
-                isPrivate: this.props.event.isPrivate,
+                isPrivate: this.props.event.privateEvent,
                 eventType: this.props.event.eventType,
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
@@ -114,9 +114,12 @@ class NewEvent extends Component {
             isTitleRequired: this.state.title === null,
             isDateRequired: this.state.date === '',
             isLocationRequired: this.state.location === null,
-        })
+        });
         eventModel.isNewEventModalOpen = false;
         eventModel.eventForEdit = null;
+        if (this.props.event !== null) {
+            setTimeout(() => window.location.reload(), 55)
+        }
     };
 
     onOptionChange = () => {
@@ -394,7 +397,7 @@ class NewEvent extends Component {
                                         name="private-event-toggle"
                                         type="checkbox"
                                         form="new-event-form"
-                                        value={this.state.isPrivate}
+                                        defaultChecked={this.state.isPrivate}
                                         tabIndex="6"
                                         onChange={this.onPrivateClick}
                                     />
