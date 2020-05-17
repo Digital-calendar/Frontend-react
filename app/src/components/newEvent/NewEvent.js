@@ -114,6 +114,7 @@ class NewEvent extends Component {
             isLocationRequired: this.state.location === null,
         })
         eventModel.isNewEventModalOpen = false;
+        eventModel.eventForEdit = null;
     };
 
     onOptionChange = () => {

@@ -89,6 +89,7 @@ class App extends Component {
                     onRequestClose={this.closeNewEventModal}
                 >
                     <NewEvent date={eventModel.dayToCreate} event = {eventModel.eventForEdit}/>
+
                 </Modal>
                 <Router>
                     <Switch>

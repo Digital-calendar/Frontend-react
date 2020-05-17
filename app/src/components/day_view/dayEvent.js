@@ -67,7 +67,6 @@ class DayEvent extends Component {
         console.log(321)
         eventModel.eventForEdit = event;
         eventModel.isNewEventModalOpen = true;
-
     };
 
     handleDeleteButtonClick = (id) => {
