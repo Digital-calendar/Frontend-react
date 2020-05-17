@@ -111,7 +111,7 @@ class Week extends Component {
 
                     {
                         monthModel.arrayWeek.map((date, index) => {
-                            return <DayEvents key={index}  day={date.getDate()}/>
+                            return <DayEvents key={index}  day={date}/>
                         })
                     }
                 </div>

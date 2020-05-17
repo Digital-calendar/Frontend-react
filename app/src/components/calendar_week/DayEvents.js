@@ -61,14 +61,14 @@ class DayEvents extends Component {
 
     render() {
 
-
+        eventModel.makeDayEvents(this.props.day)
         return (
 
             <div className="events-table__column">
                 <div className="events-table__column_container">
 
                     {
-                        eventModel.getDayEvents(this.props.day).map((event, index) => {
+                        eventModel.dayEvents.map((event, index) => {
                                 return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp)}>
                                     <div className="events-table__column__event__text">
                                         {event.title}
