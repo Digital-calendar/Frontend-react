@@ -466,7 +466,9 @@ class NewEvent extends Component {
 
                         <div className="right-fields-container">
 
-                            <div className="field-container">
+                            <div className="field-container"
+                                 style={{marginBottom: "0px"}}
+                            >
                                 <label htmlFor="description">
                                     <img
                                         src={cEOImage}
