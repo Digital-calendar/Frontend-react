@@ -198,6 +198,9 @@ class NewEvent extends Component {
     };
 
     onDescriptionInput = event => {
+        if (event.target.value.length > 1000) {
+            event.target.value = event.target.value.substring(0, 1000);
+        }
         this.setState({
             description: event.target.value
         })
@@ -473,7 +476,7 @@ class NewEvent extends Component {
                                     />
                                 </label>
                                 <textarea
-                                    className="-new-event-text-style new-event-input-field-style new-event-textarea-field"
+                                    className="new-event-text-style new-event-input-field-style new-event-textarea-field"
                                     name="description"
                                     id="description"
                                     placeholder="описание"
@@ -484,6 +487,13 @@ class NewEvent extends Component {
                                     onChange={this.onDescriptionInput}
                                 />
                                 <label htmlFor="description"/>
+                            </div>
+                            <div className="field-container new-event-text-style"
+                                 style={{
+                                     justifyContent: "right",
+                                     color: "#BDBDBD"
+                                 }}>
+                                <div>{this.state.description.length} / 1000</div>
                             </div>
                             <div className="button-container">
                                 <button
