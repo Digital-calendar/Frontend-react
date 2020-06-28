@@ -10,6 +10,7 @@ import pPOImage from '../../css/images/newEvent/paper-plane-outline.svg';
 import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg';
 import cSImage from '../../css/images/newEvent/content-save.svg';
 import tOImage from '../../css/images/newEvent/trash-outline.svg';
+import fImage from '../../css/images/newEvent/bi_file-earmark-plus.svg';
 import '../../css/newEvent.css';
 import CustomSelect from "../CustomSelect";
 import {userModel} from "../../models/UserModel";
@@ -43,6 +44,7 @@ class NewEvent extends Component {
               contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
               description: '',
               options: [],
+              selectedFiles: [],
               isTitleRequired: false,
               isDateRequired: false,
               isLocationRequired: false,
@@ -59,6 +61,7 @@ class NewEvent extends Component {
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
+                selectedFiles: [], //нужно изменить!
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,
@@ -206,6 +209,25 @@ class NewEvent extends Component {
         })
     };
 
+    onFileSelect = event => {
+        let newSF = this.state.selectedFiles;
+        for (let i = 0; i < event.target.files.length; i++) {
+            newSF.push(event.target.files[i]);
+        }
+        this.setState({
+            selectedFiles: newSF
+        });
+    }
+
+    onRenderNameFile = file => {
+        console.log(file);
+        if (file.name.length > 9) {
+            return (file.name.substring(0, 9) + "...");
+        } else {
+            return (file.name);
+        }
+    }
+
     getMarks = () => {
         let view = []
 
@@ -289,7 +311,7 @@ class NewEvent extends Component {
                                     tabIndex="1"
                                     style={{borderColor: this.state.isTitleRequired
                                             ? 'rgba(201, 6, 52, 1)'
-                                            : 'rgba(0, 0, 0, 0.25)'}}
+                                            : ''}}
                                     value={this.state.title}
                                     onChange={this.onTitleInput}
                                     required
@@ -314,7 +336,7 @@ class NewEvent extends Component {
                                     required
                                     style={{borderColor: this.state.isDateRequired
                                             ? 'rgba(201, 6, 52, 1)'
-                                            : 'rgba(0, 0, 0, 0.25)'}}
+                                            : ''}}
                                     value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
@@ -352,7 +374,7 @@ class NewEvent extends Component {
                                     tabIndex="4"
                                     style={{borderColor: this.state.isLocationRequired
                                             ? 'rgba(201, 6, 52, 1)'
-                                            : 'rgba(0, 0, 0, 0.25)'}}
+                                            : ''}}
                                     onChange={this.onLocationInput}
                                 />
                             </div>
@@ -497,6 +519,49 @@ class NewEvent extends Component {
                                  }}>
                                 <div>{this.state.description.length} / 1000</div>
                             </div>
+                            <div className="field-container">
+                                {/*<img*/}
+                                {/*    src={fImage}*/}
+                                {/*    alt=""*/}
+                                {/*    className="new-event-icon-style"*/}
+                                {/*/>*/}
+                                <div className="new-event-file-wrapper">
+                                    <input
+                                        className="new-event-file-input"
+                                        type="file"
+                                        name="files"
+                                        hidden="hidden"
+                                        accept=".jpg, .png, .jpeg, .bmp, .pdf, .doc, .docx, .txt"
+                                        ref={fileInput => this.fileInput = fileInput}
+                                        onChange={this.onFileSelect}
+                                        multiple
+                                    />
+                                    <button
+                                        className="new-event-file-button-add"
+                                        style={{background: 'url(' + fImage + ') no-repeat'}}
+                                        name="addFile"
+                                        type="fileButton"
+                                        id="addFile"
+                                        tabIndex="11"
+                                        onClick={() => this.fileInput.click()}
+                                    />
+                                </div>
+                                <div className="new-event-file-container">
+                                    {this.state.selectedFiles.map((file) => (
+                                        <div className="new-event-file">
+                                            <div className="text-style">
+                                                {this.onRenderNameFile(file)}
+                                            </div>
+                                            <img
+                                                src={xImage}
+                                                alt="X"
+                                                style={{outline: "none"}}
+                                                onClick=""
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                             <div className="button-container">
                                 <button
                                     className="button-style"
@@ -504,7 +569,7 @@ class NewEvent extends Component {
                                     type="submit"
                                     id="save"
                                     // formTarget="_self"
-                                    tabIndex="11"
+                                    tabIndex="12"
                                     onClick={this.onSaveClick}
                                 >
                                     <img
@@ -519,7 +584,7 @@ class NewEvent extends Component {
                                     className="button-style"
                                     type="submit"
                                     id="cancel"
-                                    tabIndex="12"
+                                    tabIndex="13"
                                     onClick={this.onCancelClick}
                                 >
                                     <img
