@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
+import downloadImage from "../../css/images/la_download-solid.svg"
 import {toJS} from "mobx";
 
 class DayEvent extends Component {
@@ -98,6 +99,20 @@ class DayEvent extends Component {
                             </div>
                             <div className="window__mainWindow__content__description">
                                 {event.description}
+                            </div>
+                            <div className="window__mainWindow_content__filesContainer">
+                                <div className="window__mainWindow_content__file">
+                                    <div>
+                                        File.pdf
+                                    </div>
+                                    <img
+                                        src={downloadImage}
+                                        alt="↓"
+                                        style={{outline: "none"}}
+                                        name=""
+                                        onClick=""
+                                    />
+                                </div>
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
