@@ -212,7 +212,7 @@ class NewEvent extends Component {
     onFileSelect = event => {
         let newSF = this.state.selectedFiles;
         for (let i = 0; i < event.target.files.length; i++) {
-            newSF.push(event.target.files[i]);
+            newSF.unshift(event.target.files[i]);
         }
         this.setState({
             selectedFiles: newSF
@@ -226,6 +226,14 @@ class NewEvent extends Component {
         } else {
             return (file.name);
         }
+    }
+
+    onDeleteSelectedFile = event => {
+        let sf = this.state.selectedFiles;
+        sf.splice(event.target.name, 1);
+        this.setState({
+            selectedFiles: sf
+        });
     }
 
     getMarks = () => {
@@ -547,7 +555,7 @@ class NewEvent extends Component {
                                     />
                                 </div>
                                 <div className="new-event-file-container">
-                                    {this.state.selectedFiles.map((file) => (
+                                    {this.state.selectedFiles.map((file, index) => (
                                         <div className="new-event-file">
                                             <div className="text-style">
                                                 {this.onRenderNameFile(file)}
@@ -556,7 +564,8 @@ class NewEvent extends Component {
                                                 src={xImage}
                                                 alt="X"
                                                 style={{outline: "none"}}
-                                                onClick=""
+                                                name={index}
+                                                onClick={this.onDeleteSelectedFile}
                                             />
                                         </div>
                                     ))}
