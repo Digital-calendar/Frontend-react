@@ -43,8 +43,8 @@ class NewEvent extends Component {
               contactInfo: contact,
               contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
               description: '',
-              options: [],
               selectedFiles: [],
+              options: [],
               isTitleRequired: false,
               isDateRequired: false,
               isLocationRequired: false,
@@ -94,6 +94,7 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
+                files: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
@@ -107,6 +108,7 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
+                files: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
@@ -212,7 +214,7 @@ class NewEvent extends Component {
     onFileSelect = event => {
         let newSF = this.state.selectedFiles;
         for (let i = 0; i < event.target.files.length; i++) {
-            newSF.unshift(event.target.files[i]);
+            newSF.push(event.target.files[i]);
         }
         this.setState({
             selectedFiles: newSF
@@ -220,7 +222,6 @@ class NewEvent extends Component {
     }
 
     onRenderNameFile = file => {
-        console.log(file);
         if (file.name.length > 9) {
             return (file.name.substring(0, 9) + "...");
         } else {
@@ -528,11 +529,6 @@ class NewEvent extends Component {
                                 <div>{this.state.description.length} / 1000</div>
                             </div>
                             <div className="field-container">
-                                {/*<img*/}
-                                {/*    src={fImage}*/}
-                                {/*    alt=""*/}
-                                {/*    className="new-event-icon-style"*/}
-                                {/*/>*/}
                                 <div className="new-event-file-wrapper">
                                     <input
                                         className="new-event-file-input"
