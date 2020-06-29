@@ -349,10 +349,15 @@ class NewEvent extends Component {
                                     value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
-                                <label htmlFor="time"></label>
+                                <label
+                                    className="text-style new-event-label-for-time"
+                                    htmlFor="timeFrom"
+                                >
+                                    from
+                                </label>
                                 <input
                                     className="text-style input-time-field-style"
-                                    name="time"
+                                    name="timeFrom"
                                     type="text"
                                     pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
                                     defaultValue="00:00"
@@ -362,6 +367,24 @@ class NewEvent extends Component {
                                     tabIndex="3"
                                     value={this.state.time}
                                     onChange={this.onTimeInput}
+                                />
+                                <label
+                                    className="text-style new-event-label-for-time"
+                                    htmlFor="timeTo"
+                                >
+                                    to
+                                </label>
+                                <input
+                                    className="text-style input-time-field-style"
+                                    name="timeTo"
+                                    type="text"
+                                    pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                                    defaultValue="00:00"
+                                    id="time"
+                                    autoComplete="off"
+                                    tabIndex="3"
+                                    value={this.state.time}
+                                    onChange=""
                                 />
                             </div>
                             <div className="field-container">
