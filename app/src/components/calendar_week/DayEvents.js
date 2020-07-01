@@ -69,13 +69,13 @@ class DayEvents extends Component {
 
                     {
                         eventModel.getDayEvents(this.props.day).map((event, index) => {
-                                return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp)}>
+                                return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp_begin)}>
                                     <div className="events-table__column__event__text">
                                         {event.title}
                                     </div>
                                     <div className="events-table__column__event__time-and-filters">
                                         <div className="events-table__column__event__time">
-                                            {event.timestamp.slice(-5)}
+                                            {event.timestamp_begin.slice(-5)}
                                         </div>
                                         <div className="filters">
                                             {this.getMarks(event)}

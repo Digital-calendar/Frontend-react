@@ -53,8 +53,8 @@ class NewEvent extends Component {
 
             this.state = {
                 title: this.props.event.title,
-                date: this.props.event.timestamp.slice(0, 10),
-                time: this.props.event.timestamp.slice(-5),
+                date: this.props.event.timestamp_begin.slice(0, 10),
+                time: this.props.event.timestamp_begin.slice(-5),
                 location: this.props.event.location,
                 isPrivate: this.props.event.isPrivate,
                 eventType: this.props.event.eventType,
@@ -88,7 +88,8 @@ class NewEvent extends Component {
         if (this.props.event == null) {
             createEvent({
                 title: this.state.title,
-                timestamp: this.state.date + ' ' + this.state.time,
+                timestamp_begin: this.state.date + ' ' + this.state.time,
+                timestamp_end: this.state.date + ' ' + '23:59',
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
@@ -102,7 +103,8 @@ class NewEvent extends Component {
         } else {
             editEvent({
                 title: this.state.title,
-                timestamp: this.state.date + ' ' + this.state.time,
+                timestamp_begin: this.state.date + ' ' + this.state.time,
+                timestamp_end: this.state.date + ' ' + '23:59',
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,

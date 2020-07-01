@@ -89,7 +89,7 @@ class DayEvent extends Component {
                     return <div key={index} className="window__main">
                         <div className="window__mainWindow__BgTop">
                             <p className="window__mainWindow__BgTop__textTime">
-                                {event.timestamp.slice(10, 16)}
+                                {event.timestamp_begin.slice(10, 16)}
                             </p>
                         </div>
 
@@ -116,7 +116,7 @@ class DayEvent extends Component {
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
-                                     className="timePin"/> {event.timestamp}
+                                     className="timePin"/> {event.timestamp_begin}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/locationPin.svg")} alt="locationPin"

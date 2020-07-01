@@ -52,7 +52,7 @@ export class EventModel{
     periodFiltered(start, end) {
         this.filteredEvents = this.filteredEvents
             .filter(event => {
-                return event.timestamp > start && event.timestamp < end;
+                return event.timestamp_begin > start && event.timestamp_begin < end;
             })
     }
 
@@ -69,7 +69,7 @@ export class EventModel{
         const formatDay = date.getFullYear() + '-' + monthString + '-' + dayString;
         this.dayEvents = this.filteredEvents
             .filter(event => {
-                return event.timestamp.startsWith(formatDay);
+                return event.timestamp_begin.startsWith(formatDay);
             })
     }
 
@@ -86,7 +86,7 @@ export class EventModel{
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
         this.dayEvents = this.filteredEvents
             .filter(event => {
-                return event.timestamp.startsWith(formatDay);
+                return event.timestamp_begin.startsWith(formatDay);
             })
     }
 
@@ -118,7 +118,7 @@ export class EventModel{
         eventModel.filteredEvents
             .filter(event => {
 
-                if (event.timestamp.slice(0, 10) === formatDay) {
+                if (event.timestamp_begin.slice(0, 10) === formatDay) {
                     array.push(event);
                 }
             });
