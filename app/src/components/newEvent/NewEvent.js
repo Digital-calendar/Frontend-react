@@ -18,7 +18,6 @@ import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
-import {toJS} from "mobx";
 import {editEvent} from "../../actions/editEvent";
 
 
@@ -36,7 +35,8 @@ class NewEvent extends Component {
             this.state = {
               title: null,
               date: this.props.date,
-              time: '00:00',
+              timeBegin: '00:00',
+              timeEnd: "23:59",
               location: null,
               isPrivate: false,
               eventType: 'INTERNAL',
@@ -48,13 +48,16 @@ class NewEvent extends Component {
               isTitleRequired: false,
               isDateRequired: false,
               isLocationRequired: false,
+              isTimeBeginRequired: false,
+              isTimeEndRequired: false
             };
         } else {
 
             this.state = {
                 title: this.props.event.title,
                 date: this.props.event.timestamp_begin.slice(0, 10),
-                time: this.props.event.timestamp_begin.slice(-5),
+                timeBegin: this.props.event.timestamp_begin.slice(-5),
+                timeEnd: this.props.event.timestamp_end.slice(-5),
                 location: this.props.event.location,
                 isPrivate: this.props.event.isPrivate,
                 eventType: this.props.event.eventType,
@@ -66,6 +69,8 @@ class NewEvent extends Component {
                 isTitleRequired: false,
                 isDateRequired: false,
                 isLocationRequired: false,
+                isTimeBeginRequired: false,
+                isTimeEndRequired: false
             };
             console.log(this.state.date)
         }
@@ -84,12 +89,33 @@ class NewEvent extends Component {
         return selectedUsers;
     };
 
+    getNextDayFromDate = (date) => {
+        let d = new Date(date);
+        d.setDate(d.getDate() + 1);
+        return [d.getFullYear(), d.getMonth() + 1, d.getDate()]
+            .map(n => n < 10 ? 0 + '' + n : n).join('-')
+    }
+
     onSaveClick = () => {
+        let isTimeBeginValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeBegin);
+        let isTimeEndValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeEnd);
+
+        let dateEnd = this.state.date;
+        if (isTimeBeginValid && isTimeEndValid && (this.state.date !== '')) {
+            if (Number(this.state.timeBegin.slice(0, 2)) > Number(this.state.timeEnd.slice(0, 2))) {
+                dateEnd = this.getNextDayFromDate(this.state.date);
+            } else if (Number(this.state.timeBegin.slice(0, 2)) === Number(this.state.timeEnd.slice(0, 2))) {
+                if (Number(this.state.timeBegin.slice(3, 5)) >= Number(this.state.timeEnd.slice(3, 5))) {
+                    dateEnd = this.getNextDayFromDate(this.state.date);
+                }
+            }
+        }
+
         if (this.props.event == null) {
             createEvent({
                 title: this.state.title,
-                timestamp_begin: this.state.date + ' ' + this.state.time,
-                timestamp_end: this.state.date + ' ' + '23:59',
+                timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
+                timestamp_end: dateEnd + ' ' + this.state.timeEnd,
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
@@ -103,8 +129,8 @@ class NewEvent extends Component {
         } else {
             editEvent({
                 title: this.state.title,
-                timestamp_begin: this.state.date + ' ' + this.state.time,
-                timestamp_end: this.state.date + ' ' + '23:59',
+                timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
+                timestamp_end: dateEnd + ' ' + this.state.timeEnd,
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
@@ -121,6 +147,8 @@ class NewEvent extends Component {
             isTitleRequired: this.state.title === null,
             isDateRequired: this.state.date === '',
             isLocationRequired: this.state.location === null,
+            isTimeBeginRequired: !isTimeBeginValid,
+            isTimeEndRequired: !isTimeEndValid
         })
     };
 
@@ -154,9 +182,17 @@ class NewEvent extends Component {
         })
     };
 
-    onTimeInput = event => {
+    onTimeBeginInput = event => {
         this.setState({
-            time: event.target.value
+            timeBegin: event.target.value,
+            isTimeBeginRequired: false
+        })
+    };
+
+    onTimeEndInput = event => {
+        this.setState({
+            timeEnd: event.target.value,
+            isTimeEndRequired: false
         })
     };
 
@@ -353,40 +389,47 @@ class NewEvent extends Component {
                                 />
                                 <label
                                     className="text-style new-event-label-for-time"
-                                    htmlFor="timeFrom"
+                                    htmlFor="timeBegin"
                                 >
-                                    from
+                                    от
                                 </label>
                                 <input
                                     className="text-style input-time-field-style"
-                                    name="timeFrom"
+                                    name="timeBegin"
                                     type="text"
                                     pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
                                     defaultValue="00:00"
                                     id="time"
-                                    // form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="3"
-                                    value={this.state.time}
-                                    onChange={this.onTimeInput}
+                                    value={this.state.timeBegin}
+                                    onChange={this.onTimeBeginInput}
+                                    style={{borderColor: this.state.isTimeBeginRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : '',}}
+                                    required
                                 />
                                 <label
                                     className="text-style new-event-label-for-time"
-                                    htmlFor="timeTo"
+                                    htmlFor="timeEnd"
                                 >
-                                    to
+                                    до
                                 </label>
                                 <input
                                     className="text-style input-time-field-style"
-                                    name="timeTo"
+                                    name="timeEnd"
                                     type="text"
                                     pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
-                                    defaultValue="00:00"
-                                    id="time"
+                                    defaultValue="23:59"
+                                    id="timeEnd"
                                     autoComplete="off"
                                     tabIndex="3"
-                                    value={this.state.time}
-                                    onChange=""
+                                    value={this.state.timeEnd}
+                                    onChange={this.onTimeEndInput}
+                                    style={{borderColor: this.state.isTimeEndRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : ''}}
+                                    required
                                 />
                             </div>
                             <div className="field-container">

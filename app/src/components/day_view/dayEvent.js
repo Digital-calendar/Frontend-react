@@ -116,7 +116,7 @@ class DayEvent extends Component {
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
-                                     className="timePin"/> {event.timestamp_begin}
+                                     className="timePin"/> от {event.timestamp_begin} до {event.timestamp_end}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/locationPin.svg")} alt="locationPin"
