@@ -14,10 +14,6 @@ import {userModel} from "../../models/UserModel";
 @observer
 class Bar extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     selectView() {
         localStorage.setItem("currentView", JSON.stringify(selectModel.currentView));
         switch (selectModel.currentView) {

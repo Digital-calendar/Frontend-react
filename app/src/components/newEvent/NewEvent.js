@@ -30,14 +30,15 @@ class NewEvent extends Component {
         loadUsers();
         userModel.selectedUsers = [];
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
-        console.log(this.props.event)
+        const location = userModel.user.city === null ? '' : userModel.user.city;
+        console.log(userModel.user)
         if (this.props.event == null) {
             this.state = {
               title: null,
               date: this.props.date,
               timeBegin: '00:00',
               timeEnd: "23:59",
-              location: null,
+              location: location,
               isPrivate: false,
               eventType: 'INTERNAL',
               contactInfo: contact,
@@ -59,7 +60,7 @@ class NewEvent extends Component {
                 timeBegin: this.props.event.timestamp_begin.slice(-5),
                 timeEnd: this.props.event.timestamp_end.slice(-5),
                 location: this.props.event.location,
-                isPrivate: this.props.event.isPrivate,
+                isPrivate: this.props.event.privateEvent,
                 eventType: this.props.event.eventType,
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
@@ -149,13 +150,21 @@ class NewEvent extends Component {
             isLocationRequired: this.state.location === null,
             isTimeBeginRequired: !isTimeBeginValid,
             isTimeEndRequired: !isTimeEndValid
-        })
+        });
+        eventModel.isNewEventModalOpen = false;
+        eventModel.eventForEdit = null;
+        if (this.props.event !== null) {
+            setTimeout(() => window.location.reload(), 55)
+        }
     };
 
-    onOptionChange = event => {
-        const newOptions = userModel.users.map(item => {
-            const value = item.first_name + ' ' + item.last_name;
-            return {value: value, label: value, id: item.id};
+    onOptionChange = () => {
+        const newOptions = [];
+        userModel.users.forEach(item => {
+            if (item.id !== userModel.user.id) {
+                const value = item.first_name + ' ' + item.last_name;
+                newOptions.push({value: value + item.id, label: value, id: item.id});
+            }
         });
         this.setState({
             options: newOptions
@@ -276,36 +285,36 @@ class NewEvent extends Component {
     }
 
     getMarks = () => {
-        let view = []
+        let view = [];
 
         switch (this.state.eventType) {
             case "INTERNAL":
                 view.push(
-                    <option selected="selected" defaultValue="Внутреннее">Внутреннее</option>,
-                    <option defaultValue="Внешнее">Внешнее</option>,
-                    <option defaultValue="Очное">Очное</option>
+                    <option key={1} selected defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} defaultValue="Очное">Очное</option>
                 );
                 break;
             case "EXTERNAL":
                 view.push(               
-                    <option defaultValue="Внутреннее">Внутреннее</option>,
-                    <option selected="selected" defaultValue="Внешнее">Внешнее</option>,
-                    <option defaultValue="Очное">Очное</option>
+                    <option key={1} defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} selected defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} defaultValue="Очное">Очное</option>
                 );
                 break;
             case "CORRESPONDENCE":
                 view.push(              
-                    <option defaultValue="Внутреннее">Внутреннее</option>,
-                    <option defaultValue="Внешнее">Внешнее</option>,
-                    <option selected="selected" defaultValue="Очное">Очное</option>
+                    <option key={1} defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} selected defaultValue="Очное">Очное</option>
                 );
                 break;
             default:
                 view.push(
-                    <option defaultValue="Внутреннее">Внутреннее</option>,
-                    <option defaultValue="Внешнее">Внешнее</option>,
-                    <option defaultValue="Очное">Очное</option>
-                )
+                    <option key={1} defaultValue="Внутреннее">Внутреннее</option>,
+                    <option key={2} defaultValue="Внешнее">Внешнее</option>,
+                    <option key={3} defaultValue="Очное">Очное</option>
+                );
                 break;
         }
 
@@ -359,7 +368,7 @@ class NewEvent extends Component {
                                     style={{borderColor: this.state.isTitleRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : ''}}
-                                    value={this.state.title}
+                                    value={this.state.title === null ? '' : this.state.title}
                                     onChange={this.onTitleInput}
                                     required
                                 />
@@ -398,7 +407,6 @@ class NewEvent extends Component {
                                     name="timeBegin"
                                     type="text"
                                     pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
-                                    defaultValue="00:00"
                                     id="time"
                                     autoComplete="off"
                                     tabIndex="3"
@@ -447,7 +455,7 @@ class NewEvent extends Component {
                                     placeholder="Местоположение"
                                     id="location"
                                     form="new-event-form"
-                                    value={this.state.location}
+                                    value={this.state.location === null ? '' : this.state.location}
                                     tabIndex="4"
                                     style={{borderColor: this.state.isLocationRequired
                                             ? 'rgba(201, 6, 52, 1)'
@@ -479,7 +487,7 @@ class NewEvent extends Component {
                                         className="new-event-icon-style"
                                     />
                                     <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
-                                        Приватное
+                                        Личное
                                     </div>
                                 </div>
                                 <label
@@ -491,7 +499,7 @@ class NewEvent extends Component {
                                         name="private-event-toggle"
                                         type="checkbox"
                                         form="new-event-form"
-                                        value={this.state.isPrivate}
+                                        defaultChecked={this.state.isPrivate}
                                         tabIndex="6"
                                         onChange={this.onPrivateClick}
                                     />
@@ -650,7 +658,7 @@ class NewEvent extends Component {
                                         alt=""
                                     />
                                     <div className="text-style">
-                                        Создать
+                                        {this.props.event === null ? "Создать" : "Обновить"}
                                     </div>
                                 </button>
                                 <button

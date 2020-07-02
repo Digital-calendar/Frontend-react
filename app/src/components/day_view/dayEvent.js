@@ -19,7 +19,7 @@ class DayEvent extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        this.setState({date: nextProps.date})
+        this.setState({date: nextProps.date});
         console.log("поймал - отрисовал " + nextProps.date)
     }
 
@@ -27,27 +27,31 @@ class DayEvent extends Component {
         let view;
         if (event.privateEvent) {
             view = (
-                <div className="window__mainWindow__content__eventMark privateEvent_border_color">Private event</div>
+                <div className="window__mainWindow__content__eventMark privateEvent_border_color">
+                    Личное событие
+                </div>
             );
         } else {
             switch (event.eventType) {
                 case "INTERNAL":
                     view = (
-                        <div className="window__mainWindow__content__eventMark internalEvent_border_color">Internal
-                            event</div>
+                        <div className="window__mainWindow__content__eventMark internalEvent_border_color">
+                            Внутреннее событие
+                        </div>
                     );
                     break;
                 case "EXTERNAL":
                     view = (
-                        <div className="window__mainWindow__content__eventMark externalEvent_border_color">External
-                            event</div>
+                        <div className="window__mainWindow__content__eventMark externalEvent_border_color">
+                            Внешнее событие
+                        </div>
                     );
                     break;
                 case "CORRESPONDENCE":
                     view = (
-                        <div
-                            className="window__mainWindow__content__eventMark correspondenceEvent_border_color">Correspondence
-                            event</div>
+                        <div className="window__mainWindow__content__eventMark correspondenceEvent_border_color">
+                            Очное событие
+                        </div>
                     );
                     break;
                 default:
@@ -58,23 +62,19 @@ class DayEvent extends Component {
     };
 
     onNewEventClick = (event) => {
-        console.log(321)
         eventModel.eventForEdit = event;
         eventModel.isNewEventModalOpen = true;
-
     };
 
     handleDeleteButtonClick = (id) => {
         deleteEvent(id);
-        eventModel.deleteById(id);
         eventModel.isPresent = false;
-        // selectModel.currentView = "day"
+        setTimeout(() => window.location.reload(), 55)
+
     };
 
     render() {
-
         eventModel.filter();
-
         eventModel.makeDayEvents(this.state.date);
 
         if (eventModel.dayEvents.length === 0) {
@@ -125,8 +125,7 @@ class DayEvent extends Component {
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/emailPin.svg")} alt="emailPin"
                                      className="emailPin"/>
-                                {event.contactInfo} ,
-                                {event.contactName}
+                                {event.contactInfo}, {event.contactName}
                             </div>
                             <div className="window__mainWindow__content__eventMark_container">
                                 {this.getMarks(event)}
@@ -144,17 +143,16 @@ class DayEvent extends Component {
                             </div>
                             <hr className="line"/>
                             <div className="invited_people_container">
-                                <div className="invited_people_title">Invited people:</div>
+                                <div className="invited_people_title">Участники события:</div>
 
                                 {
                                     event.participants.map((participant, index) => {
                                         return <div key={index} className="invited_people_column">
                                             <div className="invited_people_text">
-                                                {participant.first_name}
-                                                {participant.last_name}
+                                                {participant.first_name} {participant.last_name}
                                             </div>
                                             <div className="invited_people_text" style={{marginRight: 10}}>,</div>
-                                            <div className="invited_people_text">{participant.position}</div>
+                                            <div className="invited_people_text">{participant.position == null ? "должность не указана" : participant.position}</div>
                                         </div>
                                     })
                                 }

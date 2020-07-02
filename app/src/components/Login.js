@@ -43,8 +43,6 @@ class Login extends Component {
         });
 
         this.setState({
-            emailText: '',
-            passText: '',
             user: userModel.user
         });
 

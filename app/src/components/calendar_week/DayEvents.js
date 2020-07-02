@@ -1,17 +1,13 @@
 import React, {Component} from 'react'
 import {eventModel} from "../../models/EventModel";
 import {selectModel} from "../../models/SelectModel";
-import {observer} from "mobx-react";
 
 class DayEvents extends Component {
     constructor(props) {
         super(props);
 
 
-
-        this.view = [
-
-        ]
+        this.view = []
     }
 
 
@@ -21,26 +17,26 @@ class DayEvents extends Component {
             view.push(
                 <img src={require("../../css/images/private-filter.svg")} className="private-filter"
                      alt="private-filter"/>,
-                <div className="private-filter-name">Private</div>
+                <div className="private-filter-name">Личное</div>
             );
         } else {
             switch (event.eventType) {
                 case "INTERNAL":
                     view.push(
                         <img src={require("../../css/images/internal-filter.svg")} alt="internal-filter"/>,
-                        <div className="filter-internal-popup">Internal event</div>
+                        <div className="filter-internal-popup">Внутреннее</div>
                     );
                     break;
                 case "EXTERNAL":
                     view.push(
                         <img src={require("../../css/images/external-filter.svg")} alt="external-filter"/>,
-                        <div className="filter-external-popup">External event</div>
+                        <div className="filter-external-popup">Внешнее</div>
                     );
                     break;
                 case "CORRESPONDENCE":
                     view.push(
                         <img src={require("../../css/images/correspondence-filter.svg")} alt="correspondence-filter"/>,
-                        <div className="filter-corresp-popup">Correspondence</div>
+                        <div className="filter-corresp-popup">Очное</div>
                     );
                     break;
                 default:
@@ -55,21 +51,22 @@ class DayEvents extends Component {
         selectModel.dateToShowInDay = new Date(date);
         selectModel.currentView = "day";
         selectModel.isMoreDetailsClicked = true;
-        localStorage.setItem("currentView",JSON.stringify(selectModel.currentView));
-        localStorage.setItem("dateToShowInDay",JSON.stringify(selectModel.dateToShowInDay));
+        localStorage.setItem("currentView", JSON.stringify(selectModel.currentView));
+        localStorage.setItem("dateToShowInDay", JSON.stringify(selectModel.dateToShowInDay));
     };
 
     render() {
 
-
+        eventModel.makeDayEvents(this.props.day)
         return (
 
             <div className="events-table__column">
                 <div className="events-table__column_container">
 
                     {
-                        eventModel.getDayEvents(this.props.day).map((event, index) => {
-                                return <div key={index} className="events-table__column__event" onClick={() => this.handleEventClick(event.timestamp_begin)}>
+                        eventModel.dayEvents.map((event, index) => {
+                                return <div key={index} className="events-table__column__event"
+                                            onClick={() => this.handleEventClick(event.timestamp_begin)}>
                                     <div className="events-table__column__event__text">
                                         {event.title}
                                     </div>

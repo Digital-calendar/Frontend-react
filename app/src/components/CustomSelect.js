@@ -95,7 +95,7 @@ class CustomSelect extends React.Component {
     render() {
         let selectedOption;
         if (selectModel.isMoreDetailsClicked && this.props.isViewSelect) {
-            selectedOption = {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>Day</span></div>};
+            selectedOption = {value: 'day', label: <div><img style={imageStyle} src={dayImage} alt=""/><span>День</span></div>};
         } else {
             selectedOption  = this.state.selectedOption;
         }
@@ -110,6 +110,7 @@ class CustomSelect extends React.Component {
                 styles={ this.customStyles }
                 isMulti={this.props.isMulti}
                 placeholder={this.props.placeholder}
+                noOptionsMessage={() => this.props.isFilter ? "Нет фильтров" : "Нет групп"}
                 theme={theme => ({
                     ...theme,
                     colors: {

@@ -56,6 +56,7 @@ class MonthSlider extends Component {
         localStorage.setItem("monthToDisplay",JSON.stringify(monthModel.monthToDisplay));
 
         monthModel.getNextWeek(new Date(monthModel.yearToDisplay + "-" + (monthModel.monthToDisplay + 1).toString() + "-1"))
+        localStorage.setItem("arrayWeek",JSON.stringify(monthModel.arrayWeek));
     };
 
     shiftMonthInModel = (shiftMonth) => {

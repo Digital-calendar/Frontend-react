@@ -14,62 +14,103 @@ class Registration extends Component {
                 email: "",
                 pass: ""
             },
-            isSuccess: false
-            // isPassCorrect: true
+            passwordRepeat: "",
+            isSuccess: false,
+            isPassCorrect: false
         }
     }
 
 
     submitForm = async e => {
         e.preventDefault();
-        // this.state.data.pass = md5(this.state.data.pass);
-        try {
-            const resp = await fetch("/api/users/sign_up", {
-                method: "POST",
-                dataType: 'json',
-                body: JSON.stringify(this.state.data),
-                headers: {
-                    "Content-Type": "application/json"
+        let path = document.getElementsByClassName('windowRegistration__error_handler')[0];
+        if (this.state.isPassCorrect) {
+            try {
+                const resp = await fetch("/api/users/sign_up", {
+                    method: "POST",
+                    dataType: 'json',
+                    body: JSON.stringify(this.state.data),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!resp.ok) {
+                    throw new Error("Неизвестная ошибка сети");
                 }
-            });
 
-            if (!resp.ok) {
-                console.log(resp); //дебаг
-                throw new Error("Неизвестная ошибка сети");
+                if (resp.status === 205) {
+                    throw new Error("Пользователь с таким email уже существует");
+                }
+
+                if (resp.status === 201) {
+                    this.setState({isSuccess: true});
+                } else {
+                    throw new Error("Сервер вернул ошибку: " + resp.status); //дебаг
+                }
+
+            } catch (e) {
+                path.textContent = e.message;
+                path.style.visibility = "visible"
             }
+            this.state = {
 
-            if (resp.status === 205) {
-                throw new Error("Пользователь с таким email уже существует");
             }
-
-            if (resp.status === 201) {
-                alert("Регистрация прошла успешно");
-                this.setState({isSuccess: true});
-            } else {
-                throw new Error("Сервер вернул ошибку: " + resp.status); //дебаг
-            }
-
-        } catch (e) {
-            alert(e);
-        }
-
-    };
-
-    handleSubmit = e =>
-        this.setState({
-            data: {...this.state.data, [e.target.name]: e.target.value}
-        });
-
-
-    checkPass = e => {
-        if (this.state.data.pass === e.target.value) {
-            e.target.style.borderColor = '#FFFFFF';
-            document.getElementsByClassName('RegistrationPassword')[0].style.borderColor = '#FFFFFF';
         } else {
-            e.target.style.borderColor = '#F14048';
-            document.getElementsByClassName('RegistrationPassword')[0].style.borderColor = '#F14048';
+            path.textContent = "Пароли не совпадают"
+            path.style.visibility = "visible"
+        }
+
+
+    };
+
+    handleSubmit = e => {
+        document.getElementsByClassName('windowRegistration__error_handler')[0].style.visibility = "hidden";
+        this.checkPass();
+        if (e.target.name !== "passwordRepeat") {
+            this.setState({
+                data: {...this.state.data, [e.target.name]: e.target.value}
+            });
+        }
+        console.log(this.state)
+    };
+
+    // handlePass = e => {
+    //     document.getElementsByClassName('windowRegistration__error_handler')[0].style.visibility = "hidden";
+    //     this.checkPassReap(e);
+    //     this.setState({
+    //         data: {...this.state.data, [e.target.name]: e.target.value}
+    //     })
+    // };
+
+    checkPass = () => {
+        let path_pass = document.getElementsByClassName('RegistrationPassword')[0];
+        let path_reap = document.getElementsByClassName('RegistrationPassRepeat')[0];
+        if (path_pass.value === path_reap.value) {
+            path_pass.style.borderColor = '#FFFFFF';
+            path_reap.style.borderColor = '#FFFFFF';
+            this.setState({
+                isPassCorrect: true
+            })
+        } else {
+            path_pass.style.borderColor = '#F14048';
+            path_reap.style.borderColor = '#F14048';
+            this.setState({
+                isPassCorrect: false
+            })
         }
     };
+
+    // checkPassReap = e => {
+    //     let path =
+    //     if (path.value === e.target.value) {
+    //         e.target.style.borderColor = '#FFFFFF';
+    //         path.style.borderColor = '#FFFFFF';
+    //     } else {
+    //         e.target.style.borderColor = '#F14048';
+    //         path.style.borderColor = '#F14048';
+    //     }
+    // };
 
     onSignInClick = () => {
         this.setState({
@@ -91,14 +132,16 @@ class Registration extends Component {
                         className="signInTop"
                         onClick={this.onSignInClick}
                     >
-                            вход
+                        вход
                     </button>
                 </div>
                 <div className="windowRegistration__mainBg" style={{height: window.innerHeight - 40}}>
                     <div className="windowRegistration__mainWindow">
                         <div className="windowRegistration__mainWindow__RectCenter"/>
                         <div>
+
                             <form onSubmit={this.submitForm} className="windowRegistration__mainWindow__formGroup">
+                                <p className="windowRegistration__error_handler">ну пипетс</p>
                                 <input
                                     className="RegistrationFirstName"
                                     type="text"
@@ -128,6 +171,8 @@ class Registration extends Component {
                                     className="RegistrationPassword"
                                     type="password"
                                     placeholder="пароль"
+                                    minLength="6"
+                                    maxLength="30"
                                     name="pass"
                                     onChange={this.handleSubmit}
                                     required
@@ -136,11 +181,14 @@ class Registration extends Component {
                                     className="RegistrationPassRepeat"
                                     type="password"
                                     placeholder="подтверждение пароля"
+                                    minLength="6"
+                                    maxLength="30"
                                     name="passwordRepeat"
-                                    onChange={this.checkPass}
+                                    onChange={this.handleSubmit}
                                     required
                                 />
-                                <input className="RegistrationSignUp" type="submit" value="создать" name="signUp"/>
+                                <input className="RegistrationSignUp" type="submit" value="Зарегестрироваться"
+                                       name="signUp"/>
                             </form>
                         </div>
                     </div>

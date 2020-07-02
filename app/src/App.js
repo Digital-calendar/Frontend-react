@@ -13,6 +13,8 @@ import NewEvent from "./components/newEvent/NewEvent";
 import {monthModel} from "./models/MonthModel";
 import {selectModel} from "./models/SelectModel";
 
+
+
 const customUserEditStyles = {
     content: {
         paddingTop: '6%',
@@ -52,11 +54,24 @@ class App extends Component {
         monthModel.relativeToCurrentMonthShift = JSON.parse(localStorage.getItem("relativeToCurrentMonthShift"));
         monthModel.yearToDisplay = JSON.parse(localStorage.getItem("yearToDisplay"));
         monthModel.monthToDisplay = JSON.parse(localStorage.getItem("monthToDisplay"));
-        if (JSON.parse(localStorage.getItem("currentView")) === null) {
-            localStorage.setItem("currentView",JSON.stringify(selectModel.currentView ));
+
+        if (JSON.parse(localStorage.getItem("arrayWeek")) === null) {
+            monthModel.arrayWeek = [];
+        } else {
+            monthModel.setArrayWeek(JSON.parse(localStorage.getItem("arrayWeek")));
         }
-        selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));
-        selectModel.dateToShowInDay = new Date(JSON.parse(localStorage.getItem("dateToShowInDay")));
+
+        if (JSON.parse(localStorage.getItem("currentView")) === null) {
+            selectModel.currentView = "month";
+        } else {
+            selectModel.currentView = selectModel.currentView = JSON.parse(localStorage.getItem("currentView"));;
+        }
+        if (JSON.parse(localStorage.getItem("dateToShowInDay")) === null) {
+            selectModel.dateToShowInDay = new Date();
+        } else {
+            selectModel.dateToShowInDay = new Date(JSON.parse(localStorage.getItem("dateToShowInDay")));
+        }
+
     }
 
     closeUserEditModal() {
@@ -75,6 +90,7 @@ class App extends Component {
                 <Modal
                     style={customUserEditStyles}
                     isOpen={userModel.userEditIsOpen}
+                    ariaHideApp={false}
                     onRequestClose={this.closeUserEditModal}
                 >
                     <UserEdit/>
@@ -82,9 +98,11 @@ class App extends Component {
                 <Modal
                     style={customNewEventStyles}
                     isOpen={eventModel.isNewEventModalOpen}
+                    ariaHideApp={false}
                     onRequestClose={this.closeNewEventModal}
                 >
                     <NewEvent date={eventModel.dayToCreate} event = {eventModel.eventForEdit}/>
+
                 </Modal>
                 <Router>
                     <Switch>

@@ -1,9 +1,8 @@
-import {observable, action, toJS} from 'mobx'
+import {action, observable, toJS} from 'mobx'
 import {monthModel} from "./MonthModel";
-import {userModel} from "./UserModel";
 
 
-export class EventModel{
+export class EventModel {
 
     @observable
     dayToCreate = '';
@@ -46,16 +45,11 @@ export class EventModel{
                 });
                 return isFilteredEvent;
             });
+        this.filteredEvents = this.filteredEvents.sort((a, b) =>
+            (new Date(a.timestamp) > new Date(b.timestamp)) ? 1
+                : ((new Date(b.timestamp) > new Date(a.timestamp)) ? -1 : 0));
     };
-
-    @action
-    periodFiltered(start, end) {
-        this.filteredEvents = this.filteredEvents
-            .filter(event => {
-                return event.timestamp_begin > start && event.timestamp_begin < end;
-            })
-    }
-
+      
     @action
     makeDayEvents(date) {
         let dayString = date.getDate();
@@ -125,7 +119,6 @@ export class EventModel{
 
         return array;
     }
-
 }
 
 export const eventModel = new EventModel();
