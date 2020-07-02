@@ -3,7 +3,6 @@ import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
 import downloadImage from "../../css/images/la_download-solid.svg"
-import {toJS} from "mobx";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -89,7 +88,7 @@ class DayEvent extends Component {
                     return <div key={index} className="window__main">
                         <div className="window__mainWindow__BgTop">
                             <p className="window__mainWindow__BgTop__textTime">
-                                {event.timestamp_begin.slice(10, 16)}
+                                {event.timestamp_begin.slice(10, 16)} - {event.timestamp_end.slice(10, 16)}
                             </p>
                         </div>
 
