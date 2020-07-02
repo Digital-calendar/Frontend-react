@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
+import downloadImage from "../../css/images/la_download-solid.svg"
 
 class DayEvent extends Component {
     constructor(props) {
@@ -87,7 +88,7 @@ class DayEvent extends Component {
                     return <div key={index} className="window__main">
                         <div className="window__mainWindow__BgTop">
                             <p className="window__mainWindow__BgTop__textTime">
-                                {event.timestamp.slice(10, 16)}
+                                {event.timestamp_begin.slice(10, 16)} - {event.timestamp_end.slice(10, 16)}
                             </p>
                         </div>
 
@@ -98,9 +99,23 @@ class DayEvent extends Component {
                             <div className="window__mainWindow__content__description">
                                 {event.description}
                             </div>
+                            <div className="window__mainWindow_content__filesContainer">
+                                <div className="window__mainWindow_content__file">
+                                    <div>
+                                        File.pdf
+                                    </div>
+                                    <img
+                                        src={downloadImage}
+                                        alt="↓"
+                                        style={{outline: "none"}}
+                                        name=""
+                                        onClick=""
+                                    />
+                                </div>
+                            </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
-                                     className="timePin"/> {event.timestamp}
+                                     className="timePin"/> от {event.timestamp_begin} до {event.timestamp_end}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/locationPin.svg")} alt="locationPin"

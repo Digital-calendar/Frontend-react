@@ -182,7 +182,7 @@ class DayDropdownMenu extends React.Component {
                                         <div
                                             className="day-list-time"
                                         >
-                                            {event.timestamp.substr(11, 16)}
+                                            {event.timestamp_begin.substr(11, 16)}
                                         </div>
                                         <div className="day-list-content">
                                             <div
