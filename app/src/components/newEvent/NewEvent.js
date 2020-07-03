@@ -34,10 +34,10 @@ class NewEvent extends Component {
         console.log(userModel.user)
         if (this.props.event == null) {
             this.state = {
-              title: null,
+              title: '',
               date: this.props.date,
               timeBegin: '00:00',
-              timeEnd: "23:59",
+              timeEnd: '23:59',
               location: location,
               isPrivate: false,
               eventType: 'INTERNAL',
@@ -143,15 +143,23 @@ class NewEvent extends Component {
                 userID: userModel.user.id
             }, this.props.event.id);
         }
+
         eventModel.isPresent = false;
         this.setState({
-            isTitleRequired: this.state.title === null,
+            isTitleRequired: this.state.title === '',
             isDateRequired: this.state.date === '',
-            isLocationRequired: this.state.location === null,
+            isLocationRequired: this.state.location === '',
             isTimeBeginRequired: !isTimeBeginValid,
             isTimeEndRequired: !isTimeEndValid
         });
-        eventModel.isNewEventModalOpen = false;
+
+        eventModel.isNewEventModalOpen =
+            !(this.state.isTitleRequired &&
+            this.state.isDateRequired &&
+            this.state.isLocationRequired &&
+            this.state.isTimeBeginRequired &&
+            this.state.isTimeEndRequired);
+
         eventModel.eventForEdit = null;
         if (this.props.event !== null) {
             setTimeout(() => window.location.reload(), 55)
