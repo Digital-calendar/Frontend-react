@@ -66,7 +66,7 @@ class NewEvent extends Component {
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
-                selectedFiles: this.props.event.selectedFiles === undefined ? [] : this.props.event.selectedFiles,
+                selectedFiles: this.props.event.fileName,
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,

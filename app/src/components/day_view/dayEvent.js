@@ -101,8 +101,9 @@ class DayEvent extends Component {
                             </div>
                             <div className="window__mainWindow_content__filesContainer">
                                 {event.fileName.map((fileName, index) => (
-                                    <div className="window__mainWindow_content__file"
-                                         style={{minWidth: fileName.length + 35}}
+                                    <div
+                                        className="window__mainWindow_content__file"
+                                        style={{minWidth: fileName.length + 35}}
                                     >
                                         <div>
                                             {fileName}
