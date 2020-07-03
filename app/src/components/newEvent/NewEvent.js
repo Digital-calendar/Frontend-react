@@ -11,7 +11,7 @@ import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg'
 import cSImage from '../../css/images/newEvent/content-save.svg';
 import tOImage from '../../css/images/newEvent/trash-outline.svg';
 import '../../css/newEvent.css';
-import CustomSelect from "../CustomSelect";
+import CheckBoxTreeSelect from "../CheckBoxTreeSelect.js"
 import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
@@ -30,7 +30,7 @@ class NewEvent extends Component {
         userModel.selectedUsers = [];
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
         const location = userModel.user.city === null ? '' : userModel.user.city;
-        console.log(userModel.user)
+        console.log(userModel.user);
         if (this.props.event == null) {
             this.state = {
               title: null,
@@ -368,13 +368,12 @@ class NewEvent extends Component {
                                         className="new-event-icon-style"
                                     />
                                 </label>
-                                <CustomSelect
-                                    options={this.state.options}
-                                    name={'filterType'}
-                                    isMulti={true}
-                                    placeholder={'Пригласить людей'}
-                                    isNewEvent={true}
-                                />
+                                <div className="customCheckBox">
+                                    <CheckBoxTreeSelect
+                                        isNewEvent={true}
+                                        options={this.state.options}
+                                    />
+                                </div>
                             </div>
                             <div className="field-container">
                                 <div className="private-event">
