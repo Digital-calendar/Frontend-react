@@ -164,7 +164,6 @@ class CheckBoxTreeSelect extends Component {
                         <ItemCategory
                             {...opt}
                             key={opt.id}
-                            click={this.openModal}
                             ItemsChecked={ItemsChecked}
                             checkedListAll={checkedListAll}
                             handleCheckboxClick={this.handleCheckboxClick}

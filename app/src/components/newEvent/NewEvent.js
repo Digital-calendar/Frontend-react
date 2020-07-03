@@ -370,8 +370,8 @@ class NewEvent extends Component {
                                 </label>
                                 <div className="customCheckBox">
                                     <CheckBoxTreeSelect
-                                        isNewEvent={true}
                                         options={this.state.options}
+                                        isNewEvent={true}
                                     />
                                 </div>
                             </div>
