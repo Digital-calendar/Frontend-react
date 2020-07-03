@@ -19,6 +19,7 @@ import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
 import {editEvent} from "../../actions/editEvent";
+import {axios} from 'axios';
 
 
 @observer
@@ -65,7 +66,7 @@ class NewEvent extends Component {
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
-                selectedFiles: [], //нужно изменить!
+                selectedFiles: this.props.event.selectedFiles === undefined ? [] : this.props.event.selectedFiles,
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,
@@ -122,7 +123,7 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
-                files: this.state.selectedFiles,
+                fileName: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
@@ -137,7 +138,7 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
-                files: this.state.selectedFiles,
+                fileName: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
@@ -269,18 +270,20 @@ class NewEvent extends Component {
     onFileSelect = event => {
         let newSF = this.state.selectedFiles;
         for (let i = 0; i < event.target.files.length; i++) {
-            newSF.push(event.target.files[i]);
+            newSF.push(event.target.files[i].name);
         }
         this.setState({
             selectedFiles: newSF
         });
+
+
     }
 
-    onRenderNameFile = file => {
-        if (file.name.length > 9) {
-            return (file.name.substring(0, 9) + "...");
+    onRenderNameFile = fileName => {
+        if (fileName.length > 9) {
+            return (fileName.substring(0, 9) + "...");
         } else {
-            return (file.name);
+            return (fileName);
         }
     }
 
@@ -635,10 +638,10 @@ class NewEvent extends Component {
                                     />
                                 </div>
                                 <div className="new-event-file-container">
-                                    {this.state.selectedFiles.map((file, index) => (
-                                        <div className="new-event-file">
+                                    {this.state.selectedFiles.map((fileName, index) => (
+                                        <div className="new-event-file" key={index}>
                                             <div className="text-style">
-                                                {this.onRenderNameFile(file)}
+                                                {this.onRenderNameFile(fileName)}
                                             </div>
                                             <img
                                                 src={xImage}

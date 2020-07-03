@@ -100,18 +100,22 @@ class DayEvent extends Component {
                                 {event.description}
                             </div>
                             <div className="window__mainWindow_content__filesContainer">
-                                <div className="window__mainWindow_content__file">
-                                    <div>
-                                        File.pdf
+                                {event.fileName.map((fileName, index) => (
+                                    <div className="window__mainWindow_content__file"
+                                         style={{minWidth: fileName.length + 35}}
+                                    >
+                                        <div>
+                                            {fileName}
+                                        </div>
+                                        <img
+                                            src={downloadImage}
+                                            alt="↓"
+                                            style={{outline: "none"}}
+                                            name={index}
+                                            onClick=""
+                                        />
                                     </div>
-                                    <img
-                                        src={downloadImage}
-                                        alt="↓"
-                                        style={{outline: "none"}}
-                                        name=""
-                                        onClick=""
-                                    />
-                                </div>
+                                ))}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
