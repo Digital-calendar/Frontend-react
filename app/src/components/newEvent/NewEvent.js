@@ -19,8 +19,7 @@ import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
 import {editEvent} from "../../actions/editEvent";
-import {axios} from 'axios';
-
+import {uploadFiles} from "../../actions/uploadFiles";
 
 @observer
 class NewEvent extends Component {
@@ -54,7 +53,6 @@ class NewEvent extends Component {
               isTimeEndRequired: false
             };
         } else {
-
             this.state = {
                 title: this.props.event.title,
                 date: this.props.event.timestamp_begin.slice(0, 10),
@@ -66,7 +64,7 @@ class NewEvent extends Component {
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
-                selectedFiles: this.props.event.fileName,
+                selectedFiles: this.props.event.fileName, //.reverse().reverse(), //такой костыль потому что fileName обернут в proxy
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,
@@ -129,6 +127,7 @@ class NewEvent extends Component {
                 userID: userModel.user.id
             });
         } else {
+            console.log(this.state.selectedFiles);
             editEvent({
                 title: this.state.title,
                 timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
@@ -138,7 +137,7 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
-                fileName: this.state.selectedFiles,
+                fileName: this.state.selectedFiles.reverse().reverse(),
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
@@ -269,14 +268,19 @@ class NewEvent extends Component {
 
     onFileSelect = event => {
         let newSF = this.state.selectedFiles;
+        const fd = new FormData();
         for (let i = 0; i < event.target.files.length; i++) {
+            if (event.target.files[i].size === 0) {
+                continue;
+            }
             newSF.push(event.target.files[i].name);
+            fd.append("files", event.target.files[i], event.target.files[i].name);
         }
         this.setState({
             selectedFiles: newSF
         });
 
-
+        uploadFiles(fd);
     }
 
     onRenderNameFile = fileName => {
