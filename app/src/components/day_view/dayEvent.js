@@ -3,6 +3,7 @@ import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
 import downloadImage from "../../css/images/la_download-solid.svg"
+import {downloadFiles} from "../../actions/downloadFiles";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -73,6 +74,10 @@ class DayEvent extends Component {
 
     };
 
+    onDownloadFileClick = (event) => {
+        downloadFiles(event.target.name);
+    }
+
     render() {
         eventModel.filter();
         eventModel.makeDayEvents(this.state.date);
@@ -103,7 +108,10 @@ class DayEvent extends Component {
                                 {event.fileName.map((fileName, index) => (
                                     <div
                                         className="window__mainWindow_content__file"
-                                        style={{minWidth: fileName.length + 35}}
+                                        style={{
+                                            width: fileName.length * 9 + 30,
+                                            minWidth: fileName.length * 9 + 30
+                                        }}
                                     >
                                         <div>
                                             {fileName}
@@ -112,8 +120,8 @@ class DayEvent extends Component {
                                             src={downloadImage}
                                             alt="↓"
                                             style={{outline: "none"}}
-                                            name={index}
-                                            onClick=""
+                                            name={fileName}
+                                            onClick={this.onDownloadFileClick}
                                         />
                                     </div>
                                 ))}
