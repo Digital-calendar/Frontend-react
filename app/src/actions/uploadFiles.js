@@ -10,7 +10,6 @@ export async function uploadFiles(formData) {
         },
         headers: {
             'Content-Type': 'multipart/form-data',
-            'Access-Control-Allow-Origin': '*'
         }
     })
         .then(res => {
