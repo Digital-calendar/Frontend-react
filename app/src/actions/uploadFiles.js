@@ -4,15 +4,6 @@ export async function uploadFiles(formData) {
 
     console.log(formData);
 
-    // const response = await fetch('/api/files/uploadMultipleFiles', {
-    //     method: "POST",
-    //     dataType: "JSON",
-    //     body: formData
-    // });
-    //
-    // console.log(response.status);
-    // console.log(await response.json());
-
     axios.post('/api/files/uploadMultipleFiles', formData, {
         onUploadProgress: progressEvent => {
             console.log('Upload progress: ' + Math.round((progressEvent.loaded / progressEvent.total) * 100) + '%');

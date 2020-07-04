@@ -64,7 +64,7 @@ class NewEvent extends Component {
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
-                selectedFiles: this.props.event.fileName, //.reverse().reverse(), //такой костыль потому что fileName обернут в proxy
+                selectedFiles: this.props.event.fileName,
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,
@@ -137,7 +137,7 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
-                fileName: this.state.selectedFiles.reverse().reverse(),
+                fileName: this.state.selectedFiles.reverse().reverse(), //такой костыль потому что selectedFiles обернут в proxy
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id

@@ -308,9 +308,9 @@ class UserEdit extends Component {
                                     onChange={this.onNewPasswordChange}
                                 />
                                 <img id="img1" src={octionEyeClosedImage} alt="" className="pass-show-ico" onClick={this.onEyeClick}/>
-                                    <a className="empty-icon-style icon-wrapper">
+                                    <div className="empty-icon-style icon-wrapper">
                                         <img id="password-valid-ico" src={checkImage} alt="" className="valid-ico"/>
-                                    </a>
+                                    </div>
                             </div>
                         </div>
                         <div className="field-column-container">
@@ -336,9 +336,9 @@ class UserEdit extends Component {
                                     onChange={this.onConfirmNewPasswordChange}
                                 />
                                 <img id="img2" src={octionEyeClosedImage} alt="" className="pass-show-ico" onClick={this.onEyeClick}/>
-                                <a className="empty-icon-style icon-wrapper">
+                                <div className="empty-icon-style icon-wrapper">
                                     <img id="confirm-password-valid-ico" src={checkImage} alt="" className="valid-ico"/>
-                                </a>
+                                </div>
                             </div>
                         </div>
 
