@@ -109,8 +109,8 @@ class DayEvent extends Component {
                                     <div
                                         className="window__mainWindow_content__file"
                                         style={{
-                                            width: fileName.length * 9 + 30,
-                                            minWidth: fileName.length * 9 + 30
+                                            width: fileName.length * 9 + 40,
+                                            minWidth: fileName.length * 9 + 40
                                         }}
                                     >
                                         <div>

@@ -688,6 +688,7 @@ class NewEvent extends Component {
                                     // formTarget="_self"
                                     tabIndex="12"
                                     onClick={this.onSaveClick}
+                                    disabled={((this.state.selectedFiles.length > 0) && (eventModel.progressUploadFiles !== '100%'))}
                                 >
                                     <img
                                         src={cSImage}
