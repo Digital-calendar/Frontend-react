@@ -3,6 +3,7 @@ import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
 import downloadImage from "../../css/images/la_download-solid.svg"
+import {downloadFiles} from "../../actions/downloadFiles";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -73,6 +74,10 @@ class DayEvent extends Component {
 
     };
 
+    onDownloadFileClick = (event) => {
+        downloadFiles(event.target.name);
+    }
+
     render() {
         eventModel.filter();
         eventModel.makeDayEvents(this.state.date);
@@ -100,18 +105,26 @@ class DayEvent extends Component {
                                 {event.description}
                             </div>
                             <div className="window__mainWindow_content__filesContainer">
-                                <div className="window__mainWindow_content__file">
-                                    <div>
-                                        File.pdf
+                                {event.fileName.map((fileName) => (
+                                    <div
+                                        className="window__mainWindow_content__file"
+                                        style={{
+                                            width: fileName.length * 9 + 40,
+                                            minWidth: fileName.length * 9 + 40
+                                        }}
+                                    >
+                                        <div>
+                                            {fileName}
+                                        </div>
+                                        <img
+                                            src={downloadImage}
+                                            alt="↓"
+                                            style={{outline: "none"}}
+                                            name={fileName}
+                                            onClick={this.onDownloadFileClick}
+                                        />
                                     </div>
-                                    <img
-                                        src={downloadImage}
-                                        alt="↓"
-                                        style={{outline: "none"}}
-                                        name=""
-                                        onClick=""
-                                    />
-                                </div>
+                                ))}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"

@@ -1,4 +1,4 @@
-import {action, observable, toJS} from 'mobx'
+import {action, observable} from 'mobx'
 import {monthModel} from "./MonthModel";
 
 
@@ -27,6 +27,9 @@ export class EventModel {
 
     @observable
     isNewEventModalOpen = false;
+
+    @observable
+    progressUploadFiles = '0%';
 
     @action
     filter() {

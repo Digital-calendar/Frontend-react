@@ -19,7 +19,7 @@ import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
 import {editEvent} from "../../actions/editEvent";
-
+import {uploadFiles} from "../../actions/uploadFiles";
 
 @observer
 class NewEvent extends Component {
@@ -34,10 +34,10 @@ class NewEvent extends Component {
         console.log(userModel.user)
         if (this.props.event == null) {
             this.state = {
-              title: null,
+              title: '',
               date: this.props.date,
               timeBegin: '00:00',
-              timeEnd: "23:59",
+              timeEnd: '23:59',
               location: location,
               isPrivate: false,
               eventType: 'INTERNAL',
@@ -53,7 +53,6 @@ class NewEvent extends Component {
               isTimeEndRequired: false
             };
         } else {
-
             this.state = {
                 title: this.props.event.title,
                 date: this.props.event.timestamp_begin.slice(0, 10),
@@ -65,7 +64,7 @@ class NewEvent extends Component {
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
-                selectedFiles: [], //нужно изменить!
+                selectedFiles: this.props.event.fileName,
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,
@@ -74,6 +73,7 @@ class NewEvent extends Component {
                 isTimeEndRequired: false
             };
             console.log(this.state.date)
+            eventModel.progressUploadFiles = '100%';
         }
     }
 
@@ -122,12 +122,13 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
-                files: this.state.selectedFiles,
+                fileName: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
             });
         } else {
+            console.log(this.state.selectedFiles);
             editEvent({
                 title: this.state.title,
                 timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
@@ -137,21 +138,33 @@ class NewEvent extends Component {
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
-                files: this.state.selectedFiles,
+                fileName: this.state.selectedFiles.reverse().reverse(), //такой костыль потому что selectedFiles обернут в proxy
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
             }, this.props.event.id);
         }
+
         eventModel.isPresent = false;
         this.setState({
-            isTitleRequired: this.state.title === null,
+            isTitleRequired: this.state.title === '',
             isDateRequired: this.state.date === '',
-            isLocationRequired: this.state.location === null,
+            isLocationRequired: this.state.location === '',
             isTimeBeginRequired: !isTimeBeginValid,
             isTimeEndRequired: !isTimeEndValid
         });
-        eventModel.isNewEventModalOpen = false;
+
+        eventModel.isNewEventModalOpen =
+            !(this.state.isTitleRequired &&
+            this.state.isDateRequired &&
+            this.state.isLocationRequired &&
+            this.state.isTimeBeginRequired &&
+            this.state.isTimeEndRequired);
+
+        if (eventModel.isNewEventModalOpen) {
+            eventModel.progressUploadFiles = '0%';
+        }
+
         eventModel.eventForEdit = null;
         if (this.props.event !== null) {
             setTimeout(() => window.location.reload(), 55)
@@ -175,6 +188,7 @@ class NewEvent extends Component {
     onCancelClick = () => {
         eventModel.eventForEdit = null;
         eventModel.isNewEventModalOpen = false;
+        eventModel.progressUploadFiles = '0%';
     };
 
     onTitleInput = event => {
@@ -260,19 +274,26 @@ class NewEvent extends Component {
 
     onFileSelect = event => {
         let newSF = this.state.selectedFiles;
+        const fd = new FormData();
         for (let i = 0; i < event.target.files.length; i++) {
-            newSF.push(event.target.files[i]);
+            if (event.target.files[i].size === 0) {
+                continue;
+            }
+            newSF.push(event.target.files[i].name);
+            fd.append("files", event.target.files[i], event.target.files[i].name);
         }
         this.setState({
             selectedFiles: newSF
         });
+
+        uploadFiles(fd);
     }
 
-    onRenderNameFile = file => {
-        if (file.name.length > 9) {
-            return (file.name.substring(0, 9) + "...");
+    onRenderNameFile = fileName => {
+        if (fileName.length > 9) {
+            return (fileName.substring(0, 9) + "...");
         } else {
-            return (file.name);
+            return (fileName);
         }
     }
 
@@ -282,6 +303,10 @@ class NewEvent extends Component {
         this.setState({
             selectedFiles: sf
         });
+
+        if (this.state.selectedFiles.length === 0) {
+            eventModel.progressUploadFiles = '0%';
+        }
     }
 
     getMarks = () => {
@@ -607,7 +632,6 @@ class NewEvent extends Component {
                             <div className="field-container">
                                 <div className="new-event-file-wrapper">
                                     <input
-                                        className="new-event-file-input"
                                         type="file"
                                         name="files"
                                         hidden="hidden"
@@ -627,10 +651,10 @@ class NewEvent extends Component {
                                     />
                                 </div>
                                 <div className="new-event-file-container">
-                                    {this.state.selectedFiles.map((file, index) => (
-                                        <div className="new-event-file">
+                                    {this.state.selectedFiles.map((fileName, index) => (
+                                        <div className="new-event-file" key={index}>
                                             <div className="text-style">
-                                                {this.onRenderNameFile(file)}
+                                                {this.onRenderNameFile(fileName)}
                                             </div>
                                             <img
                                                 src={xImage}
@@ -643,6 +667,20 @@ class NewEvent extends Component {
                                     ))}
                                 </div>
                             </div>
+                            <div className="new-event-file-progress"
+                                 style={{
+                                     display: eventModel.progressUploadFiles === '0%' ? 'none' : 'flex'
+                                 }}
+                            >
+                                <div
+                                    className="new-event-file-progress-line"
+                                    style={{
+                                        width: eventModel.progressUploadFiles
+                                    }}
+                                >
+                                    {eventModel.progressUploadFiles}
+                                </div>
+                            </div>
                             <div className="button-container">
                                 <button
                                     className="button-style"
@@ -652,6 +690,7 @@ class NewEvent extends Component {
                                     // formTarget="_self"
                                     tabIndex="12"
                                     onClick={this.onSaveClick}
+                                    disabled={((this.state.selectedFiles.length > 0) && (eventModel.progressUploadFiles !== '100%'))}
                                 >
                                     <img
                                         src={cSImage}
