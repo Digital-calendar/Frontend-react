@@ -73,6 +73,7 @@ class NewEvent extends Component {
                 isTimeEndRequired: false
             };
             console.log(this.state.date)
+            eventModel.progressUploadFiles = '100%';
         }
     }
 
