@@ -188,6 +188,7 @@ class NewEvent extends Component {
     onCancelClick = () => {
         eventModel.eventForEdit = null;
         eventModel.isNewEventModalOpen = false;
+        eventModel.progressUploadFiles = '0%';
     };
 
     onTitleInput = event => {
