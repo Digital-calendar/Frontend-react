@@ -4,14 +4,17 @@ import {userModel} from "../models/UserModel";
 import {selectModel} from "../models/SelectModel";
 import {eventModel} from "../models/EventModel";
 import {observer} from "mobx-react";
+import {loadUsers} from "../actions/loadUsers";
 
 @observer
 class CheckBoxTreeSelect extends Component {
     constructor(props) {
         super(props);
+        loadUsers();
+        this.initializeOptions();
         this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
 
-        const options = eventModel.filters !== null ? this.props.options.filter(item => {
+        /*const options = eventModel.filters !== null ? this.props.options.filter(item => {
             const value = item.value.toUpperCase();
             let isOption = false;
             eventModel.filters.forEach(filter => {
@@ -20,38 +23,100 @@ class CheckBoxTreeSelect extends Component {
                 }
             });
             return isOption;
-        }) : this.props.options;
+        }) : this.props.options;*/
 
         this.state = {
             /*<-------- ПРИМЕР ПОЛЕЙ В ЧЕКБОКСЕ -------->
             * ДЛЯ ПРОСМОТРА ПРИМЕРА НУЖНО ЗАКОММЕНТИТЬ OPTIONS ВЫШЕ*/
-            /*options: [
+            //options: this.initializeOptions(),
+            options: [
                 {
                     id: 1,
-                    name: "category 1",
+                    name: "DEVELOPER",
                     items: [
-                        { name: "item 1", id: Math.floor(Math.random() * 99999) },
-                        { name: "item 2", id: Math.floor(Math.random() * 99999) }
+                        { name: "item 1"},
+                        { name: "item 2"}
                     ]
                 },
                 {
                     id: 2,
-                    name: "category 2",
+                    name: "DESIGNER",
                     items: [
-                        { name: "item 3", id: Math.floor(Math.random() * 99999) },
-                        { name: "item 4", id: Math.floor(Math.random() * 99999) }
+                        { name: "item 3"},
+                        { name: "item 4"}
                     ]
                 },
                 {
                     id: 3,
-                    name: "category 3",
-                    items: [{ name: "item 5", id: Math.floor(Math.random() * 99999) }]
+                    name: "EVENT_MANAGER",
+                    items: [{ name: "item 5"}]
+                },
+                {
+                    id: 4,
+                    name: "MANAGER",
+                    items: [{ name: "item 6"}]
                 }
-            ],*/ /*<-------- ПРИМЕР ПОЛЕЙ В ЧЕКБОКСЕ -------->*/
+            ], /*<-------- ПРИМЕР ПОЛЕЙ В ЧЕКБОКСЕ -------->*/
             checkedListAll: [],
             clickAtInput: false,
             ItemsChecked: false
         };
+    }
+
+    initializeOptions() {
+        const positions = [
+            {name: "DEVELOPER"},
+            {name: "DESIGNER"},
+            {name: "EVENT_MANAGER"},
+            {name: "MANAGER"}
+        ];
+
+        let newOptions = [];
+
+        newOptions = [
+            {
+                name: positions[0],
+                items: [
+                    userModel.users.map(user => {
+                        if (user.position === positions[0])
+                            return {name: user.toString()}
+                    })
+                ]
+            },
+            {
+                name: positions[1],
+                items: [
+                    userModel.users.map(user => {
+                        if (user.position === positions[1])
+                            return {name: user.toString()}
+                    })
+                ]
+            },
+            {
+                name: positions[2],
+                items: [
+                    userModel.users.map(user => {
+                        if (user.position === positions[2])
+                            return {name: user.toString()}
+                    })
+                ]
+            },
+            {
+                name: positions[3],
+                items: [
+                    userModel.users.map(user => {
+                        if (user.position === positions[3])
+                            return {name: user.toString()}
+                    })
+                ]
+            },
+        ];
+
+        console.log(newOptions)
+
+        /*this.setState({
+            options: newOptions
+        })*/
     }
 
     selectedItems(e) {
@@ -80,7 +145,7 @@ class CheckBoxTreeSelect extends Component {
             if (checked) {
                 for (const opt of options) {
                     for (const item of opt.items) {
-                        collection.push(item.id);
+                        collection.push(item.name);
                     }
                 }
             }
@@ -98,17 +163,32 @@ class CheckBoxTreeSelect extends Component {
         }
     }
 
+    getAllItems = () => {
+        const { options } = this.state;
+        const collection = [];
+        for (const opt of options) {
+            for (const item of opt.items) {
+                collection.push(item.name);
+            }
+        }
+
+        return collection;
+    };
+
     handleCheckboxClick(e) {
         const { value, checked } = e.target;
         const { checkedListAll } = this.state;
 
         if (checked) {
+            const collection = this.getAllItems();
             this.setState(prevState => ({
-                checkedListAll: [...prevState.checkedListAll, value * 1]
+                checkedListAll: [...prevState.checkedListAll, value],
+                ItemsChecked: collection.length === prevState.checkedListAll.length + 1
             }));
         } else {
             this.setState(prevState => ({
-                checkedListAll: prevState.checkedListAll.filter(item => item != value)
+                checkedListAll: prevState.checkedListAll.filter(item => item != value),
+                ItemsChecked: false
             }));
         }
 
@@ -163,7 +243,6 @@ class CheckBoxTreeSelect extends Component {
                     return (
                         <ItemCategory
                             {...opt}
-                            key={opt.id}
                             ItemsChecked={ItemsChecked}
                             checkedListAll={checkedListAll}
                             handleCheckboxClick={this.handleCheckboxClick}
@@ -178,6 +257,7 @@ class CheckBoxTreeSelect extends Component {
                 <input
                     className="textCheckboxGroups"
                     id="textCheckboxGroups"
+                    value={checkedListAll}
                     type="text"
                     placeholder="Выберите группу"
                     readOnly={true}
@@ -211,10 +291,10 @@ class ItemCategory extends Component {
                 <ul className="childrenItem">
                     {getItems.map(item => {
                         return (
-                            <li className="childrenItemCheckbox" key={item.id}>
+                            <li className="childrenItemCheckbox">
                                 <Checkbox
                                     item={item}
-                                    isChecked={checkedListAll.includes(item.id)}
+                                    isChecked={checkedListAll.includes(item.name)}
                                     handleCheckboxClick={this.props.handleCheckboxClick}
                                 />
                             </li>
@@ -229,13 +309,12 @@ class ItemCategory extends Component {
 class Checkbox extends Component {
     render() {
         const { item, isChecked } = this.props;
-        //const { isChecked } = this.state;
 
         return (
             <label>
                 <input
                     type="checkbox"
-                    value={item.id}
+                    value={item.name}
                     checked={isChecked}
                     onChange={this.props.handleCheckboxClick}
                 />
