@@ -28,6 +28,9 @@ export class EventModel {
     @observable
     isNewEventModalOpen = false;
 
+    @observable
+    progressUploadFiles = '0%';
+
     @action
     filter() {
         if (this.filters === null) {

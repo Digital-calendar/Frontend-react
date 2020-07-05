@@ -160,6 +160,10 @@ class NewEvent extends Component {
             this.state.isTimeBeginRequired &&
             this.state.isTimeEndRequired);
 
+        if (eventModel.isNewEventModalOpen) {
+            eventModel.progressUploadFiles = '0%';
+        }
+
         eventModel.eventForEdit = null;
         if (this.props.event !== null) {
             setTimeout(() => window.location.reload(), 55)
@@ -297,6 +301,10 @@ class NewEvent extends Component {
         this.setState({
             selectedFiles: sf
         });
+
+        if (this.state.selectedFiles.length === 0) {
+            eventModel.progressUploadFiles = '0%';
+        }
     }
 
     getMarks = () => {
@@ -622,7 +630,6 @@ class NewEvent extends Component {
                             <div className="field-container">
                                 <div className="new-event-file-wrapper">
                                     <input
-                                        className="new-event-file-input"
                                         type="file"
                                         name="files"
                                         hidden="hidden"
@@ -656,6 +663,20 @@ class NewEvent extends Component {
                                             />
                                         </div>
                                     ))}
+                                </div>
+                            </div>
+                            <div className="new-event-file-progress"
+                                 style={{
+                                     display: eventModel.progressUploadFiles === '0%' ? 'none' : 'flex'
+                                 }}
+                            >
+                                <div
+                                    className="new-event-file-progress-line"
+                                    style={{
+                                        width: eventModel.progressUploadFiles
+                                    }}
+                                >
+                                    {eventModel.progressUploadFiles}
                                 </div>
                             </div>
                             <div className="button-container">
