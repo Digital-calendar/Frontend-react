@@ -5,8 +5,6 @@ import {selectModel} from "../models/SelectModel";
 import {eventModel} from "../models/EventModel";
 import {observer} from "mobx-react";
 import {loadUsers} from "../actions/loadUsers";
-<<<<<<< Updated upstream
-=======
 
 const positions = [
     {name: "Разработчик"},
@@ -14,68 +12,20 @@ const positions = [
     {name: "Ивент менеджер"},
     {name: "Менеджер"}
 ];
->>>>>>> Stashed changes
 
 @observer
 class CheckBoxTreeSelect extends Component {
     constructor(props) {
         super(props);
-<<<<<<< Updated upstream
         loadUsers();
         this.initializeOptions();
         this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
-
-        /*const options = eventModel.filters !== null ? this.props.options.filter(item => {
-            const value = item.value.toUpperCase();
-            let isOption = false;
-            eventModel.filters.forEach(filter => {
-                if (value === filter) {
-                    isOption = true;
-                }
-            });
-            return isOption;
-        }) : this.props.options;*/
-
-        this.state = {
-            /*<-------- ПРИМЕР ПОЛЕЙ В ЧЕКБОКСЕ -------->
-            * ДЛЯ ПРОСМОТРА ПРИМЕРА НУЖНО ЗАКОММЕНТИТЬ OPTIONS ВЫШЕ*/
-            //options: this.initializeOptions(),
-            options: [
-                {
-                    id: 1,
-                    name: "DEVELOPER",
-                    items: [
-                        { name: "item 1"},
-                        { name: "item 2"}
-                    ]
-                },
-                {
-                    id: 2,
-                    name: "DESIGNER",
-                    items: [
-                        { name: "item 3"},
-                        { name: "item 4"}
-                    ]
-                },
-                {
-                    id: 3,
-                    name: "EVENT_MANAGER",
-                    items: [{ name: "item 5"}]
-                },
-                {
-                    id: 4,
-                    name: "MANAGER",
-                    items: [{ name: "item 6"}]
-                }
-            ], /*<-------- ПРИМЕР ПОЛЕЙ В ЧЕКБОКСЕ -------->*/
-=======
 
         loadUsers();
         this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
 
         this.state = {
             options: [],
->>>>>>> Stashed changes
             checkedListAll: [],
             checkedDev: 0,
             checkedDes: 0,
@@ -90,63 +40,6 @@ class CheckBoxTreeSelect extends Component {
             isCheckedMan: false
         };
     }
-
-<<<<<<< Updated upstream
-    initializeOptions() {
-        const positions = [
-            {name: "DEVELOPER"},
-            {name: "DESIGNER"},
-            {name: "EVENT_MANAGER"},
-            {name: "MANAGER"}
-        ];
-
-        let newOptions = [];
-
-        newOptions = [
-            {
-                name: positions[0],
-                items: [
-                    userModel.users.map(user => {
-                        if (user.position === positions[0])
-                            return {name: user.toString()}
-                    })
-                ]
-            },
-            {
-                name: positions[1],
-                items: [
-                    userModel.users.map(user => {
-                        if (user.position === positions[1])
-                            return {name: user.toString()}
-                    })
-                ]
-            },
-            {
-                name: positions[2],
-                items: [
-                    userModel.users.map(user => {
-                        if (user.position === positions[2])
-                            return {name: user.toString()}
-                    })
-                ]
-            },
-            {
-                name: positions[3],
-                items: [
-                    userModel.users.map(user => {
-                        if (user.position === positions[3])
-                            return {name: user.toString()}
-                    })
-                ]
-            },
-        ];
-
-        console.log(newOptions)
-
-        /*this.setState({
-            options: newOptions
-        })*/
-=======
 
     initializeOptions() {
         const newOptions = [];
@@ -177,48 +70,29 @@ class CheckBoxTreeSelect extends Component {
         this.setState({
             options: newOptions
         });
->>>>>>> Stashed changes
-    }
-
-    selectedItems(e) {
-        const { value, checked } = e.target;
-        let { checkedListAll } = this.state;
-
-        if (checked) {
-            checkedListAll = [...checkedListAll, value];
-        } else {
-            checkedListAll = checkedListAll.filter(el => el !== value);
-            if (this.state.ItemsChecked) {
-                this.setState({
-                    ItemsChecked: !this.state.ItemsChecked
-                });
-            }
-        }
-        this.setState({ checkedListAll });
     }
 
     selectItem(e) {
         if (this.props.users != null) {
-            const { checked } = e.target;
-            const { users } = this.props;
-            const { options } = this.state;
+            const {checked} = e.target;
+            const {users} = this.props;
+            const {options} = this.state;
             const collection = [];
 
             if (checked) {
-<<<<<<< Updated upstream
                 for (const opt of options) {
                     for (const item of opt.items) {
                         collection.push(item.name);
-=======
-                for (const user of users) {
-                    for (let opt of options) {
-                        for (const item of opt.items) {
-                            if (item.name === user.name) {
-                                item.valueCheck = true;
-                                collection.push(user.name);
+                        for (const user of users) {
+                            for (let opt of options) {
+                                for (const item of opt.items) {
+                                    if (item.name === user.name) {
+                                        item.valueCheck = true;
+                                        collection.push(user.name);
+                                    }
+                                }
                             }
                         }
->>>>>>> Stashed changes
                     }
                 }
             }
@@ -497,8 +371,6 @@ class CheckBoxTreeSelect extends Component {
         return collection;
     };
 
-<<<<<<< Updated upstream
-=======
     getAllDev = () => {
         const { users } = this.props;
         const collection = [];
@@ -547,7 +419,6 @@ class CheckBoxTreeSelect extends Component {
         return collection;
     };
 
->>>>>>> Stashed changes
     handleCheckboxClick(e) {
         const { value, checked } = e.target;
         const { users } = this.props;
@@ -559,18 +430,6 @@ class CheckBoxTreeSelect extends Component {
         const collectionMan = this.getAllMan();
 
         if (checked) {
-<<<<<<< Updated upstream
-            const collection = this.getAllItems();
-            this.setState(prevState => ({
-                checkedListAll: [...prevState.checkedListAll, value],
-                ItemsChecked: collection.length === prevState.checkedListAll.length + 1
-            }));
-        } else {
-            this.setState(prevState => ({
-                checkedListAll: prevState.checkedListAll.filter(item => item != value),
-                ItemsChecked: false
-            }));
-=======
             for (const user of users) {
                 switch (user.position) {
                     case "Разработчик":
@@ -736,7 +595,6 @@ class CheckBoxTreeSelect extends Component {
                         break;
                 }
             }
->>>>>>> Stashed changes
         }
 
         this.loadToStorage(value);
@@ -878,7 +736,6 @@ class ItemCategory extends Component {
         const {
             items,
             name,
-            checkedListAll,
         } = this.props;
 
         const getItems = items.map(item => {
@@ -899,12 +756,7 @@ class ItemCategory extends Component {
                             <li className="childrenItemCheckbox">
                                 <Checkbox
                                     item={item}
-<<<<<<< Updated upstream
-                                    isChecked={checkedListAll.includes(item.name)}
-=======
                                     isChecked={item.valueCheck}
-                                    //isChecked={checkedListAll.includes(item.name)}
->>>>>>> Stashed changes
                                     handleCheckboxClick={this.props.handleCheckboxClick}
                                 />
                             </li>

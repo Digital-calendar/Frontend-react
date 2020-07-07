@@ -370,13 +370,9 @@ class NewEvent extends Component {
                                 </label>
                                 <div className="customCheckBox">
                                     <CheckBoxTreeSelect
-<<<<<<< Updated upstream
 										isNewEvent={true}
                                         options={this.state.options}
-=======
                                         users={this.state.options}
-                                        isNewEvent={true}
->>>>>>> Stashed changes
                                     />
                                 </div>
                             </div>
