@@ -127,7 +127,7 @@ class NewEvent extends Component {
         userModel.users.forEach(item => {
             if (item.id !== userModel.user.id) {
                 const value = item.first_name + ' ' + item.last_name;
-                newOptions.push({value: value + item.id, label: value, id: item.id});
+                newOptions.push({name: value, id: item.id, position: item.position});
             }
         });
         this.setState({
@@ -370,8 +370,13 @@ class NewEvent extends Component {
                                 </label>
                                 <div className="customCheckBox">
                                     <CheckBoxTreeSelect
+<<<<<<< Updated upstream
 										isNewEvent={true}
                                         options={this.state.options}
+=======
+                                        users={this.state.options}
+                                        isNewEvent={true}
+>>>>>>> Stashed changes
                                     />
                                 </div>
                             </div>

@@ -129,6 +129,8 @@ body {
   font-family: 'Oxygen', sans-serif;
   font-style: normal;
   font-weight: normal;
+  font-size: 18px;
+  color: #000000;
 }
 
 .categoryName {
@@ -145,6 +147,10 @@ body {
   margin-left: 12%;
   margin-bottom: 5%;
   margin-top: 1%;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+  background: white;
+  border: none;
+  border-radius: 2px;
 }
 
 .childrenItemCheckbox {
@@ -170,6 +176,7 @@ body {
 }
 
 .dropdownList {
+  padding-bottom: 1px;
   margin-top: 1%;
   width: 103%;
   border-radius: 2px;
