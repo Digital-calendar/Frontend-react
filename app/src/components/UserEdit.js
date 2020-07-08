@@ -8,14 +8,21 @@ import checkImage from '../css/images/userEdit/check.svg';
 import slashImage from '../css/images/userEdit/slash.svg';
 import {userModel} from "../models/UserModel";
 import {editUser} from "../actions/editUser";
+import Select from "react-select";
 
+const options = [
+    {value: "Разработчик", label: "Разработчик"},
+    {value: "Дизайнер", label: "Дизайнер"},
+    {value: "Ивент менеджер", label: "Ивент менеджер"},
+    {value: "Менеджер", label: "Менеджер"}
+];
 
 class UserEdit extends Component {
 
     constructor(props) {
         super(props);
 
-        const pos = userModel.user.position === null ? '' : userModel.user.position;
+        const pos = userModel.user.position === null ? "" : userModel.user.position;
         const ct = userModel.user.city === null ? '' : userModel.user.city;
         const phn = userModel.user.phone === null ? '' : userModel.user.phone;
         this.state = {
@@ -57,7 +64,7 @@ class UserEdit extends Component {
 
     onPositionChange = event => {
         this.setState({
-            position: event.target.value,
+            position: event.value,
         })
     };
 
@@ -81,7 +88,7 @@ class UserEdit extends Component {
             this.state.checkConfirmPassword.setAttribute('opacity', "0");
         } else {
             this.state.checkConfirmPassword.setAttribute('opacity', "1");
-        };
+        }
     };
 
     onConfirmNewPasswordChange = event => {
@@ -95,7 +102,7 @@ class UserEdit extends Component {
                 this.state.checkConfirmPassword.setAttribute('opacity', "1");
                 this.state.checkConfirmPassword.setAttribute("src", checkImage)
             } else {
-                this.state.checkConfirmPassword.setAttribute("src", slashImage)
+                this.state.checkConfirmPassword.setAttribute("src", slashImage);
                 this.state.checkConfirmPassword.setAttribute('opacity', "1");
 
             }
@@ -217,17 +224,24 @@ class UserEdit extends Component {
                             >
                                 Должность
                             </label>
-                            <div className="field-row-container">
-                                <input
-                                    className="text-style input-field-style"
+                            <div className="field-row-container RegistrationPos">
+                                <Select
+                                    className="RegPosSelect"
                                     name="position"
-                                    type="text"
-                                    id="position"
-                                    value={this.state.position}
-                                    form="profile-edit-form"
-                                    autoComplete="off"
-                                    tabIndex="3"
+                                    required
+                                    value={this.state.selectedOption}
                                     onChange={this.onPositionChange}
+                                    options={options}
+                                    styles={ this.customStyles }
+                                    placeholder="должность"
+                                    noOptionsMessage={"Нет групп"}
+                                    theme={theme => ({
+                                        ...theme,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary: "#F2F2F2",
+                                        },
+                                    })}
                                 />
                                 <div className="empty-icon-style"></div>
                             </div>

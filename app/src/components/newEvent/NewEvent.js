@@ -78,6 +78,7 @@ class NewEvent extends Component {
 
         selectedUsers.push(userModel.user);
 
+        console.log(selectedUsers)
         return selectedUsers;
     };
 
