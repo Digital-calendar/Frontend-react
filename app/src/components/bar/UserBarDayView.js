@@ -30,14 +30,18 @@ class UserBarDayView extends Component {
                 {
                     monthModel.dayArray.map((date, index) => {
                         if (_.isEqual(monthModel.dayArray[3], date)) {
-                            return <button key={index} id="${index}" className="cal-wind__menu-bar__button-month_selected">
-                                {date.toLocaleString('ru', monthModel.options).slice(0, 6)}
-                            </button>
+                            return (
+                                <button key={index} id="${index}" className="cal-wind__menu-bar__button-month_selected">
+                                    {date.toLocaleString('ru', monthModel.options).slice(0, 6)}
+                                </button>
+                            );
                         } else {
-                            return <button key={index} id="${index}" className="cal-wind__menu-bar__button-month"
+                            return (
+                                <button key={index} id="${index}" className="cal-wind__menu-bar__button-month"
                                            onClick={() => this.onDayClick(date)}>
-                                {date.toLocaleString('ru', monthModel.options).slice(0, 6)}
-                            </button>
+                                    {date.toLocaleString('ru', monthModel.options).slice(0, 6)}
+                                </button>
+                            );
                         }
 
                     })

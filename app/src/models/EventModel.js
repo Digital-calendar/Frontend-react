@@ -1,4 +1,4 @@
-import {action, observable, toJS} from 'mobx'
+import {action, observable} from 'mobx'
 import {monthModel} from "./MonthModel";
 
 
@@ -28,6 +28,9 @@ export class EventModel {
     @observable
     isNewEventModalOpen = false;
 
+    @observable
+    progressUploadFiles = '0%';
+
     @action
     filter() {
         if (this.filters === null) {
@@ -46,19 +49,10 @@ export class EventModel {
                 return isFilteredEvent;
             });
         this.filteredEvents = this.filteredEvents.sort((a, b) =>
-            (new Date(a.timestamp) > new Date(b.timestamp)) ? 1
-                : ((new Date(b.timestamp) > new Date(a.timestamp)) ? -1 : 0));
-
+            (new Date(a.timestamp_begin) > new Date(b.timestamp_begin)) ? 1
+                : ((new Date(b.timestamp_begin) > new Date(a.timestamp_begin)) ? -1 : 0));
     };
-    //
-    // @action
-    // periodFiltered(start, end) {
-    //     this.filteredEvents = this.filteredEvents
-    //         .filter(event => {
-    //             return event.timestamp > start && event.timestamp < end;
-    //         })
-    // }
-
+      
     @action
     makeDayEvents(date) {
         let dayString = date.getDate();
@@ -72,7 +66,7 @@ export class EventModel {
         const formatDay = date.getFullYear() + '-' + monthString + '-' + dayString;
         this.dayEvents = this.filteredEvents
             .filter(event => {
-                return event.timestamp.startsWith(formatDay);
+                return event.timestamp_begin.startsWith(formatDay);
             })
     }
 
@@ -89,45 +83,9 @@ export class EventModel {
         const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
         this.dayEvents = this.filteredEvents
             .filter(event => {
-                return event.timestamp.startsWith(formatDay);
+                return event.timestamp_begin.startsWith(formatDay);
             })
     }
-    // @action
-    // deleteById(id) {
-    //     console.log(toJS(this.dayEvents))
-    //     this.dayEvents = this.dayEvents
-    //         .filter(event => {
-    //             if (id !== event.id) {
-    //                 return event;
-    //             }
-    //         })
-    //     console.log(toJS(this.dayEvents))
-    // }
-
-    // @action
-    // getDayEvents(day) {
-    //     let array = [];
-    //     let dayString = day;
-    //     if ((day - 10) < 0) {
-    //         dayString = '0' + dayString;
-    //     }
-    //     let monthString = monthModel.monthToDisplay + 1;
-    //     if ((monthModel.monthToDisplay - 9) < 0) {
-    //         monthString = '0' + monthString;
-    //     }
-    //     const formatDay = monthModel.yearToDisplay + '-' + monthString + '-' + dayString;
-    //
-    //     eventModel.filteredEvents
-    //         .filter(event => {
-    //
-    //             if (event.timestamp.slice(0, 10) === formatDay) {
-    //                 array.push(event);
-    //             }
-    //         });
-    //
-    //     return array;
-    // }
-
 }
 
 export const eventModel = new EventModel();

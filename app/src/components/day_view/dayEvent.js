@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {eventModel} from "../../models/EventModel";
 import {monthModel} from "../../models/MonthModel";
 import {deleteEvent} from "../../actions/deleteEvent";
+import downloadImage from "../../css/images/la_download-solid.svg"
+import {downloadFiles} from "../../actions/downloadFiles";
 
 class DayEvent extends Component {
     constructor(props) {
@@ -72,6 +74,10 @@ class DayEvent extends Component {
 
     };
 
+    onDownloadFileClick = (event) => {
+        downloadFiles(event.target.name);
+    }
+
     render() {
         eventModel.filter();
         eventModel.makeDayEvents(this.state.date);
@@ -87,7 +93,7 @@ class DayEvent extends Component {
                     return <div key={index} className="window__main">
                         <div className="window__mainWindow__BgTop">
                             <p className="window__mainWindow__BgTop__textTime">
-                                {event.timestamp.slice(10, 16)}
+                                {event.timestamp_begin.slice(10, 16)} - {event.timestamp_end.slice(10, 16)}
                             </p>
                         </div>
 
@@ -98,9 +104,31 @@ class DayEvent extends Component {
                             <div className="window__mainWindow__content__description">
                                 {event.description}
                             </div>
+                            <div className="window__mainWindow_content__filesContainer">
+                                {event.fileName.map((fileName) => (
+                                    <div
+                                        className="window__mainWindow_content__file"
+                                        style={{
+                                            width: fileName.length * 9 + 40,
+                                            minWidth: fileName.length * 9 + 40
+                                        }}
+                                    >
+                                        <div>
+                                            {fileName}
+                                        </div>
+                                        <img
+                                            src={downloadImage}
+                                            alt="↓"
+                                            style={{outline: "none"}}
+                                            name={fileName}
+                                            onClick={this.onDownloadFileClick}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
-                                     className="timePin"/> {event.timestamp}
+                                     className="timePin"/> от {event.timestamp_begin} до {event.timestamp_end}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/locationPin.svg")} alt="locationPin"

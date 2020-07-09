@@ -10,6 +10,7 @@ import pPOImage from '../../css/images/newEvent/paper-plane-outline.svg';
 import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg';
 import cSImage from '../../css/images/newEvent/content-save.svg';
 import tOImage from '../../css/images/newEvent/trash-outline.svg';
+import fImage from '../../css/images/newEvent/bi_file-earmark-plus.svg';
 import '../../css/newEvent.css';
 import CheckBoxTreeSelect from "../CheckBoxTreeSelect.js"
 import {userModel} from "../../models/UserModel";
@@ -18,7 +19,7 @@ import {createEvent} from "../../actions/createEvent";
 import {loadUsers} from "../../actions/loadUsers";
 import {eventModel} from "../../models/EventModel";
 import {editEvent} from "../../actions/editEvent";
-
+import {uploadFiles} from "../../actions/uploadFiles";
 
 @observer
 class NewEvent extends Component {
@@ -33,38 +34,46 @@ class NewEvent extends Component {
         console.log(userModel.user);
         if (this.props.event == null) {
             this.state = {
-              title: null,
+              title: '',
               date: this.props.date,
-              time: '00:00',
+              timeBegin: '00:00',
+              timeEnd: '23:59',
               location: location,
               isPrivate: false,
               eventType: 'INTERNAL',
               contactInfo: contact,
               contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
               description: '',
+              selectedFiles: [],
               options: [],
               isTitleRequired: false,
               isDateRequired: false,
               isLocationRequired: false,
+              isTimeBeginRequired: false,
+              isTimeEndRequired: false
             };
         } else {
-
             this.state = {
                 title: this.props.event.title,
-                date: this.props.event.timestamp.slice(0, 10),
-                time: this.props.event.timestamp.slice(-5),
+                date: this.props.event.timestamp_begin.slice(0, 10),
+                timeBegin: this.props.event.timestamp_begin.slice(-5),
+                timeEnd: this.props.event.timestamp_end.slice(-5),
                 location: this.props.event.location,
                 isPrivate: this.props.event.privateEvent,
                 eventType: this.props.event.eventType,
                 contactInfo: this.props.event.contactInfo,
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
+                selectedFiles: this.props.event.fileName,
                 options: [],
                 isTitleRequired: false,
                 isDateRequired: false,
                 isLocationRequired: false,
+                isTimeBeginRequired: false,
+                isTimeEndRequired: false
             };
             console.log(this.state.date)
+            eventModel.progressUploadFiles = '100%';
         }
     }
 
@@ -82,41 +91,81 @@ class NewEvent extends Component {
         return selectedUsers;
     };
 
+    getNextDayFromDate = (date) => {
+        let d = new Date(date);
+        d.setDate(d.getDate() + 1);
+        return [d.getFullYear(), d.getMonth() + 1, d.getDate()]
+            .map(n => n < 10 ? 0 + '' + n : n).join('-')
+    }
+
     onSaveClick = () => {
+        let isTimeBeginValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeBegin);
+        let isTimeEndValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeEnd);
+
+        let dateEnd = this.state.date;
+        if (isTimeBeginValid && isTimeEndValid && (this.state.date !== '')) {
+            if (Number(this.state.timeBegin.slice(0, 2)) > Number(this.state.timeEnd.slice(0, 2))) {
+                dateEnd = this.getNextDayFromDate(this.state.date);
+            } else if (Number(this.state.timeBegin.slice(0, 2)) === Number(this.state.timeEnd.slice(0, 2))) {
+                if (Number(this.state.timeBegin.slice(3, 5)) >= Number(this.state.timeEnd.slice(3, 5))) {
+                    dateEnd = this.getNextDayFromDate(this.state.date);
+                }
+            }
+        }
+
         if (this.props.event == null) {
             createEvent({
                 title: this.state.title,
-                timestamp: this.state.date + ' ' + this.state.time,
+                timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
+                timestamp_end: dateEnd + ' ' + this.state.timeEnd,
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
+                fileName: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
             });
         } else {
+            console.log(this.state.selectedFiles);
             editEvent({
                 title: this.state.title,
-                timestamp: this.state.date + ' ' + this.state.time,
+                timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
+                timestamp_end: dateEnd + ' ' + this.state.timeEnd,
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
                 contactName: this.state.contactName,
                 description: this.state.description,
+                fileName: this.state.selectedFiles.reverse().reverse(), //такой костыль потому что selectedFiles обернут в proxy
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
                 userID: userModel.user.id
             }, this.props.event.id);
         }
+
         eventModel.isPresent = false;
         this.setState({
-            isTitleRequired: this.state.title === null,
+            isTitleRequired: this.state.title === '',
             isDateRequired: this.state.date === '',
-            isLocationRequired: this.state.location === null,
+            isLocationRequired: this.state.location === '',
+            isTimeBeginRequired: !isTimeBeginValid,
+            isTimeEndRequired: !isTimeEndValid
         });
-        eventModel.isNewEventModalOpen = false;
+
+        eventModel.isNewEventModalOpen =
+            !(this.state.isTitleRequired &&
+            this.state.isDateRequired &&
+            this.state.isLocationRequired &&
+            this.state.isTimeBeginRequired &&
+            this.state.isTimeEndRequired);
+
+        if (eventModel.isNewEventModalOpen) {
+            eventModel.progressUploadFiles = '0%';
+        }
+
         eventModel.eventForEdit = null;
         if (this.props.event !== null) {
             setTimeout(() => window.location.reload(), 55)
@@ -140,6 +189,7 @@ class NewEvent extends Component {
     onCancelClick = () => {
         eventModel.eventForEdit = null;
         eventModel.isNewEventModalOpen = false;
+        eventModel.progressUploadFiles = '0%';
     };
 
     onTitleInput = event => {
@@ -156,9 +206,17 @@ class NewEvent extends Component {
         })
     };
 
-    onTimeInput = event => {
+    onTimeBeginInput = event => {
         this.setState({
-            time: event.target.value
+            timeBegin: event.target.value,
+            isTimeBeginRequired: false
+        })
+    };
+
+    onTimeEndInput = event => {
+        this.setState({
+            timeEnd: event.target.value,
+            isTimeEndRequired: false
         })
     };
 
@@ -207,10 +265,50 @@ class NewEvent extends Component {
     };
 
     onDescriptionInput = event => {
+        if (event.target.value.length > 1000) {
+            event.target.value = event.target.value.substring(0, 1000);
+        }
         this.setState({
             description: event.target.value
         })
     };
+
+    onFileSelect = event => {
+        let newSF = this.state.selectedFiles;
+        const fd = new FormData();
+        for (let i = 0; i < event.target.files.length; i++) {
+            if (event.target.files[i].size === 0) {
+                continue;
+            }
+            newSF.push(event.target.files[i].name);
+            fd.append("files", event.target.files[i], event.target.files[i].name);
+        }
+        this.setState({
+            selectedFiles: newSF
+        });
+
+        uploadFiles(fd);
+    }
+
+    onRenderNameFile = fileName => {
+        if (fileName.length > 9) {
+            return (fileName.substring(0, 9) + "...");
+        } else {
+            return (fileName);
+        }
+    }
+
+    onDeleteSelectedFile = event => {
+        let sf = this.state.selectedFiles;
+        sf.splice(event.target.name, 1);
+        this.setState({
+            selectedFiles: sf
+        });
+
+        if (this.state.selectedFiles.length === 0) {
+            eventModel.progressUploadFiles = '0%';
+        }
+    }
 
     getMarks = () => {
         let view = [];
@@ -295,7 +393,7 @@ class NewEvent extends Component {
                                     tabIndex="1"
                                     style={{borderColor: this.state.isTitleRequired
                                             ? 'rgba(201, 6, 52, 1)'
-                                            : 'rgba(0, 0, 0, 0.25)'}}
+                                            : ''}}
                                     value={this.state.title === null ? '' : this.state.title}
                                     onChange={this.onTitleInput}
                                     required
@@ -320,22 +418,52 @@ class NewEvent extends Component {
                                     required
                                     style={{borderColor: this.state.isDateRequired
                                             ? 'rgba(201, 6, 52, 1)'
-                                            : 'rgba(0, 0, 0, 0.25)'}}
+                                            : ''}}
                                     value={this.state.date}
                                     onChange={this.onDateInput}
                                 />
-                                <label htmlFor="time"></label>
+                                <label
+                                    className="text-style new-event-label-for-time"
+                                    htmlFor="timeBegin"
+                                >
+                                    от
+                                </label>
                                 <input
                                     className="text-style input-time-field-style"
-                                    name="time"
+                                    name="timeBegin"
                                     type="text"
                                     pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
                                     id="time"
-                                    // form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="3"
-                                    value={this.state.time}
-                                    onChange={this.onTimeInput}
+                                    value={this.state.timeBegin}
+                                    onChange={this.onTimeBeginInput}
+                                    style={{borderColor: this.state.isTimeBeginRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : '',}}
+                                    required
+                                />
+                                <label
+                                    className="text-style new-event-label-for-time"
+                                    htmlFor="timeEnd"
+                                >
+                                    до
+                                </label>
+                                <input
+                                    className="text-style input-time-field-style"
+                                    name="timeEnd"
+                                    type="text"
+                                    pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                                    defaultValue="23:59"
+                                    id="timeEnd"
+                                    autoComplete="off"
+                                    tabIndex="3"
+                                    value={this.state.timeEnd}
+                                    onChange={this.onTimeEndInput}
+                                    style={{borderColor: this.state.isTimeEndRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : ''}}
+                                    required
                                 />
                             </div>
                             <div className="field-container">
@@ -357,7 +485,7 @@ class NewEvent extends Component {
                                     tabIndex="4"
                                     style={{borderColor: this.state.isLocationRequired
                                             ? 'rgba(201, 6, 52, 1)'
-                                            : 'rgba(0, 0, 0, 0.25)'}}
+                                            : ''}}
                                     onChange={this.onLocationInput}
                                 />
                             </div>
@@ -471,7 +599,9 @@ class NewEvent extends Component {
 
                         <div className="right-fields-container">
 
-                            <div className="field-container">
+                            <div className="field-container"
+                                 style={{marginBottom: "0px"}}
+                            >
                                 <label htmlFor="description">
                                     <img
                                         src={cEOImage}
@@ -481,7 +611,7 @@ class NewEvent extends Component {
                                     />
                                 </label>
                                 <textarea
-                                    className="-new-event-text-style new-event-input-field-style new-event-textarea-field"
+                                    className="new-event-text-style new-event-input-field-style new-event-textarea-field"
                                     name="description"
                                     id="description"
                                     placeholder="описание"
@@ -493,6 +623,65 @@ class NewEvent extends Component {
                                 />
                                 <label htmlFor="description"/>
                             </div>
+                            <div className="field-container new-event-text-style"
+                                 style={{
+                                     justifyContent: "right",
+                                     color: "#BDBDBD"
+                                 }}>
+                                <div>{this.state.description.length} / 1000</div>
+                            </div>
+                            <div className="field-container">
+                                <div className="new-event-file-wrapper">
+                                    <input
+                                        type="file"
+                                        name="files"
+                                        hidden="hidden"
+                                        accept=".jpg, .png, .jpeg, .bmp, .pdf, .doc, .docx, .txt"
+                                        ref={fileInput => this.fileInput = fileInput}
+                                        onChange={this.onFileSelect}
+                                        multiple
+                                    />
+                                    <button
+                                        className="new-event-file-button-add"
+                                        style={{background: 'url(' + fImage + ') no-repeat'}}
+                                        name="addFile"
+                                        type="fileButton"
+                                        id="addFile"
+                                        tabIndex="11"
+                                        onClick={() => this.fileInput.click()}
+                                    />
+                                </div>
+                                <div className="new-event-file-container">
+                                    {this.state.selectedFiles.map((fileName, index) => (
+                                        <div className="new-event-file" key={index}>
+                                            <div className="text-style">
+                                                {this.onRenderNameFile(fileName)}
+                                            </div>
+                                            <img
+                                                src={xImage}
+                                                alt="X"
+                                                style={{outline: "none"}}
+                                                name={index}
+                                                onClick={this.onDeleteSelectedFile}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="new-event-file-progress"
+                                 style={{
+                                     display: eventModel.progressUploadFiles === '0%' ? 'none' : 'flex'
+                                 }}
+                            >
+                                <div
+                                    className="new-event-file-progress-line"
+                                    style={{
+                                        width: eventModel.progressUploadFiles
+                                    }}
+                                >
+                                    {eventModel.progressUploadFiles}
+                                </div>
+                            </div>
                             <div className="button-container">
                                 <button
                                     className="button-style"
@@ -500,8 +689,9 @@ class NewEvent extends Component {
                                     type="submit"
                                     id="save"
                                     // formTarget="_self"
-                                    tabIndex="11"
+                                    tabIndex="12"
                                     onClick={this.onSaveClick}
+                                    disabled={((this.state.selectedFiles.length > 0) && (eventModel.progressUploadFiles !== '100%'))}
                                 >
                                     <img
                                         src={cSImage}
@@ -515,7 +705,7 @@ class NewEvent extends Component {
                                     className="button-style"
                                     type="submit"
                                     id="cancel"
-                                    tabIndex="12"
+                                    tabIndex="13"
                                     onClick={this.onCancelClick}
                                 >
                                     <img
