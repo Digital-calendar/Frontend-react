@@ -11,10 +11,10 @@ import {editUser} from "../actions/editUser";
 import Select from "react-select";
 
 const options = [
-    {value: "Разработчик", label: "Разработчик"},
-    {value: "Дизайнер", label: "Дизайнер"},
-    {value: "Ивент менеджер", label: "Ивент менеджер"},
-    {value: "Менеджер", label: "Менеджер"}
+    {value: "DEVELOPER", label: "Разработчик"},
+    {value: "DESIGNER", label: "Дизайнер"},
+    {value: "EVENT_MANAGER", label: "Ивент менеджер"},
+    {value: "MANAGER", label: "Менеджер"}
 ];
 
 class UserEdit extends Component {
@@ -234,12 +234,12 @@ class UserEdit extends Component {
                                     options={options}
                                     styles={ this.customStyles }
                                     placeholder="должность"
-                                    noOptionsMessage={"Нет групп"}
                                     theme={theme => ({
                                         ...theme,
                                         colors: {
                                             ...theme.colors,
-                                            primary: "#F2F2F2",
+                                            primary: "#2f2f2f",
+                                            primary25: "#F2F2F2"
                                         },
                                     })}
                                 />

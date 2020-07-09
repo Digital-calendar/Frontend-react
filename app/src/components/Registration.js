@@ -4,10 +4,10 @@ import {Redirect} from 'react-router';
 import Select from 'react-select';
 
 const options = [
-    {value: "Разработчик", label: "Разработчик"},
-    {value: "Дизайнер", label: "Дизайнер"},
-    {value: "Ивент менеджер", label: "Ивент менеджер"},
-    {value: "Менеджер", label: "Менеджер"}
+    {value: "DEVELOPER", label: "Разработчик"},
+    {value: "DESIGNER", label: "Дизайнер"},
+    {value: "EVENT_MANAGER", label: "Ивент менеджер"},
+    {value: "MANAGER", label: "Менеджер"}
 ];
 
 class Registration extends Component {
@@ -211,12 +211,12 @@ class Registration extends Component {
                                     options={options}
                                     styles={ this.customStyles }
                                     placeholder="должность"
-                                    noOptionsMessage={"Нет групп"}
                                     theme={theme => ({
                                         ...theme,
                                         colors: {
                                             ...theme.colors,
-                                            primary: "#F2F2F2",
+                                            primary: "rgba(47,47,47,0.65)",
+                                            primary25: "#F2F2F2"
                                         },
                                     })}
                                 />
@@ -228,6 +228,7 @@ class Registration extends Component {
                                     maxLength="30"
                                     name="pass"
                                     onChange={this.handleSubmit}
+                                    autoComplete={false}
                                     required
                                 />
                                 <input
