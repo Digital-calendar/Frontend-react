@@ -7,6 +7,12 @@ import {userModel} from "../models/UserModel";
 import {observer} from 'mobx-react';
 import {eventModel} from "../models/EventModel";
 
+const nameOfPositions = {
+    DEVELOPER: "Разработчик",
+    DESIGNER: "Дизайнер",
+    EVENT_MANAGER: "Ивент менеджер",
+    MANAGER: "Менеджер"
+}
 
 @observer
 class DropdownMenu extends React.Component {
@@ -73,7 +79,7 @@ class DropdownMenu extends React.Component {
                         <ul>
                             <li className="cal-wind__auth-bar__employee-name">{userModel.user.first_name}<br/>{userModel.user.last_name}</li>
                             <li className="cal-wind__auth-bar__employee-position">
-                                {userModel.user.position ? userModel.user.position : 'отредактируйте позицию'}
+                                {userModel.user.position ? nameOfPositions[userModel.user.position] : 'отредактируйте позицию'}
                             </li>
                             <li className="cal-wind__auth-bar__employee-edit" onClick={this.onEditClick}>редактировать</li>
                             <li className="cal-wind__auth-bar__employee-sing_out" onClick={this.onSignOut} style={{color: "#4F4F4F"}}>выход</li>
