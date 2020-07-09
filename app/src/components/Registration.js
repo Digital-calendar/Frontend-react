@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import '../css/registration.css';
 import {Redirect} from 'react-router';
+import Select from 'react-select';
+
+const options = [
+    {value: "DEVELOPER", label: "Разработчик"},
+    {value: "DESIGNER", label: "Дизайнер"},
+    {value: "EVENT_MANAGER", label: "Ивент менеджер"},
+    {value: "MANAGER", label: "Менеджер"}
+];
 
 class Registration extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -11,12 +18,15 @@ class Registration extends Component {
                 isRedirectToSignIn: false,
                 first_name: "",
                 last_name: "",
+                position: "",
                 email: "",
                 pass: ""
             },
             passwordRepeat: "",
             isSuccess: false,
-            isPassCorrect: false
+            isPassCorrect: false,
+            isPositionActive: false,
+            selectedOption: null
         }
     }
 
@@ -25,36 +35,41 @@ class Registration extends Component {
         e.preventDefault();
         let path = document.getElementsByClassName('windowRegistration__error_handler')[0];
         if (this.state.isPassCorrect) {
-            try {
-                const resp = await fetch("/api/users/sign_up", {
-                    method: "POST",
-                    dataType: 'json',
-                    body: JSON.stringify(this.state.data),
-                    headers: {
-                        "Content-Type": "application/json"
+            if (this.state.isPositionActive) {
+                try {
+                    const resp = await fetch("/api/users/sign_up", {
+                        method: "POST",
+                        dataType: 'json',
+                        body: JSON.stringify(this.state.data),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    if (!resp.ok) {
+                        throw new Error("Неизвестная ошибка сети");
                     }
-                });
 
-                if (!resp.ok) {
-                    throw new Error("Неизвестная ошибка сети");
+                    if (resp.status === 205) {
+                        throw new Error("Пользователь с таким email уже существует");
+                    }
+
+                    if (resp.status === 201) {
+                        this.setState({isSuccess: true});
+                    } else {
+                        throw new Error("Сервер вернул ошибку: " + resp.status); //дебаг
+                    }
+
+                } catch (e) {
+                    path.textContent = e.message;
+                    path.style.visibility = "visible"
                 }
+                this.state = {
 
-                if (resp.status === 205) {
-                    throw new Error("Пользователь с таким email уже существует");
                 }
-
-                if (resp.status === 201) {
-                    this.setState({isSuccess: true});
-                } else {
-                    throw new Error("Сервер вернул ошибку: " + resp.status); //дебаг
-                }
-
-            } catch (e) {
-                path.textContent = e.message;
+            } else {
+                path.textContent = "Выберите должность"
                 path.style.visibility = "visible"
-            }
-            this.state = {
-
             }
         } else {
             path.textContent = "Пароли не совпадают"
@@ -73,6 +88,28 @@ class Registration extends Component {
             });
         }
         console.log(this.state)
+    };
+
+    positionSubmit = (selectedOption) => {
+        this.checkPosition();
+        this.setState({
+            data: { ...this.state.data, position: selectedOption.value },
+            selectedOption: selectedOption
+        }, function () {
+            console.log(this.state.data.position)
+        })
+    };
+
+    checkPosition = () => {
+        if (this.state.data.position !== null) {
+            this.setState({
+                isPositionActive: true
+            })
+        } else {
+            this.setState({
+                isPositionActive: false
+            })
+        }
     };
 
     // handlePass = e => {
@@ -119,7 +156,6 @@ class Registration extends Component {
     };
 
     render() {
-
         if (this.state.isRedirectToSignIn) {
             return <Redirect to='/'/>
         }
@@ -139,7 +175,6 @@ class Registration extends Component {
                     <div className="windowRegistration__mainWindow">
                         <div className="windowRegistration__mainWindow__RectCenter"/>
                         <div>
-
                             <form onSubmit={this.submitForm} className="windowRegistration__mainWindow__formGroup">
                                 <p className="windowRegistration__error_handler">ну пипетс</p>
                                 <input
@@ -167,6 +202,24 @@ class Registration extends Component {
                                     onChange={this.handleSubmit}
                                     required
                                 />
+                                <Select
+                                    className="RegistrationPosition"
+                                    name="position"
+                                    required
+                                    value={this.state.selectedOption}
+                                    onChange={this.positionSubmit}
+                                    options={options}
+                                    styles={ this.customStyles }
+                                    placeholder="должность"
+                                    theme={theme => ({
+                                        ...theme,
+                                        colors: {
+                                            ...theme.colors,
+                                            primary: "rgba(47,47,47,0.65)",
+                                            primary25: "#F2F2F2"
+                                        },
+                                    })}
+                                />
                                 <input
                                     className="RegistrationPassword"
                                     type="password"
@@ -175,6 +228,7 @@ class Registration extends Component {
                                     maxLength="30"
                                     name="pass"
                                     onChange={this.handleSubmit}
+                                    autoComplete={false}
                                     required
                                 />
                                 <input

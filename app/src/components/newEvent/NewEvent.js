@@ -12,7 +12,7 @@ import cSImage from '../../css/images/newEvent/content-save.svg';
 import tOImage from '../../css/images/newEvent/trash-outline.svg';
 import fImage from '../../css/images/newEvent/bi_file-earmark-plus.svg';
 import '../../css/newEvent.css';
-import CustomSelect from "../CustomSelect";
+import CheckBoxTreeSelect from "../CheckBoxTreeSelect.js"
 import {userModel} from "../../models/UserModel";
 import {observer} from "mobx-react";
 import {createEvent} from "../../actions/createEvent";
@@ -31,7 +31,7 @@ class NewEvent extends Component {
         userModel.selectedUsers = [];
         const contact = userModel.user.phone === null ? '' : userModel.user.phone;
         const location = userModel.user.city === null ? '' : userModel.user.city;
-        console.log(userModel.user)
+        console.log(userModel.user);
         if (this.props.event == null) {
             this.state = {
               title: '',
@@ -65,7 +65,7 @@ class NewEvent extends Component {
                 contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
                 description: this.props.event.description,
                 selectedFiles: this.props.event.fileName,
-                options: [],
+                options: this.props.event.participants,
                 isTitleRequired: false,
                 isDateRequired: false,
                 isLocationRequired: false,
@@ -87,6 +87,7 @@ class NewEvent extends Component {
 
         selectedUsers.push(userModel.user);
 
+        console.log(selectedUsers)
         return selectedUsers;
     };
 
@@ -176,7 +177,7 @@ class NewEvent extends Component {
         userModel.users.forEach(item => {
             if (item.id !== userModel.user.id) {
                 const value = item.first_name + ' ' + item.last_name;
-                newOptions.push({value: value + item.id, label: value, id: item.id});
+                newOptions.push({name: value, id: item.id, position: item.position});
             }
         });
         this.setState({
@@ -496,13 +497,13 @@ class NewEvent extends Component {
                                         className="new-event-icon-style"
                                     />
                                 </label>
-                                <CustomSelect
-                                    options={this.state.options}
-                                    name={'filterType'}
-                                    isMulti={true}
-                                    placeholder={'Пригласить людей'}
-                                    isNewEvent={true}
-                                />
+                                <div className="customCheckBox">
+                                    <CheckBoxTreeSelect
+										isNewEvent={true}
+                                        options={this.state.options}
+                                        users={this.state.options}
+                                    />
+                                </div>
                             </div>
                             <div className="field-container">
                                 <div className="private-event">
