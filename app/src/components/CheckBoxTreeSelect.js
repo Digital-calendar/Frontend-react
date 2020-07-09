@@ -7,10 +7,10 @@ import {observer} from "mobx-react";
 import {loadUsers} from "../actions/loadUsers";
 
 const positions = [
-    {name: "Разработчик"},
-    {name: "Дизайнер"},
-    {name: "Ивент менеджер"},
-    {name: "Менеджер"}
+    {name: "Разработчик", label: "DEVELOPER"},
+    {name: "Дизайнер", label: "DESIGNER"},
+    {name: "Ивент менеджер", label: "EVENT_MANAGER"},
+    {name: "Менеджер", label: "MANAGER"}
 ];
 
 @observer
@@ -47,16 +47,16 @@ class CheckBoxTreeSelect extends Component {
         const items4 = [];
 
         this.props.users.forEach(item => {
-            if (item.position === positions[0].name) {
+            if (item.position === positions[0].label) {
                 items1.push({name: item.name, id: item.id, position: item.position, valueCheck: false});
             }
-            else if (item.position === positions[1].name) {
+            else if (item.position === positions[1].label) {
                 items2.push({name: item.name, id: item.id, position: item.position, valueCheck: false});
             }
-            else if (item.position === positions[2].name) {
+            else if (item.position === positions[2].label) {
                 items3.push({name: item.name, id: item.id, position: item.position, valueCheck: false});
             }
-            else if (item.position === positions[3].name) {
+            else if (item.position === positions[3].label) {
                 items4.push({name: item.name, id: item.id, position: item.position, valueCheck: false});
             }
         });
@@ -148,7 +148,7 @@ class CheckBoxTreeSelect extends Component {
 
             if (checked) {
                 for (const user of users) {
-                    if (user.position === positions[0].name) {
+                    if (user.position === positions[0].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -168,7 +168,7 @@ class CheckBoxTreeSelect extends Component {
                 })
             } else {
                 for (const user of users) {
-                    if (user.position === positions[0].name) {
+                    if (user.position === positions[0].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -214,7 +214,7 @@ class CheckBoxTreeSelect extends Component {
 
             if (checked) {
                 for (const user of users) {
-                    if (user.position === positions[1].name) {
+                    if (user.position === positions[1].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -234,7 +234,7 @@ class CheckBoxTreeSelect extends Component {
                 })
             } else {
                 for (const user of users) {
-                    if (user.position === positions[1].name) {
+                    if (user.position === positions[1].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -280,7 +280,7 @@ class CheckBoxTreeSelect extends Component {
 
             if (checked) {
                 for (const user of users) {
-                    if (user.position === positions[2].name) {
+                    if (user.position === positions[2].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -300,7 +300,7 @@ class CheckBoxTreeSelect extends Component {
                 })
             } else {
                 for (const user of users) {
-                    if (user.position === positions[2].name) {
+                    if (user.position === positions[2].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -346,7 +346,7 @@ class CheckBoxTreeSelect extends Component {
 
             if (checked) {
                 for (const user of users) {
-                    if (user.position === positions[3].name) {
+                    if (user.position === positions[3].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -366,7 +366,7 @@ class CheckBoxTreeSelect extends Component {
                 })
             } else {
                 for (const user of users) {
-                    if (user.position === positions[3].name) {
+                    if (user.position === positions[3].label) {
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
@@ -416,7 +416,7 @@ class CheckBoxTreeSelect extends Component {
         const { users } = this.props;
         const collection = [];
         for (const user of users) {
-            if (user.position === positions[0].name) {
+            if (user.position === positions[0].label) {
                 collection.push(user.name);
             }
         }
@@ -428,7 +428,7 @@ class CheckBoxTreeSelect extends Component {
         const { users } = this.props;
         const collection = [];
         for (const user of users) {
-            if (user.position === positions[1].name) {
+            if (user.position === positions[1].label) {
                 collection.push(user.name);
             }
         }
@@ -440,7 +440,7 @@ class CheckBoxTreeSelect extends Component {
         const { users } = this.props;
         const collection = [];
         for (const user of users) {
-            if (user.position === positions[2].name) {
+            if (user.position === positions[2].label) {
                 collection.push(user.name);
             }
         }
@@ -452,7 +452,7 @@ class CheckBoxTreeSelect extends Component {
         const { users } = this.props;
         const collection = [];
         for (const user of users) {
-            if (user.position === positions[3].name) {
+            if (user.position === positions[3].label) {
                 collection.push(user.name);
             }
         }
@@ -476,7 +476,7 @@ class CheckBoxTreeSelect extends Component {
         if (checked) {
             for (const user of users) {
                 switch (user.position) {
-                    case positions[0].name:
+                    case positions[0].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && !item.valueCheck) {
@@ -500,7 +500,7 @@ class CheckBoxTreeSelect extends Component {
                             }
                         }
                         break;
-                    case positions[1].name:
+                    case positions[1].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && !item.valueCheck) {
@@ -524,7 +524,7 @@ class CheckBoxTreeSelect extends Component {
                             }
                         }
                         break;
-                    case positions[2].name:
+                    case positions[2].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && !item.valueCheck) {
@@ -548,7 +548,7 @@ class CheckBoxTreeSelect extends Component {
                             }
                         }
                         break;
-                    case positions[3].name:
+                    case positions[3].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && !item.valueCheck) {
@@ -579,7 +579,7 @@ class CheckBoxTreeSelect extends Component {
         } else {
             for (const user of users) {
                 switch (user.position) {
-                    case positions[0].name:
+                    case positions[0].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && item.valueCheck) {
@@ -603,7 +603,7 @@ class CheckBoxTreeSelect extends Component {
                             }
                         }
                         break;
-                    case positions[1].name:
+                    case positions[1].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && item.valueCheck) {
@@ -627,7 +627,7 @@ class CheckBoxTreeSelect extends Component {
                             }
                         }
                         break;
-                    case positions[2].name:
+                    case positions[2].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && item.valueCheck) {
@@ -651,7 +651,7 @@ class CheckBoxTreeSelect extends Component {
                             }
                         }
                         break;
-                    case positions[3].name:
+                    case positions[3].label:
                         for (let opt of options) {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && item.valueCheck) {
@@ -789,7 +789,7 @@ class CheckBoxTreeSelect extends Component {
                     readOnly={true}
                     onClick={() => this.changeClickAtInput()}
                     style={{borderColor: this.state.isDateRequired
-                          ? 'rgba(201, 6, 52, 1)'
+                          ? 'rgb(201,6,52)'
                           : 'rgba(0, 0, 0, 0.25)'}}
                 />
                 {content}

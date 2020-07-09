@@ -76,6 +76,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: stretch;
+    padding-bottom: 35px;
 }
 
 .windowRegistration__mainWindow__formGroup {

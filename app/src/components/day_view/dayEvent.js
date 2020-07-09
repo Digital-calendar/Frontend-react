@@ -5,6 +5,13 @@ import {deleteEvent} from "../../actions/deleteEvent";
 import downloadImage from "../../css/images/la_download-solid.svg"
 import {downloadFiles} from "../../actions/downloadFiles";
 
+const nameOfPositions = {
+    DEVELOPER: "Разработчик",
+    DESIGNER: "Дизайнер",
+    EVENT_MANAGER: "Ивент менеджер",
+    MANAGER: "Менеджер"
+}
+
 class DayEvent extends Component {
     constructor(props) {
         super(props);
@@ -165,7 +172,7 @@ class DayEvent extends Component {
                                                 {participant.first_name} {participant.last_name}
                                             </div>
                                             <div className="invited_people_text" style={{marginRight: 10}}>,</div>
-                                            <div className="invited_people_text">{participant.position == null ? "должность не указана" : participant.position}</div>
+                                            <div className="invited_people_text">{participant.position == null ? "должность не указана" : nameOfPositions[participant.position]}</div>
                                         </div>
                                     })
                                 }
