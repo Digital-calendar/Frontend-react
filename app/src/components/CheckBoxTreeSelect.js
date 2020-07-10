@@ -67,6 +67,8 @@ class CheckBoxTreeSelect extends Component {
 
         this.setState({
             options: newOptions
+        }, function () {
+            console.log(this.state.options)
         });
     }
 
@@ -85,9 +87,11 @@ class CheckBoxTreeSelect extends Component {
                         for (const item of opt.items) {
                             if (item.name === user.name) {
                                 item.valueCheck = true;
-                                ++prevCheckedAll;
-                                collection.push({name: user.name, id: user.id, position: user.position});
-                                prevCheckedListAllNames.push(user.name);
+                                if (!(prevCheckedListAllNames.indexOf(user.name) > -1)) {
+                                    ++prevCheckedAll;
+                                    collection.push({name: user.name, id: user.id, position: user.position});
+                                    prevCheckedListAllNames.push(user.name);
+                                }
                             }
                         }
                     }
@@ -153,10 +157,12 @@ class CheckBoxTreeSelect extends Component {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
                                     item.valueCheck = true;
-                                    ++prevCheckedAll;
-                                    ++prevCheckedDev;
-                                    newCheckList.push({name: user.name, id: user.id, position: user.position});
-                                    prevCheckedListAllNames.push(user.name);
+                                    if (!(prevCheckedListAllNames.indexOf(user.name) > -1)) {
+                                        ++prevCheckedAll;
+                                        ++prevCheckedDev;
+                                        newCheckList.push({name: user.name, id: user.id, position: user.position});
+                                        prevCheckedListAllNames.push(user.name);
+                                    }
                                 }
                             }
                         }
@@ -219,10 +225,12 @@ class CheckBoxTreeSelect extends Component {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
                                     item.valueCheck = true;
-                                    ++prevCheckedDes;
-                                    ++prevCheckedAll;
-                                    newCheckList.push({name: user.name, id: user.id, position: user.position});
-                                    prevCheckedListAllNames.push(user.name);
+                                    if (!(prevCheckedListAllNames.indexOf(user.name) > -1)) {
+                                        ++prevCheckedDes;
+                                        ++prevCheckedAll;
+                                        newCheckList.push({name: user.name, id: user.id, position: user.position});
+                                        prevCheckedListAllNames.push(user.name);
+                                    }
                                 }
                             }
                         }
@@ -285,10 +293,12 @@ class CheckBoxTreeSelect extends Component {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
                                     item.valueCheck = true;
-                                    ++prevCheckedEvMan;
-                                    ++prevCheckedAll;
-                                    newCheckList.push({name: user.name, id: user.id, position: user.position});
-                                    prevCheckedListAllNames.push(user.name);
+                                    if (!(prevCheckedListAllNames.indexOf(user.name) > -1)) {
+                                        ++prevCheckedEvMan;
+                                        ++prevCheckedAll;
+                                        newCheckList.push({name: user.name, id: user.id, position: user.position});
+                                        prevCheckedListAllNames.push(user.name);
+                                    }
                                 }
                             }
                         }
@@ -351,10 +361,12 @@ class CheckBoxTreeSelect extends Component {
                             for (const item of opt.items) {
                                 if (item.name === user.name) {
                                     item.valueCheck = true;
-                                    ++prevCheckedAll;
-                                    ++prevCheckedMan;
-                                    newCheckList.push({name: user.name, id: user.id, position: user.position});
-                                    prevCheckedListAllNames.push(user.name);
+                                    if (!(prevCheckedListAllNames.indexOf(user.name) > -1)) {
+                                        ++prevCheckedAll;
+                                        ++prevCheckedMan;
+                                        newCheckList.push({name: user.name, id: user.id, position: user.position});
+                                        prevCheckedListAllNames.push(user.name);
+                                    }
                                 }
                             }
                         }
@@ -481,6 +493,7 @@ class CheckBoxTreeSelect extends Component {
                             for (const item of opt.items) {
                                 if (item.name === value && item.name === user.name && !item.valueCheck) {
                                     item.valueCheck = true;
+                                    console.log(this.state.options)
                                     let prevCountChecked = this.state.checkedDev;
                                     ++prevCountChecked;
                                     ++prevCheckedAll;
@@ -492,7 +505,7 @@ class CheckBoxTreeSelect extends Component {
                                     });
                                     this.setState(prevState => ({
                                         checkedListAll: newCheckList,
-                                        ItemsChecked: collection.length === prevState.checkedListAll.length + 1,
+                                        ItemsChecked: collection.length === prevState.checkedListAll.length,
                                         isCheckedDev: collectionDev.length === this.state.checkedDev + 1,
                                         checkedListAllNames: prevCheckedListAllNames
                                     }));
@@ -516,7 +529,7 @@ class CheckBoxTreeSelect extends Component {
                                     });
                                     this.setState(prevState => ({
                                         checkedListAll: newCheckList,
-                                        ItemsChecked: collection.length === prevState.checkedListAll.length + 1,
+                                        ItemsChecked: collection.length === prevState.checkedListAll.length,
                                         isCheckedDes: collectionDes.length === this.state.checkedDes + 1,
                                         checkedListAllNames: prevCheckedListAllNames
                                     }));
@@ -540,7 +553,7 @@ class CheckBoxTreeSelect extends Component {
                                     });
                                     this.setState(prevState => ({
                                         checkedListAll: newCheckList,
-                                        ItemsChecked: collection.length === prevState.checkedListAll.length + 1,
+                                        ItemsChecked: collection.length === prevState.checkedListAll.length,
                                         isCheckedEvMan: collectionEvMan.length === this.state.checkedEvMan + 1,
                                         checkedListAllNames: prevCheckedListAllNames
                                     }));
@@ -564,7 +577,7 @@ class CheckBoxTreeSelect extends Component {
                                     });
                                     this.setState(prevState => ({
                                         checkedListAll: newCheckList,
-                                        ItemsChecked: collection.length === prevState.checkedListAll.length + 1,
+                                        ItemsChecked: collection.length === prevState.checkedListAll.length,
                                         isCheckedMan: collectionMan.length === this.state.checkedMan + 1,
                                         checkedListAllNames: prevCheckedListAllNames
                                     }));
@@ -734,10 +747,12 @@ class CheckBoxTreeSelect extends Component {
         if (this.state.firstClick)
         {
             this.initializeOptions();
+            this.setState({
+                firstClick: !this.state.firstClick
+            })
         }
         this.setState({
-            clickAtInput: !this.state.clickAtInput,
-            firstClick: !this.state.firstClick
+            clickAtInput: !this.state.clickAtInput
         });
     }
 
@@ -808,7 +823,6 @@ class ItemCategory extends Component {
         const getItems = items.map(item => {
             return item;
         });
-
         return (
 
             <div className="category">
@@ -819,6 +833,7 @@ class ItemCategory extends Component {
                 </div>
                 <ul className="childrenItem">
                     {getItems.map(item => {
+                        //console.log(item.name + item.valueCheck)
                         return (
                             <li className="childrenItemCheckbox">
                                 <Checkbox
@@ -838,7 +853,7 @@ class ItemCategory extends Component {
 class Checkbox extends Component {
     render() {
         const { item, isChecked } = this.props;
-
+        
         return (
             <label>
                 <input
