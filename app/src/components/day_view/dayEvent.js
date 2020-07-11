@@ -33,13 +33,6 @@ class DayEvent extends Component {
 
     getMarks = (event) => {
         let view = [];
-        if (event.deadlineEvent) {
-            view.push(
-                <div className="window__mainWindow__content__eventMark deadlineEvent_border_color">
-                    Дедлайн
-                </div>
-            )
-        }
         if (event.privateEvent) {
             view.push(
                 <div className="window__mainWindow__content__eventMark privateEvent_border_color">
@@ -72,6 +65,13 @@ class DayEvent extends Component {
                 default:
                     view = null
             }
+        }
+        if (event.deadlineEvent) {
+            view.push(
+                <div className="window__mainWindow__content__eventMark deadlineEvent_border_color">
+                    Дедлайн
+                </div>
+            )
         }
         return view
     };
