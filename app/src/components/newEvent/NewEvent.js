@@ -171,6 +171,8 @@ class NewEvent extends Component {
             }, this.props.event.id);
         }
 
+        skip: ;
+
         eventModel.isPresent = false;
         this.setState({
             isTitleRequired: this.state.title === '',

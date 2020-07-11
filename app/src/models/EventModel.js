@@ -49,7 +49,11 @@ export class EventModel {
                         isFilteredEvent = filter === event.eventType || isFilteredEvent;
                     }
                 });
-                return isFilteredEvent && (isDeadlinePresent || !event.deadlineEvent);
+                if (isFilteredEvent) {
+                    return isFilteredEvent && (isDeadlinePresent || !event.deadlineEvent);
+                } else {
+                    return isDeadlinePresent && event.deadlineEvent;
+                }
             });
         this.filteredEvents = this.filteredEvents.sort((a, b) =>
             (new Date(a.timestamp_begin) > new Date(b.timestamp_begin)) ? 1
