@@ -134,6 +134,28 @@ class NewEvent extends Component {
             }
         }
 
+        eventModel.isPresent = false;
+        this.setState({
+            isTitleRequired: this.state.title === '',
+            isDateRequired: this.state.date === '',
+            isLocationRequired: this.state.location === '',
+            isTimeBeginRequired: !isTimeBeginValid,
+            isTimeEndRequired: !isTimeEndValid,
+            isTimeDeadlineRequired: !isTimeDeadlineValid
+        });
+
+        eventModel.isNewEventModalOpen =
+            ((this.state.title === '') ||
+                (this.state.date === '') ||
+                (this.state.location === '') ||
+                (!isTimeBeginValid) ||
+                (!isTimeEndValid) ||
+                (!isTimeDeadlineValid));
+
+        if (eventModel.isNewEventModalOpen) {
+            return;
+        }
+
         if (this.props.event == null) {
             createEvent({
                 title: this.state.title,
@@ -170,26 +192,6 @@ class NewEvent extends Component {
                 deadlineEvent: this.state.deadlineEvent
             }, this.props.event.id);
         }
-
-        skip: ;
-
-        eventModel.isPresent = false;
-        this.setState({
-            isTitleRequired: this.state.title === '',
-            isDateRequired: this.state.date === '',
-            isLocationRequired: this.state.location === '',
-            isTimeBeginRequired: !isTimeBeginValid,
-            isTimeEndRequired: !isTimeEndValid,
-            isTimeDeadlineRequired: !isTimeDeadlineValid
-        });
-
-        eventModel.isNewEventModalOpen =
-            !(this.state.isTitleRequired &&
-            this.state.isDateRequired &&
-            this.state.isLocationRequired &&
-            this.state.isTimeBeginRequired &&
-            this.state.isTimeEndRequired &&
-            this.state.isTimeDeadlineRequired);
 
         if (eventModel.isNewEventModalOpen) {
             eventModel.progressUploadFiles = '0%';
