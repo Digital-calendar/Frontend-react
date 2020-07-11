@@ -39,14 +39,17 @@ export class EventModel {
         this.filteredEvents = this.events
             .filter(event => {
                 let isFilteredEvent = false;
+                let isDeadlinePresent = false;
                 this.filters.forEach(filter => {
-                    if (filter === 'OWN') {
+                    if (filter === "DEADLINE") {
+                        isDeadlinePresent = true;
+                    } else if (filter === 'OWN') {
                         isFilteredEvent = event.privateEvent || isFilteredEvent;
                     } else if (!event.privateEvent) {
                         isFilteredEvent = filter === event.eventType || isFilteredEvent;
                     }
                 });
-                return isFilteredEvent;
+                return isFilteredEvent && (isDeadlinePresent || !event.deadlineEvent);
             });
         this.filteredEvents = this.filteredEvents.sort((a, b) =>
             (new Date(a.timestamp_begin) > new Date(b.timestamp_begin)) ? 1
