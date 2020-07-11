@@ -123,7 +123,11 @@ class DayEvent extends Component {
                             <div className="window__mainWindow__content__description">
                                 {event.description}
                             </div>
-                            <div className="window__mainWindow_content__filesContainer">
+                            <div className="window__mainWindow_content__filesContainer"
+                                 style={{
+                                     display: event.fileName.length === 0 ? "none" : "flex"
+                                 }}
+                            >
                                 {event.fileName.map((fileName) => (
                                     <div
                                         className="window__mainWindow_content__file"
