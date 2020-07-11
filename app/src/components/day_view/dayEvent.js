@@ -32,9 +32,16 @@ class DayEvent extends Component {
     }
 
     getMarks = (event) => {
-        let view;
+        let view = [];
+        if (event.deadlineEvent) {
+            view.push(
+                <div className="window__mainWindow__content__eventMark deadlineEvent_border_color">
+                    Дедлайн
+                </div>
+            )
+        }
         if (event.privateEvent) {
-            view = (
+            view.push(
                 <div className="window__mainWindow__content__eventMark privateEvent_border_color">
                     Личное событие
                 </div>
@@ -42,21 +49,21 @@ class DayEvent extends Component {
         } else {
             switch (event.eventType) {
                 case "INTERNAL":
-                    view = (
+                    view.push(
                         <div className="window__mainWindow__content__eventMark internalEvent_border_color">
                             Внутреннее событие
                         </div>
                     );
                     break;
                 case "EXTERNAL":
-                    view = (
+                    view.push(
                         <div className="window__mainWindow__content__eventMark externalEvent_border_color">
                             Внешнее событие
                         </div>
                     );
                     break;
                 case "CORRESPONDENCE":
-                    view = (
+                    view.push(
                         <div className="window__mainWindow__content__eventMark correspondenceEvent_border_color">
                             Очное событие
                         </div>
@@ -100,7 +107,12 @@ class DayEvent extends Component {
                     return <div key={index} className="window__main">
                         <div className="window__mainWindow__BgTop">
                             <p className="window__mainWindow__BgTop__textTime">
-                                {event.timestamp_begin.slice(10, 16)} - {event.timestamp_end.slice(10, 16)}
+                                {
+                                    event.deadlineEvent ?
+                                        event.timestamp_begin.slice(10, 16)
+                                            :
+                                        event.timestamp_begin.slice(10, 16) + ' - ' + event.timestamp_end.slice(10, 16)
+                                }
                             </p>
                         </div>
 
@@ -133,9 +145,17 @@ class DayEvent extends Component {
                                     </div>
                                 ))}
                             </div>
-                            <div className="window__mainWindow__content__info">
+                            <div className="window__mainWindow__content__info" >
                                 <img src={require("../../css/images/timePin.svg")} alt="timePin"
                                      className="timePin"/> от {event.timestamp_begin} до {event.timestamp_end}
+                            </div>
+                            <div className="window__mainWindow__content__info"
+                                 style={{
+                                     display: event.deadline === null ? 'none' : "flex",
+                                     marginLeft: '24px'
+                                 }}
+                            >
+                                Дедлайн: {event.deadline}
                             </div>
                             <div className="window__mainWindow__content__info">
                                 <img src={require("../../css/images/locationPin.svg")} alt="locationPin"
