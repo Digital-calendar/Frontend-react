@@ -5,6 +5,7 @@ import lCImage from '../../css/images/newEvent/light_clock.svg';
 import bSLImage from '../../css/images/newEvent/bytesize_location.svg';
 import pAOImage from '../../css/images/newEvent/person-add-outline.svg';
 import rBOImage from '../../css/images/newEvent/radio-button-on.svg';
+import deadlineImage from '../../css/images/newEvent/radio-button-on-deadline.svg'
 import aUOImage from '../../css/images/newEvent/arrow-undo-outline.svg';
 import pPOImage from '../../css/images/newEvent/paper-plane-outline.svg';
 import cEOImage from '../../css/images/newEvent/chatbubble-ellipses-outline.svg';
@@ -34,23 +35,28 @@ class NewEvent extends Component {
         console.log(userModel.user);
         if (this.props.event == null) {
             this.state = {
-              title: '',
-              date: this.props.date,
-              timeBegin: '00:00',
-              timeEnd: '23:59',
-              location: location,
-              isPrivate: false,
-              eventType: 'INTERNAL',
-              contactInfo: contact,
-              contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
-              description: '',
-              selectedFiles: [],
-              options: [],
-              isTitleRequired: false,
-              isDateRequired: false,
-              isLocationRequired: false,
-              isTimeBeginRequired: false,
-              isTimeEndRequired: false
+                title: '',
+                date: this.props.date,
+                timeBegin: '00:00',
+                timeEnd: '23:59',
+                deadlineDate: '',
+                deadlineTime: '00:00',
+                location: location,
+                isPrivate: false,
+                eventType: 'INTERNAL',
+                contactInfo: contact,
+                contactName: userModel.user.last_name + ' ' + userModel.user.first_name,
+                description: '',
+                selectedFiles: [],
+                options: [],
+                deadlineEvent: false,
+                isTitleRequired: false,
+                isDateRequired: false,
+                isLocationRequired: false,
+                isTimeBeginRequired: false,
+                isTimeEndRequired: false,
+                isDeadlineToggle: false,
+                isTimeDeadlineRequired: false
             };
         } else {
             this.state = {
@@ -58,6 +64,8 @@ class NewEvent extends Component {
                 date: this.props.event.timestamp_begin.slice(0, 10),
                 timeBegin: this.props.event.timestamp_begin.slice(-5),
                 timeEnd: this.props.event.timestamp_end.slice(-5),
+                deadlineDate: this.props.event.deadline === null ? '' : this.props.event.deadline.slice(0, 10),
+                deadlineTime: this.props.event.deadline === null ? '00:00' : this.props.event.deadline.slice(-5),
                 location: this.props.event.location,
                 isPrivate: this.props.event.privateEvent,
                 eventType: this.props.event.eventType,
@@ -66,11 +74,14 @@ class NewEvent extends Component {
                 description: this.props.event.description,
                 selectedFiles: this.props.event.fileName,
                 options: this.props.event.participants,
+                deadlineEvent: this.props.event.deadlineEvent,
                 isTitleRequired: false,
                 isDateRequired: false,
                 isLocationRequired: false,
                 isTimeBeginRequired: false,
-                isTimeEndRequired: false
+                isTimeEndRequired: false,
+                isDeadlineToggle: this.props.event.deadline !== null,
+                isTimeDeadlineRequired: false
             };
             console.log(this.state.date)
             eventModel.progressUploadFiles = '100%';
@@ -101,6 +112,7 @@ class NewEvent extends Component {
     onSaveClick = () => {
         let isTimeBeginValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeBegin);
         let isTimeEndValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeEnd);
+        let isTimeDeadlineValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.deadlineTime);
 
         let dateEnd = this.state.date;
         if (isTimeBeginValid && isTimeEndValid && (this.state.date !== '')) {
@@ -113,11 +125,21 @@ class NewEvent extends Component {
             }
         }
 
+        let deadline = '';
+        if (this.state.isDeadlineToggle) {
+            if (this.state.deadlineDate !== '') {
+                if (isTimeDeadlineValid) {
+                    deadline = this.state.deadlineDate + ' ' + this.state.deadlineTime;
+                }
+            }
+        }
+
         if (this.props.event == null) {
             createEvent({
                 title: this.state.title,
                 timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
                 timestamp_end: dateEnd + ' ' + this.state.timeEnd,
+                deadline: deadline,
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
@@ -126,7 +148,8 @@ class NewEvent extends Component {
                 fileName: this.state.selectedFiles,
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
-                userID: userModel.user.id
+                userID: userModel.user.id,
+                deadlineEvent: this.state.deadlineEvent
             });
         } else {
             console.log(this.state.selectedFiles);
@@ -134,6 +157,7 @@ class NewEvent extends Component {
                 title: this.state.title,
                 timestamp_begin: this.state.date + ' ' + this.state.timeBegin,
                 timestamp_end: dateEnd + ' ' + this.state.timeEnd,
+                deadline: deadline,
                 location: this.state.location,
                 eventType: this.state.eventType,
                 contactInfo: this.state.contactInfo,
@@ -142,7 +166,8 @@ class NewEvent extends Component {
                 fileName: this.state.selectedFiles.reverse().reverse(), //такой костыль потому что selectedFiles обернут в proxy
                 participants: this.getSelectedUsers(),
                 privateEvent: this.state.isPrivate,
-                userID: userModel.user.id
+                userID: userModel.user.id,
+                deadlineEvent: this.state.deadlineEvent
             }, this.props.event.id);
         }
 
@@ -152,7 +177,8 @@ class NewEvent extends Component {
             isDateRequired: this.state.date === '',
             isLocationRequired: this.state.location === '',
             isTimeBeginRequired: !isTimeBeginValid,
-            isTimeEndRequired: !isTimeEndValid
+            isTimeEndRequired: !isTimeEndValid,
+            isTimeDeadlineRequired: !isTimeDeadlineValid
         });
 
         eventModel.isNewEventModalOpen =
@@ -160,14 +186,15 @@ class NewEvent extends Component {
             this.state.isDateRequired &&
             this.state.isLocationRequired &&
             this.state.isTimeBeginRequired &&
-            this.state.isTimeEndRequired);
+            this.state.isTimeEndRequired &&
+            this.state.isTimeDeadlineRequired);
 
         if (eventModel.isNewEventModalOpen) {
             eventModel.progressUploadFiles = '0%';
         }
 
         eventModel.eventForEdit = null;
-        if (this.props.event !== null) {
+        if (this.props.event !== null && !eventModel.isNewEventModalOpen) {
             setTimeout(() => window.location.reload(), 55)
         }
     };
@@ -206,6 +233,12 @@ class NewEvent extends Component {
         })
     };
 
+    onDeadlineDateInput = event => {
+        this.setState({
+            deadlineDate: event.target.value
+        })
+    }
+
     onTimeBeginInput = event => {
         this.setState({
             timeBegin: event.target.value,
@@ -220,6 +253,13 @@ class NewEvent extends Component {
         })
     };
 
+    onTimeDeadlineInput = event => {
+        this.setState({
+            deadlineTime: event.target.value,
+            isTimeDeadlineRequired: false
+        })
+    }
+
     onLocationInput = event => {
         this.setState({
             location: event.target.value,
@@ -232,6 +272,14 @@ class NewEvent extends Component {
             isPrivate: !this.state.isPrivate
         })
     };
+
+    onDeadlineToggleClick = () => {
+        this.setState({
+            isDeadlineToggle: !this.state.isDeadlineToggle,
+            deadlineDate: '',
+            deadlineTime: "00:00"
+        })
+    }
 
     onEventTypeChange = event => {
         let type = '';
@@ -499,7 +547,7 @@ class NewEvent extends Component {
                                 </label>
                                 <div className="customCheckBox">
                                     <CheckBoxTreeSelect
-										isNewEvent={true}
+                                        isNewEvent={true}
                                         options={this.state.options}
                                         users={this.state.options}
                                     />
@@ -512,7 +560,7 @@ class NewEvent extends Component {
                                         alt=""
                                         className="new-event-icon-style"
                                     />
-                                    <div className="window-title-style" style={{marginLeft: "3px", fontSize: "14px"}}>
+                                    <div className="window-title-style" style={{marginLeft: "3px", fontSize: "16px"}}>
                                         Личное
                                     </div>
                                 </div>
@@ -544,6 +592,74 @@ class NewEvent extends Component {
                                 >
                                     {this.getMarks()}
                                 </select>
+                            </div>
+                            <div className="field-container">
+                                <div className="private-event"
+                                    style={{borderColor: "#FD5052"}}>
+                                    <img
+                                        src={deadlineImage}
+                                        alt=""
+                                        className="new-event-icon-style"
+                                    />
+                                    <div className="window-title-style" style={{marginLeft: "3px", fontSize: "16px"}}>
+                                        Дедлайн
+                                    </div>
+                                </div>
+                                <label
+                                    className="toggle-switch"
+                                    id="toggle"
+                                    style={{visibility: userModel.userEditIsOpen ? "hidden" : "visible"}}
+                                >
+                                    <input
+                                        name="private-event-toggle"
+                                        type="checkbox"
+                                        form="new-event-form"
+                                        defaultChecked={this.state.isDeadlineToggle}
+                                        tabIndex="6"
+                                        onChange={this.onDeadlineToggleClick}
+                                    />
+                                    <span></span>
+                                </label>
+                                <label htmlFor="deadlineDate"/>
+                                <input
+                                    className="text-style input-field-style"
+                                    name="deadlineDate"
+                                    type="date"
+                                    id="date"
+                                    form="new-event-form"
+                                    autoComplete="off"
+                                    tabIndex="7"
+                                    style={{
+                                        borderColor: this.state.isDateRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : '',
+                                        maxWidth: '170px',
+                                        visibility: this.state.isDeadlineToggle ? "visible" : "hidden"
+                                    }}
+                                    value={this.state.deadlineDate}
+                                    onChange={this.onDeadlineDateInput}
+                                />
+                                <label htmlFor="timeEnd"/>
+                                <input
+                                    className="text-style input-time-field-style"
+                                    name="timeEnd"
+                                    type="text"
+                                    pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                                    defaultValue="23:59"
+                                    id="timeEnd"
+                                    autoComplete="off"
+                                    tabIndex="3"
+                                    value={this.state.deadlineTime}
+                                    onChange={this.onTimeDeadlineInput}
+                                    style={{
+                                        borderColor: this.state.isTimeDeadlineRequired
+                                            ? 'rgba(201, 6, 52, 1)'
+                                            : '',
+                                        maxWidth: '70px',
+                                        visibility: this.state.isDeadlineToggle ? "visible" : "hidden"
+                                    }}
+                                    required
+                                />
                             </div>
                             <div className="field-container">
                                 <div className="feedback-item">
