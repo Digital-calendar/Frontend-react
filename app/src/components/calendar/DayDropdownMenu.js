@@ -6,6 +6,7 @@ import privateImage from '../../css/images/filters/private-filter.svg';
 import internalImage from '../../css/images/filters/internal-filter.svg';
 import externalImage from '../../css/images/filters/external-filter.svg';
 import correspondenceImage from '../../css/images/filters/correspondence-filter.svg';
+import deadlineImage from '../../css/images/filters/deadline-filter.svg';
 import {eventModel} from "../../models/EventModel";
 import {selectModel} from "../../models/SelectModel";
 
@@ -74,26 +75,26 @@ class DayDropdownMenu extends React.Component {
                 views.push(<img
                     className="day-list-item-filter"
                     src={privateImage}
-                    alt="private-filter" />);
+                    alt="private" />);
             } else {
                 switch (event.eventType) {
                     case 'INTERNAL':
                         views.push(<img
                             className="day-list-item-filter"
                             src={internalImage}
-                            alt="internal-filter" />);
+                            alt="internal" />);
                         break;
                     case 'EXTERNAL':
                         views.push(<img
                             className="day-list-item-filter"
                             src={externalImage}
-                            alt="external-filter" />);
+                            alt="external" />);
                         break;
                     case 'CORRESPONDENCE':
                         views.push(<img
                             className="day-list-item-filter"
                             src={correspondenceImage}
-                            alt="correspondence-filter" />);
+                            alt="correspondence" />);
                         break;
                     default:
                 }
