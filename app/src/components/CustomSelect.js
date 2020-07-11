@@ -27,7 +27,7 @@ class CustomSelect extends React.Component {
         placeholder: () => ({
             fontSize    : '18px',
             textAlign   : 'center',
-            fontFamily  : 'Oxygen'
+            fontFamily  : '\'Oxygen\', sans-serif;'
         }),
         dropdownIndicator: () => ({
             ":hover"    : {
