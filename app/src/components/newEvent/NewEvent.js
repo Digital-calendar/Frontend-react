@@ -151,7 +151,22 @@ class NewEvent extends Component {
             } else {
                 isDateDeadlineNoValid = true;
             }
+
+            setTimeout(() => {
+                if (!isTimeDeadlineValid) {
+                    this.deadlineTimeInput.focus();
+                } else if (isDateDeadlineNoValid) {
+                    this.deadlineDateInput.focus();
+                }
+            }, 500);
         }
+
+        this.focusingOnInvalidFields(
+            this.state.title === '',
+            this.state.date === '',
+            this.state.location === '',
+            !isTimeBeginValid,
+            !isTimeEndValid);
 
         eventModel.isPresent = false;
         this.setState({
@@ -223,6 +238,27 @@ class NewEvent extends Component {
             setTimeout(() => window.location.reload(), 55)
         }
     };
+
+    focusingOnInvalidFields = (titleRequired,
+                               dateRequired,
+                               locationRequired,
+                               timeBeginRequired,
+                               timeEndRequired) => {
+        this.mainContainer.scrollIntoView({block: "start", behavior: "smooth"});
+        setTimeout(() => {
+            if (titleRequired) {
+                this.titleInput.focus();
+            } else if (dateRequired) {
+                this.dateInput.focus();
+            } else if (locationRequired) {
+                this.locationInput.focus();
+            } else if (timeBeginRequired) {
+                this.timeBeginInput.focus();
+            } else if (timeEndRequired) {
+                this.timeEndInput.focus();
+            }
+        }, 500);
+    }
 
     onOptionChange = () => {
         const newOptions = [];
@@ -444,7 +480,9 @@ class NewEvent extends Component {
                 </div>
 
                 <div className="window-content">
-                    <div className="main-container">
+                    <div className="main-container"
+                         ref={(mainContainer) => {this.mainContainer = mainContainer}}
+                    >
 
                         <div className="left-fields-container">
 
@@ -465,6 +503,7 @@ class NewEvent extends Component {
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="1"
+                                    ref={(titleInput) => {this.titleInput = titleInput}}
                                     style={{borderColor: this.state.isTitleRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : ''}}
@@ -490,6 +529,7 @@ class NewEvent extends Component {
                                     autoComplete="off"
                                     tabIndex="2"
                                     required
+                                    ref={(dateInput) => {this.dateInput = dateInput}}
                                     style={{borderColor: this.state.isDateRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : ''}}
@@ -512,6 +552,7 @@ class NewEvent extends Component {
                                     tabIndex="3"
                                     value={this.state.timeBegin}
                                     onChange={this.onTimeBeginInput}
+                                    ref={(timeBeginInput) => {this.timeBeginInput = timeBeginInput}}
                                     style={{borderColor: this.state.isTimeBeginRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : '',}}
@@ -534,6 +575,7 @@ class NewEvent extends Component {
                                     tabIndex="3"
                                     value={this.state.timeEnd}
                                     onChange={this.onTimeEndInput}
+                                    ref={(timeEndInput) => {this.timeEndInput = timeEndInput}}
                                     style={{borderColor: this.state.isTimeEndRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : ''}}
@@ -557,6 +599,7 @@ class NewEvent extends Component {
                                     form="new-event-form"
                                     value={this.state.location === null ? '' : this.state.location}
                                     tabIndex="4"
+                                    ref={(locationInput) => {this.locationInput = locationInput}}
                                     style={{borderColor: this.state.isLocationRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : ''}}
@@ -655,6 +698,7 @@ class NewEvent extends Component {
                                     form="new-event-form"
                                     autoComplete="off"
                                     tabIndex="7"
+                                    ref={(deadlineDateInput) => {this.deadlineDateInput = deadlineDateInput}}
                                     style={{
                                         borderColor: this.state.isDateDeadlineRequired
                                             ? 'rgba(201, 6, 52, 1)'
@@ -677,6 +721,7 @@ class NewEvent extends Component {
                                     tabIndex="3"
                                     value={this.state.deadlineTime}
                                     onChange={this.onTimeDeadlineInput}
+                                    ref={(deadlineTimeInput) => {this.deadlineTimeInput = deadlineTimeInput}}
                                     style={{
                                         borderColor: this.state.isTimeDeadlineRequired
                                             ? 'rgba(201, 6, 52, 1)'
