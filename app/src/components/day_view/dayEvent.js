@@ -175,7 +175,8 @@ class DayEvent extends Component {
                                 {this.getMarks(event)}
                             </div>
                             <div className="window__mainWindow__content__buttons">
-                                <button className="window__mainWindow__content__buttons__edit" onClick={() => this.onNewEventClick(event)}>
+                                <button className="window__mainWindow__content__buttons__edit" onClick={() => this.onNewEventClick(event)}
+                                    style={{display: event.deadlineEvent ? "none" : "flex"}}>
                                     <img src={require("../../css/images/editButton.svg")} alt="editButton"
                                          className="editButton"/>
                                 </button>
