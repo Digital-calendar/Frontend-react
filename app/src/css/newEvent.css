@@ -91,7 +91,8 @@ body {
 
 .main-container {
   flex-grow: 30;
-  margin: 3% 5%;
+  margin: 0 5%;
+  padding-top: 3%;
   flex-wrap: wrap;
   justify-content: space-between;
   /*background: #0061ff;*/
