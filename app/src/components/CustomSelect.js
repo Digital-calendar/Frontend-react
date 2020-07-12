@@ -27,7 +27,7 @@ class CustomSelect extends React.Component {
         placeholder: () => ({
             fontSize    : '18px',
             textAlign   : 'center',
-            fontFamily  : 'Oxygen'
+            fontFamily  : '\'Oxygen\', sans-serif;'
         }),
         dropdownIndicator: () => ({
             ":hover"    : {
@@ -60,7 +60,7 @@ class CustomSelect extends React.Component {
         }) : this.props.options;
 
         if (eventModel.filters === null) {
-            eventModel.filters = ['OWN', 'INTERNAL', 'EXTERNAL', 'CORRESPONDENCE'];
+            eventModel.filters = ['OWN', 'INTERNAL', 'EXTERNAL', 'CORRESPONDENCE', 'DEADLINE'];
         }
 
         this.state = {

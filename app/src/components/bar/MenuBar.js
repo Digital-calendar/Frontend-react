@@ -20,6 +20,7 @@ const filterOptions = [
     {value: 'internal', label: 'Внутренние'},
     {value: 'external', label: 'Внешние'},
     {value: 'Correspondence', label: 'Очные'},
+    {value: 'deadline', label: 'Дедлайны'}
 ];
 
 const viewOptions = [
