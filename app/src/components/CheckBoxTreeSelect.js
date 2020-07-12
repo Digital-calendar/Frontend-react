@@ -99,6 +99,7 @@ class CheckBoxTreeSelect extends Component {
             }
 
             console.log(prevCheckedListAllNames)
+            console.log(collection)
 
             this.setState({
                 checkedAll: prevCheckedAll,
@@ -109,6 +110,10 @@ class CheckBoxTreeSelect extends Component {
                 isCheckedDes: checked,
                 isCheckedEvMan: checked,
                 isCheckedMan: checked
+            }, function () {
+                this.state.checkedListAll.forEach(item => {
+                    this.loadToStorage(item);
+                });
             });
 
             if (!checked) {
@@ -131,10 +136,6 @@ class CheckBoxTreeSelect extends Component {
                     checkedMan: 0,
                 })
             }
-
-            this.state.checkedListAll.forEach(item => {
-                this.loadToStorage(item);
-            });
         }
         console.log(userModel.selectedUsers)
     }
@@ -700,6 +701,7 @@ class CheckBoxTreeSelect extends Component {
 
     loadToStorage(value) {
         this.setState({ value });
+        console.log(this.state.checkedListAll)
         userModel.selectedUsers = this.state.checkedListAll;
     }
 
