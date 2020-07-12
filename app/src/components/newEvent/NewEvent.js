@@ -56,7 +56,8 @@ class NewEvent extends Component {
                 isTimeBeginRequired: false,
                 isTimeEndRequired: false,
                 isDeadlineToggle: false,
-                isTimeDeadlineRequired: false
+                isTimeDeadlineRequired: false,
+                isDateDeadlineRequired: false
             };
         } else {
             this.state = {
@@ -81,7 +82,8 @@ class NewEvent extends Component {
                 isTimeBeginRequired: false,
                 isTimeEndRequired: false,
                 isDeadlineToggle: this.props.event.deadline !== null,
-                isTimeDeadlineRequired: false
+                isTimeDeadlineRequired: false,
+                isDateDeadlineRequired: false
             };
             console.log(this.state.date)
             eventModel.progressUploadFiles = '100%';
@@ -109,6 +111,12 @@ class NewEvent extends Component {
             .map(n => n < 10 ? 0 + '' + n : n).join('-')
     }
 
+    timeComparatorLeftMoreThenRight = (leftTime, rightTime , date) => {
+        let t1 = new Date(date + 'T' + leftTime);
+        let t2 = new Date(date + 'T' + rightTime);
+        return t1.getTime() >= t2.getTime();
+    }
+
     onSaveClick = () => {
         let isTimeBeginValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeBegin);
         let isTimeEndValid = (/^([01]{1}[0-9]|2[0-3]):[0-5][0-9]$/).test(this.state.timeEnd);
@@ -116,21 +124,32 @@ class NewEvent extends Component {
 
         let dateEnd = this.state.date;
         if (isTimeBeginValid && isTimeEndValid && (this.state.date !== '')) {
-            if (Number(this.state.timeBegin.slice(0, 2)) > Number(this.state.timeEnd.slice(0, 2))) {
+            if (this.timeComparatorLeftMoreThenRight(this.state.timeBegin, this.state.timeEnd, this.state.date)) {
                 dateEnd = this.getNextDayFromDate(this.state.date);
-            } else if (Number(this.state.timeBegin.slice(0, 2)) === Number(this.state.timeEnd.slice(0, 2))) {
-                if (Number(this.state.timeBegin.slice(3, 5)) >= Number(this.state.timeEnd.slice(3, 5))) {
-                    dateEnd = this.getNextDayFromDate(this.state.date);
-                }
             }
         }
 
+        let isDateDeadlineNoValid = this.state.isDateDeadlineRequired;
         let deadline = '';
         if (this.state.isDeadlineToggle) {
             if (this.state.deadlineDate !== '') {
+                let deadlineDate = new Date(this.state.deadlineDate);
+                let eventDate = new Date(this.state.date);
+                if (deadlineDate.getTime() < eventDate.getTime()) {
+                    isDateDeadlineNoValid = true;
+                } else if (deadlineDate.getTime() === eventDate.getTime()) {
+                    if (isTimeDeadlineValid && isTimeBeginValid) {
+                        let timeDeadline = new Date("2020-01-01T" + this.state.deadlineTime);
+                        let timeBeginEvent = new Date("2020-01-01T" + this.state.timeBegin);
+                        isTimeDeadlineValid = timeDeadline.getTime() > timeBeginEvent.getTime();
+                    }
+                }
+
                 if (isTimeDeadlineValid) {
                     deadline = this.state.deadlineDate + ' ' + this.state.deadlineTime;
                 }
+            } else {
+                isDateDeadlineNoValid = true;
             }
         }
 
@@ -141,7 +160,8 @@ class NewEvent extends Component {
             isLocationRequired: this.state.location === '',
             isTimeBeginRequired: !isTimeBeginValid,
             isTimeEndRequired: !isTimeEndValid,
-            isTimeDeadlineRequired: !isTimeDeadlineValid
+            isTimeDeadlineRequired: !isTimeDeadlineValid,
+            isDateDeadlineRequired: isDateDeadlineNoValid
         });
 
         eventModel.isNewEventModalOpen =
@@ -150,7 +170,8 @@ class NewEvent extends Component {
                 (this.state.location === '') ||
                 (!isTimeBeginValid) ||
                 (!isTimeEndValid) ||
-                (!isTimeDeadlineValid));
+                (!isTimeDeadlineValid) ||
+                isDateDeadlineNoValid);
 
         if (eventModel.isNewEventModalOpen) {
             return;
@@ -239,7 +260,8 @@ class NewEvent extends Component {
 
     onDeadlineDateInput = event => {
         this.setState({
-            deadlineDate: event.target.value
+            deadlineDate: event.target.value,
+            isDateDeadlineRequired: false
         })
     }
 
@@ -634,7 +656,7 @@ class NewEvent extends Component {
                                     autoComplete="off"
                                     tabIndex="7"
                                     style={{
-                                        borderColor: this.state.isDateRequired
+                                        borderColor: this.state.isDateDeadlineRequired
                                             ? 'rgba(201, 6, 52, 1)'
                                             : '',
                                         maxWidth: '170px',
